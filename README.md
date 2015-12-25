@@ -1,6 +1,6 @@
 ![Logo](http://img401.imageshack.us/img401/6918/admincmdlogobig.png)
 
-Unleash the power of Sponge and Bukkit!
+Unleash the power of Bukkit!
 
 Informations
 ------------
@@ -12,7 +12,7 @@ Informations
 Description
 ------------
 AdminCMD is a powerful plug-in that brings you commands that give you total control over your server. 
-Now we decided to remake it completely for the new [Sponge API](https://www.spongepowered.org).
+Now we decided to remake it completely.
 Featuring the most widely used commands in server management such as: inventory management, 
 banishment of bad players, limitation to teleporting, setting spawn and home way points, and much, much more! 
 Blockface approved and rated as one of the best plug-in by server owners.
@@ -74,10 +74,6 @@ So always prefix your commit message with one of these tags:
 * [DEV] : Something only related to development
 * [DEBUG] : Related to help the debugging.
 * [IGNORE] : Related to the .gitignore file
-* [API] : Work on the API module
-* [BUKKIT] : Work on the Bukkit module
-* [SPONGE] : Work on the sponge module
-* [CORE] : Work on the core module
 
 If you have already commited something, but want to add another commit, 
 just type ```git commit -amend```
