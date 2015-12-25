@@ -31,7 +31,8 @@ public class SQLite extends Database {
      *
      * @param dbFile Database file
      */
-    public SQLite(File dbFile) {       
+    public SQLite(File dbFile) { 
+        super("org.sqlite.JDBC");
         dbFile.getParentFile().mkdirs();
         this.dbFile = dbFile;
     }

@@ -18,7 +18,10 @@
  */
 package com.admincmd.admincmd.database;
 
+import com.admincmd.admincmd.utils.ACLogger;
 import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,6 +30,21 @@ import java.sql.Statement;
 public abstract class Database {
 
     private Connection conn = null;
+    
+    public Database(String driver) {
+        try {
+            Class d = Class.forName(driver);
+            Object o = d.newInstance();
+            if(!(o instanceof Driver)) {
+                ACLogger.severe("Driver is not an instance of the Driver class!");
+            } else {
+                Driver dr = (Driver) o;
+                DriverManager.registerDriver(dr);
+            }
+        } catch (Exception ex) {
+            ACLogger.severe("Driver not found! " + driver, ex);
+        } 
+    }
     
     public final boolean testConnection() {
         try {

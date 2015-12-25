@@ -20,10 +20,9 @@ package com.admincmd.admincmd.database;
 
 import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.Main;
+import com.admincmd.admincmd.utils.ACLogger;
 import java.io.File;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DatabaseFactory {
 
@@ -37,10 +36,10 @@ public class DatabaseFactory {
         }
 
         if (db.testConnection()) {
-            //ACLogger.info("The connection was successful!");
+            ACLogger.info("The connection was successful!");
             createTables();
         } else {
-            //ACLogger.severe("Could not connect to the Database!");
+            ACLogger.severe("Could not connect to the Database!");
         }
 
     }
