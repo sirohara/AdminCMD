@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class CommandManager implements CommandExecutor, CommandRegistry {
+public class CommandManager implements CommandExecutor {
 
     private final HashMap<BaseCommand, MethodContainer> cmds = new HashMap<>();
     private final CommandMap cmap;
@@ -58,7 +58,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
     }
 
     private void registerCommand(String name, List<String> aliases) {
-        if (cmap.getCommand(name) != null) return;
+        if (cmap.getCommand(name) != null) {
+            return;
+        }
         BukkitCommand cmd = new BukkitCommand(name, aliases);
         cmap.register(plugin.getName().toLowerCase(), cmd);
         cmd.setExecutor(this);
@@ -67,7 +69,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
     private BaseCommand getCommand(Command c, CommandArgs args, Sender sender) {
         BaseCommand ret = null;
         for (BaseCommand bc : cmds.keySet()) {
-            if (bc.sender() != sender) continue;
+            if (bc.sender() != sender) {
+                continue;
+            }
             if (bc.command().equalsIgnoreCase(c.getName())) {
                 if (args.isEmpty() && bc.subCommand().trim().isEmpty()) {
                     ret = bc;
@@ -83,7 +87,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
         BaseCommand bcmd = getCommand(c, args, sender);
         if (bcmd == null) {
             for (BaseCommand bc : cmds.keySet()) {
-                if (bc.sender() != sender) continue;
+                if (bc.sender() != sender) {
+                    continue;
+                }
                 if (bc.command().equalsIgnoreCase(c.getName()) && bc.subCommand().trim().isEmpty()) {
                     bcmd = bc;
                     break;
@@ -100,10 +106,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
      *
      * @param clazz the classfile where your command /-s are stored.
      */
-    @Override
     public void registerClass(Class<?> clazz) {
         if (!clazz.isAnnotationPresent(CommandHandler.class)) {
-            plugin.getLogger().severe("Class is not a CommandHandler");
+            ACLogger.severe("Class is not a CommandHandler");
             return;
         }
 
@@ -111,6 +116,10 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
 
         for (Method m : clazz.getDeclaredMethods()) {
             if (m.isAnnotationPresent(BaseCommand.class)) {
+                if (m.isAnnotationPresent(Ignore.class)) {
+                    ACLogger.debug(m.getName() + " in class " + clazz.getName() + " has the @ignore annotation and does not get loaded.");
+                    continue;
+                }
                 BaseCommand bc = m.getAnnotation(BaseCommand.class);
                 List<String> aliases = new ArrayList<>();
                 if (bc.aliases().contains(",")) {
@@ -153,7 +162,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
         BaseCommand bcmd = getCommand(c, args, sender);
         if (bcmd == null) {
             for (BaseCommand bc : cmds.keySet()) {
-                if (bc.sender() != sender) continue;
+                if (bc.sender() != sender) {
+                    continue;
+                }
                 if (bc.command().equalsIgnoreCase(c.getName()) && bc.subCommand().trim().isEmpty()) {
                     bcmd = bc;
                     break;
@@ -161,7 +172,9 @@ public class CommandManager implements CommandExecutor, CommandRegistry {
             }
         }
         MethodContainer container = cmds.get(bcmd);
-        if (container == null) return null;
+        if (container == null) {
+            return null;
+        }
 
         Method m = container.getMethod(sender);
 

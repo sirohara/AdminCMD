@@ -51,11 +51,11 @@ public class Main extends JavaPlugin {
         Config.load();
         Locales.load();
         DatabaseFactory.init();
-        
+
         PlayerManager.init();
         WorldManager.init();
         HomeManager.init();
-        
+
         registerCommands();
         registerEvents();
 
@@ -77,7 +77,7 @@ public class Main extends JavaPlugin {
     public static Main getInstance() {
         return INSTANCE;
     }
-    
+
     private void registerCommands() {
         manager.registerClass(ServerCommands.class);
         manager.registerClass(PlayerCommands.class);
@@ -85,7 +85,7 @@ public class Main extends JavaPlugin {
         manager.registerClass(WorldCommands.class);
         manager.registerClass(MobCommands.class);
     }
-    
+
     private void registerEvents() {
         EventManager.registerEvent(PlayerJoinListener.class);
         EventManager.registerEvent(PlayerCommandListener.class);
