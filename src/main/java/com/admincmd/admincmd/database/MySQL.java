@@ -37,7 +37,7 @@ public class MySQL extends Database {
      * @param port the port of the database server
      */
     public MySQL(String host, String user, String password, String dbName, int port) {
-        super("com.mysql.jdbc.Driver");
+        super("com.mysql.jdbc.Driver", Type.MYSQL);
         this.host = host;
         this.user = user;
         this.password = password;

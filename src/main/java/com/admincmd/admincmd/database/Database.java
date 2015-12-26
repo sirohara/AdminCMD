@@ -30,12 +30,20 @@ import java.sql.Statement;
 public abstract class Database {
 
     private Connection conn = null;
-    
-    public Database(String driver) {
+    private final Type type;
+
+    public enum Type {
+
+        SQLITE,
+        MYSQL;
+    }
+
+    public Database(String driver, Type type) {
+        this.type = type;
         try {
             Class d = Class.forName(driver);
             Object o = d.newInstance();
-            if(!(o instanceof Driver)) {
+            if (!(o instanceof Driver)) {
                 ACLogger.severe("Driver is not an instance of the Driver class!");
             } else {
                 Driver dr = (Driver) o;
@@ -43,9 +51,13 @@ public abstract class Database {
             }
         } catch (Exception ex) {
             ACLogger.severe("Driver not found! " + driver, ex);
-        } 
+        }
     }
-    
+
+    public Type getType() {
+        return type;
+    }
+
     public final boolean testConnection() {
         try {
             getConnection();
@@ -62,8 +74,9 @@ public abstract class Database {
      * @throws SQLException
      */
     public final Connection getConnection() throws SQLException {
-        if (conn == null || conn.isClosed())
+        if (conn == null || conn.isClosed()) {
             reactivateConnection();
+        }
         return conn;
     }
 
@@ -82,8 +95,9 @@ public abstract class Database {
      * @throws SQLException
      */
     public final void closeConnection() throws SQLException {
-        if (conn != null && !conn.isClosed())
+        if (conn != null && !conn.isClosed()) {
             conn.close();
+        }
     }
 
     /**
@@ -93,8 +107,9 @@ public abstract class Database {
      * @throws SQLException
      */
     public final void closeStatement(Statement s) throws SQLException {
-        if (s != null)
+        if (s != null) {
             s.close();
+        }
 
     }
 
@@ -105,8 +120,9 @@ public abstract class Database {
      * @throws SQLException
      */
     public final void closeResultSet(ResultSet rs) throws SQLException {
-        if (rs != null)
+        if (rs != null) {
             rs.close();
+        }
     }
 
     /**
