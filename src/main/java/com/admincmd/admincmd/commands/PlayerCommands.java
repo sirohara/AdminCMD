@@ -28,6 +28,7 @@ import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 @CommandHandler
@@ -36,6 +37,64 @@ public class PlayerCommands {
     private final HelpPage cw = new HelpPage("cw", "", "<-p player>");
     private final HelpPage fly = new HelpPage("fly", "", "<-p player>");
     private final HelpPage god = new HelpPage("god", "", "<-p player>");
+    private final HelpPage enderchest = new HelpPage("enderchest", "<-p player>");
+    private final HelpPage gm = new HelpPage("gamemode", "<-p player> <0|1|2>");
+
+    @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
+    public CommandResult executeGamemode(Player sender, CommandArgs args) {
+        if (gm.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+        if (args.isEmpty()) {
+            GameMode gm = sender.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL;
+            sender.setGameMode(gm);
+            //TODO: Send Message
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.gamemode.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            //TODO: code
+            return CommandResult.SUCCESS;
+        }
+
+        return CommandResult.ERROR;
+    }
+
+    @BaseCommand(command = "enderchest", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.enderchest", aliases = "ec")
+    public CommandResult executeEnderchest(Player sender, CommandArgs args) {
+        if (enderchest.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+        if (args.isEmpty()) {
+            sender.openInventory(sender.getEnderChest());
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.enderchest.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            sender.openInventory(target.getEnderChest());
+            return CommandResult.SUCCESS;
+        }
+
+        return CommandResult.ERROR;
+    }
 
     @BaseCommand(command = "god", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.god", aliases = "g,gg")
     public CommandResult executeGod(Player sender, CommandArgs args) {
@@ -46,7 +105,7 @@ public class PlayerCommands {
             BukkitPlayer p = PlayerManager.getPlayer(sender);
             p.setGod(!p.isGod());
 
-            String s = p.isGod()? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String s = p.isGod() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
             String msg = Locales.PLAYER_GOD_TOGGLED.getString().replaceAll("%status%", s);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
         }
