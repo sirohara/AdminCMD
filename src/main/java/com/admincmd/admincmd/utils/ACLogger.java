@@ -68,7 +68,7 @@ public class ACLogger {
      */
     public static void severe(final String message, final Throwable ex) {
         logger.log(Level.SEVERE, PREFIX + message, ex);
-        printError(message, ex); 
+        printError(message, ex);
     }
 
     /**
@@ -77,7 +77,9 @@ public class ACLogger {
      * @param message The debug message to log
      */
     public static void debug(final String message) {
-        if (!Config.DEBUG.getBoolean()) return;
+        if (!Config.DEBUG.getBoolean()) {
+            return;
+        }
         logger.log(Level.INFO, PREFIX + message);
         writeToDebug(message);
     }
@@ -89,7 +91,9 @@ public class ACLogger {
      * @param ex The exception to log
      */
     public static void debug(final String message, final Throwable ex) {
-        if (!Config.DEBUG.getBoolean()) return;
+        if (!Config.DEBUG.getBoolean()) {
+            return;
+        }
         logger.log(Level.INFO, PREFIX + message, ex);
         writeToDebug(message, ex);
     }
@@ -106,7 +110,7 @@ public class ACLogger {
         file.mkdirs();
         try {
             bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
-            bw.write(prefix() + ": " + message);
+            bw.write(prefix() + ":" + message);
             bw.newLine();
         } catch (Exception ex) {
         } finally {
@@ -126,9 +130,20 @@ public class ACLogger {
         file.mkdirs();
         try {
             bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
+            bw.newLine();
+            bw.newLine();
+            bw.write("///////////////////////////////////////////////////////////////////////////////");
+            bw.newLine();
+            bw.newLine();
             bw.write(prefix() + ": An Exception happened!");
             bw.newLine();
+            bw.write(prefix() + message);
+            bw.newLine();
             bw.write(getStackTrace(t));
+            bw.newLine();
+            bw.newLine();
+            bw.write("///////////////////////////////////////////////////////////////////////////////");
+            bw.newLine();
             bw.newLine();
         } catch (Exception ex) {
         } finally {
@@ -141,18 +156,27 @@ public class ACLogger {
             }
         }
     }
-    
+
     private static void printError(String message, Throwable t) {
         BufferedWriter bw = null;
-        File file = new File(Main.getInstance().getDataFolder(), "logs");
+        File file = new File(Main.getInstance().getDataFolder(), "logs" + File.separator + "errors");
         file.mkdirs();
         try {
-            bw = new BufferedWriter(new FileWriter(file + File.separator + "errors.log", true));
+
+            DateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+            Calendar cal = Calendar.getInstance();
+            String d = date.format(cal.getTime());
+
+            bw = new BufferedWriter(new FileWriter(file + File.separator + d + ".log", true));
             bw.write(prefix() + ": An Exception happened!");
             bw.newLine();
             bw.write(prefix() + message);
             bw.newLine();
             bw.write(getStackTrace(t));
+            bw.newLine();
+            bw.newLine();
+            bw.write("///////////////////////////////////////////////////////////////////////////////");
+            bw.newLine();
             bw.newLine();
         } catch (Exception ex) {
         } finally {
