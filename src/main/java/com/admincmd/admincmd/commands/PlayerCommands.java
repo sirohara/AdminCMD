@@ -24,6 +24,7 @@ import com.admincmd.admincmd.commandapi.CommandArgs.Flag;
 import com.admincmd.admincmd.commandapi.CommandHandler;
 import com.admincmd.admincmd.commandapi.CommandResult;
 import com.admincmd.admincmd.commandapi.HelpPage;
+import com.admincmd.admincmd.commandapi.Ignore;
 import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;
@@ -37,14 +38,16 @@ public class PlayerCommands {
     private final HelpPage cw = new HelpPage("cw", "", "<-p player>");
     private final HelpPage fly = new HelpPage("fly", "", "<-p player>");
     private final HelpPage god = new HelpPage("god", "", "<-p player>");
-    private final HelpPage enderchest = new HelpPage("enderchest", "<-p player>");
-    private final HelpPage gm = new HelpPage("gamemode", "<-p player> <0|1|2>");
+    private final HelpPage enderchest = new HelpPage("enderchest", "", "<-p player>");
+    private final HelpPage gm = new HelpPage("gamemode", "", "<-p player>", "<0|1|2|3>", "<-p player> <0|1|2|3>");
 
+    @Ignore
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
     public CommandResult executeGamemode(Player sender, CommandArgs args) {
         if (gm.sendHelp(sender, args)) {
             return CommandResult.SUCCESS;
         }
+
         if (args.isEmpty()) {
             GameMode gm = sender.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL;
             sender.setGameMode(gm);
@@ -62,8 +65,34 @@ public class PlayerCommands {
             }
 
             Player target = flag.getPlayer();
-            //TODO: code
-            return CommandResult.SUCCESS;
+            if (args.getLength() == 2) {
+                GameMode gm = target.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL;
+                target.setGameMode(gm);
+                //TODO: Send message
+                return CommandResult.SUCCESS;
+            } else if (args.getLength() == 3) {
+                if (!args.isInteger(2)) {
+                    return CommandResult.NOT_A_NUMBER;
+                }
+                int num = args.getInt(2);
+                GameMode gm = GameMode.getByValue(num);
+                target.setGameMode(gm);
+                //TODO: Send message
+                return CommandResult.SUCCESS;
+            } else {
+                return CommandResult.ERROR;
+            }
+        } else {
+            if (args.getLength() == 1) {
+                if (!args.isInteger(0)) {
+                    return CommandResult.NOT_A_NUMBER;
+                }
+                int num = args.getInt(0);
+                GameMode gm = GameMode.getByValue(num);
+                sender.setGameMode(gm);
+                //TODO: Send Message
+                return CommandResult.SUCCESS;
+            }
         }
 
         return CommandResult.ERROR;

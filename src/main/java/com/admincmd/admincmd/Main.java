@@ -18,6 +18,7 @@
  */
 package com.admincmd.admincmd;
 
+import com.admincmd.admincmd.addon.AddonManager;
 import com.admincmd.admincmd.commandapi.CommandManager;
 import com.admincmd.admincmd.commands.HomeCommands;
 import com.admincmd.admincmd.commands.MobCommands;
@@ -59,12 +60,16 @@ public class Main extends JavaPlugin {
         registerCommands();
         registerEvents();
 
+        AddonManager.loadAddons();
+
         long timeTook = System.currentTimeMillis() - start;
-        ACLogger.info("Core start took " + timeTook + " miliseconds");
+        ACLogger.info("Plugin start took " + timeTook + " miliseconds");
     }
 
     @Override
     public void onDisable() {
+        AddonManager.disableAddons();
+        
         try {
             DatabaseFactory.getDatabase().closeConnection();
         } catch (SQLException ex) {

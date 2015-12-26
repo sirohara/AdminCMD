@@ -1,5 +1,5 @@
 /*
- * This file is part of AdminCMD-Rebirth
+ * This file is part of AdminCMD
  * Copyright (C) 2014 AdminCMD Team
  *
  * This program is free software; you can redistribute it and/or

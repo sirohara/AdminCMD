@@ -25,7 +25,7 @@ import com.admincmd.admincmd.commandapi.CommandHandler;
 import com.admincmd.admincmd.commandapi.CommandResult;
 import com.admincmd.admincmd.commandapi.HelpPage;
 import com.admincmd.admincmd.utils.Locales;
-import com.admincmd.admincmd.utils.Locator;
+import com.admincmd.admincmd.utils.LocationSerialization;
 import com.admincmd.admincmd.utils.Messager;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -64,7 +64,7 @@ public class MobCommands {
         }
 
         for (int i = 0; i < amount; i++) {
-            target.spawnEntity(Locator.getLocationLooking(sender, 10), type);
+            target.spawnEntity(LocationSerialization.getLocationLooking(sender, 10), type);
         }
 
         String msg = Locales.MOB_SPAWNED.getString().replaceAll("%num%", spawnmob + "");

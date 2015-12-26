@@ -19,7 +19,6 @@
 package com.admincmd.admincmd.utils;
 
 import com.admincmd.admincmd.Main;
-import com.admincmd.admincmd.utils.Utils;
 import java.io.File;
 import java.io.IOException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -48,6 +47,12 @@ public enum Locales {
     HELP_PLAYER_FLY_2("Help.Player.Fly.2", "Toggles flying for the player"),
     HELP_PLAYER_GOD_1("Help.Player.God.1", "Toggles godmode"),
     HELP_PLAYER_GOD_2("Help.Player.God.2", "Toggles godmode for the player"),
+    HELP_PLAYER_ENDERCHEST_1("Help.Player.Enderchest.1", "Opens your enderchest"),
+    HELP_PLAYER_ENDERCHEST_2("Help.Player.Enderchest.2", "Opens the enderchest of the player"),
+    HELP_PLAYER_GAMEMODE_1("Help.Player.Gamemode.1", "Toggles your gamemode."),
+    HELP_PLAYER_GAMEMODE_2("Help.Player.Gamemode.2", "Toggles the gamemode of the player"),
+    HELP_PLAYER_GAMEMODE_3("Help.Player.Gamemode.3", "Changes your gamemode to the given mode."),
+    HELP_PLAYER_GAMEMODE_4("Help.Player.Gamemode.4", "Changes the gamemode of the player to the given mode."),
     HELP_TELEPORT_HOME_1("Help.Home.Home.1", "List's all homes"),
     HELP_TELEPORT_HOME_2("Help.Home.Home.2", "Teleports you to the given home"),
     HELP_TELEPORT_SETHOME_1("Help.Home.Sethome.1", "Creates a new home at your location with the given name"),

@@ -26,7 +26,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class Locator {
+public class LocationSerialization {
 
     public static String serialLocation(Location l) {
         int pitch = Integer.valueOf(String.valueOf(l.getPitch()).split("\\.")[0]);

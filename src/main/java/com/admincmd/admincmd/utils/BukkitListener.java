@@ -19,6 +19,7 @@
 package com.admincmd.admincmd.utils;
 
 import com.admincmd.admincmd.Main;
+import com.admincmd.admincmd.addon.Addon;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -26,6 +27,10 @@ public class BukkitListener implements Listener {
 
     public void register() {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+    }
+    
+    public void register(Addon a) {
+        a.getServer().getPluginManager().registerEvents(this, a);
     }
 
 }

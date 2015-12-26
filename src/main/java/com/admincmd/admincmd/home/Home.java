@@ -19,7 +19,7 @@
 package com.admincmd.admincmd.home;
 
 import com.admincmd.admincmd.player.BukkitPlayer;
-import com.admincmd.admincmd.utils.Locator;
+import com.admincmd.admincmd.utils.LocationSerialization;
 import com.admincmd.admincmd.world.ACWorld;
 import com.admincmd.admincmd.world.WorldManager;
 import org.bukkit.Location;
@@ -40,7 +40,7 @@ public class Home {
 
 
     public Home(String serializedLocation, BukkitPlayer owner, String name, int id) {
-        this.loc = Locator.deserialLocation(serializedLocation);
+        this.loc = LocationSerialization.deserialLocation(serializedLocation);
         this.owner = owner;
         this.name = name;
         this.id = id;
@@ -59,11 +59,11 @@ public class Home {
     }
 
     public void updateLocation(String serializedLocation) {
-        this.loc = Locator.deserialLocation(serializedLocation);
+        this.loc = LocationSerialization.deserialLocation(serializedLocation);
     }
 
     public String getSerializedLocation() {
-        return Locator.serialLocation(loc);
+        return LocationSerialization.serialLocation(loc);
     }
 
     public String getName() {

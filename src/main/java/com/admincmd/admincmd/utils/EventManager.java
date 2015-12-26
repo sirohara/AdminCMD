@@ -18,7 +18,7 @@
  */
 package com.admincmd.admincmd.utils;
 
-
+import com.admincmd.admincmd.addon.Addon;
 
 public class EventManager {
 
@@ -28,7 +28,16 @@ public class EventManager {
             l.register();
         } catch (Exception ex) {
             ACLogger.severe("Error registering the listener", ex);
-        } 
+        }
+    }
+
+    public static void registerEvent(Class<? extends BukkitListener> clazz, Addon a) {
+        try {
+            BukkitListener l = clazz.newInstance();
+            l.register(a);
+        } catch (Exception ex) {
+            ACLogger.severe("Error registering the listener", ex);
+        }
     }
 
 }
