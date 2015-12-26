@@ -85,7 +85,6 @@ Developers
 * [TheJeterLP](https://github.com/TheJeterLP/)
 * [BossLetsPlays](https://github.com/BossLetsPlays/)
 * [Jkmalan](https://github.com/jkmalan/)
-* [Sheenrox82](https://github.com/sheenrox82/)
 
 Thanks to
 ------------
@@ -100,7 +99,7 @@ Used IDEs
 * [IntelliJ](https://www.jetbrains.com/idea/) (used by Belphemur)
   * Built-in Maven support
   * Built-in Git support
-* [Eclipse](https://eclipse.org) (used by BossLetsPlays, Jkmalan and Sheenrox82)
+* [Eclipse](https://eclipse.org) (used by BossLetsPlays and Jkmalan)
   * [Maven Plugin](http://eclipse.org/m2e/)
   * [Git Plugin](http://eclipse.org/egit/)
 
