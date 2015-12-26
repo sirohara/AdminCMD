@@ -84,6 +84,8 @@ public enum Locales {
     PLAYER_GOD_TOGGLED_OTHER("Player.God.ToggledOther", "%player%'s godmode is now %status%"),
     PLAYER_FLY_TOGGLED("Player.Fly.Toggled", "Your fly mode is now %status%"),
     PLAYER_FLY_TOGGLED_OTHER("Player.Fly.ToggledOther", "%player%'s fly mode is now %status%"),
+    PLAYER_GAMEMODE_CHANGED("Player.Gamemode.Changed", "Your gamemode has been changed to %status%"),
+    PLAYER_GAMEMODE_CHANGED_OTHER("Player.Gamemode.ChangedOther", "%player%'s gamemode has been changed to %status%"),
     SERVER_RELOAD_FULL("Server.Reload.Full", "The server has been reloaded."),
     SERVER_RELOAD_NOT_FOUND("Server.Reload.NotFound", "There is no plugin by that name installed."),
     SERVER_RELOAD_SINGLE("Server.Reload.Single", "The plugin has been reloaded."),
