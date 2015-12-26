@@ -50,7 +50,7 @@ public class DatabaseFactory {
             String HOME_TABLE;
             String SPAWN_TABLE;
             String WORLD_TABLE;
-            if (db instanceof SQLite) {
+            if (db.getType() == Database.Type.SQLITE) {
                 PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
                         + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT,"
                         + "`uuid` varchar(64) NOT NULL,"

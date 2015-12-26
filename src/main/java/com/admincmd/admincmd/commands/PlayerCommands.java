@@ -24,7 +24,6 @@ import com.admincmd.admincmd.commandapi.CommandArgs.Flag;
 import com.admincmd.admincmd.commandapi.CommandHandler;
 import com.admincmd.admincmd.commandapi.CommandResult;
 import com.admincmd.admincmd.commandapi.HelpPage;
-import com.admincmd.admincmd.commandapi.Ignore;
 import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;

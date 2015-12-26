@@ -25,6 +25,25 @@ import org.bukkit.command.CommandSender;
 
 public class HelpPage {
 
+    private final List<CommandHelp> helpPages = new ArrayList<>();
+    private final List<String> HELP_TEXT = new ArrayList<>();
+    private final String command;
+
+    public HelpPage(String command) {
+        this.command = command;
+    }
+
+    public void prepare() {
+        if (helpPages == null || helpPages.isEmpty()) {
+            return;
+        }
+        HELP_TEXT.add("§a------------------------§1" + Locales.HELP.getString() + "§a-------------------------");
+        for (CommandHelp ch : helpPages) {
+            HELP_TEXT.add("§6/" + ch.getText());
+        }
+        HELP_TEXT.add("§a-----------------------------------------------------");
+    }
+
     public HelpPage(String command, String... arguments) {
         this.command = command;
 
@@ -38,7 +57,7 @@ public class HelpPage {
 
                 String[] l = loc.toString().toLowerCase().split("_");
 
-                for (String s : l) {                  
+                for (String s : l) {
                     if (!s.equalsIgnoreCase(command)) {
                         continue;
                     }
@@ -64,11 +83,7 @@ public class HelpPage {
         HELP_TEXT.add("§a-----------------------------------------------------");
     }
 
-    private final List<CommandHelp> helpPages = new ArrayList<>();
-    private final List<String> HELP_TEXT = new ArrayList<>();
-    private final String command;
-
-    private void addPage(String argument, String description) {
+    public final void addPage(String argument, String description) {
         helpPages.add(new CommandHelp(command + argument, description));
     }
 
