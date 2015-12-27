@@ -21,7 +21,7 @@ Blockface approved and rated as one of the best plug-in by server owners.
 
 Contributing
 ------------
-If you want to contribute, please read the ![Contributing Guidelines](CONTRIBUTING.md)
+If you want to contribute, please read the [Contributing Guidelines](CONTRIBUTING.md).
 
 Developers
 ------------
