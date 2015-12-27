@@ -29,10 +29,18 @@ public class HelpPage {
     private final List<String> HELP_TEXT = new ArrayList<>();
     private final String command;
 
+    /**
+     * Creates a new helppage for the provided command.
+     *
+     * @param command
+     */
     public HelpPage(String command) {
         this.command = command;
     }
 
+    /**
+     * Prepares the help message
+     */
     public void prepare() {
         if (helpPages == null || helpPages.isEmpty()) {
             return;
@@ -44,6 +52,13 @@ public class HelpPage {
         HELP_TEXT.add("§a-----------------------------------------------------");
     }
 
+    /**
+     * Automatically gets all help texts from the given arguments of the
+     * {@link com.admincmd.admincmd.utils.Locales} and prepares the message.
+     *
+     * @param command
+     * @param arguments
+     */
     public HelpPage(String command, String... arguments) {
         this.command = command;
 
@@ -83,10 +98,24 @@ public class HelpPage {
         HELP_TEXT.add("§a-----------------------------------------------------");
     }
 
+    /**
+     * Manually add a message to a given argument.
+     *
+     * @param argument
+     * @param description
+     */
     public final void addPage(String argument, String description) {
         helpPages.add(new CommandHelp(command + argument, description));
     }
 
+    /**
+     * Checks if the sender wants to see the help by typing /<command> help or
+     * /<command> ? and sends the text if he did.
+     *
+     * @param s the commandsender
+     * @param args the arguments
+     * @return true if helptext was sent
+     */
     public boolean sendHelp(CommandSender s, CommandArgs args) {
         if (args.getLength() == 1 && (args.getString(0).equalsIgnoreCase("?") || args.getString(0).equalsIgnoreCase("help")) && !HELP_TEXT.isEmpty()) {
             for (String string : HELP_TEXT) {

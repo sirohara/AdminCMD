@@ -42,7 +42,7 @@ public class BukkitCommand extends Command {
         return false;
     }
 
-    public void setExecutor(CommandExecutor exe) {
+    protected void setExecutor(CommandExecutor exe) {
         this.exe = exe;
     }
 

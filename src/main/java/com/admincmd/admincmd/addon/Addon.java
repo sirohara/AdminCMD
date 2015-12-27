@@ -29,18 +29,38 @@ public abstract class Addon extends JavaPlugin {
     private CommandManager cmdManager;
     private static Addon INSTANCE;
 
+    /**
+     * Returns an instance of the AdminCMD main class.
+     *
+     * @return {@link com.admincmd.admincmd.Main}
+     */
     public Main getAdminCMD() {
         return Main.getInstance();
     }
 
+    /**
+     * Returns the loaded database.
+     *
+     * @return {@link com.admincmd.admincmd.database.Database}
+     */
     public Database getDB() {
         return DatabaseFactory.getDatabase();
     }
 
+    /**
+     * Returns the commandmanager for this addon.
+     *
+     * @return {@link com.admincmd.admincmd.commandapi.CommandManager}
+     */
     public CommandManager getCommandManager() {
         return cmdManager;
     }
 
+    /**
+     * Returns an instance of this class.
+     *
+     * @return {@link com.admincmd.admincmd.addon.Addon}
+     */
     public static Addon getInstance() {
         return INSTANCE;
     }
@@ -59,8 +79,15 @@ public abstract class Addon extends JavaPlugin {
         INSTANCE = null;
     }
 
+    /**
+     * Called in the onEnable Bukkit method after the commandManager is loaded
+     * for this addon.
+     */
     public abstract void enable();
 
+    /**
+     * Called in the onDisable Bukkit method.
+     */
     public abstract void disable();
 
 }

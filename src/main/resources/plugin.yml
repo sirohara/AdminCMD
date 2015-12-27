@@ -1,3 +1,5 @@
 main: com.admincmd.admincmd.Main
 name: ${project.artifactId}
-version: ${project.version}
+version: ${project.version} (BUILD ${git.build.time})
+authors: [Balor, TheJeterLP, JKMalan, BossLetsPlays]
+description: This plugin implements the basic commands for running a server.

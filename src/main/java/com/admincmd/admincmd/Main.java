@@ -69,7 +69,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         AddonManager.disableAddons();
-        
+
         try {
             DatabaseFactory.getDatabase().closeConnection();
         } catch (SQLException ex) {
@@ -79,6 +79,11 @@ public class Main extends JavaPlugin {
         System.gc();
     }
 
+    /**
+     * Returns an instance of this class.
+     *
+     * @return {@link com.admincmd.admincmd.Main}
+     */
     public static Main getInstance() {
         return INSTANCE;
     }

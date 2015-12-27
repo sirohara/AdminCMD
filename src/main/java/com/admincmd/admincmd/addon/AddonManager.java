@@ -31,6 +31,9 @@ public class AddonManager {
     private static final Map<String, Addon> addons = new HashMap<>();
     private static final PluginManager manager = Main.getInstance().getServer().getPluginManager();
 
+    /**
+     * Loads all the addons in the plugins/AdminCMD/addons folder.
+     */
     public static void loadAddons() {
         ACLogger.info("Loading addons...");
         File folder = new File(Main.getInstance().getDataFolder(), "addons");
@@ -63,6 +66,9 @@ public class AddonManager {
         }
     }
 
+    /**
+     * Disables all the addons in the plugins/AdminCMD/addons folder
+     */
     public static void disableAddons() {
         for (Addon a : addons.values()) {
             manager.disablePlugin(a);
@@ -70,8 +76,14 @@ public class AddonManager {
         addons.clear();
     }
 
+    /**
+     * Returns a loaded Addon
+     *
+     * @param name the name of the addon
+     * @return {@link com.admincmd.admincmd.addon.Addon}
+     */
     public static Addon getAddon(String name) {
         return addons.get(name);
     }
-    
+
 }

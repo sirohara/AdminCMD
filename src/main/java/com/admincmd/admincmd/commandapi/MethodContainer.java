@@ -27,20 +27,20 @@ public class MethodContainer {
 
     private final HashMap<Sender, Method> methods;
 
-    public MethodContainer(HashMap<Sender, Method> map) {
+    protected MethodContainer(HashMap<Sender, Method> map) {
         methods = map;
     }
 
-    public Method getMethod(Sender s) {
+    protected Method getMethod(Sender s) {
         return methods.get(s);
     }
 
-    public Collection<Method> getMethods() {
+    protected Collection<Method> getMethods() {
         return methods.values();
     }
 
-    public HashMap<Sender, Method> getMethodMap() {
+    protected HashMap<Sender, Method> getMethodMap() {
         return methods;
     }
-    
+
 }

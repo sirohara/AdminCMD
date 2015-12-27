@@ -20,26 +20,53 @@ package com.admincmd.admincmd.commandapi;
 
 import com.admincmd.admincmd.utils.Locales;
 
-
 public enum CommandResult {
 
+    /**
+     * Command was executed successful
+     */
     SUCCESS(null),
+    /**
+     * The user has not the permission to execute the command
+     */
     NO_PERMISSION(Locales.COMMAND_MESSAGES_NO_PERMISSION.getString()),
+    /**
+     * The user has not the permission to execute this command for other
+     * players.
+     */
     NO_PERMISSION_OTHER(Locales.COMMAND_MESSAGES_NO_PERMISSION_OTHER.getString()),
+    /**
+     * The sender has used the command wrong. Sends help message
+     */
     ERROR(Locales.COMMAND_MESSAGES_WRONG_USAGE.getString()),
+    /**
+     * Tells the sender that the given player in the arguments is not online
+     */
     NOT_ONLINE(Locales.COMMAND_MESSAGES_NOT_ONLINE.getString()),
+    /**
+     * Tells the sender that the given argument has to be a number
+     */
     NOT_A_NUMBER(Locales.COMMAND_MESSAGES_NOT_A_NUMBER.getString()),
+    /**
+     * Tells the sender that the given argument has to be a world
+     */
     NOT_A_WORLD(Locales.COMMAND_MESSAGES_NOT_A_WORLD.getString()),
+    /**
+     * Tells the sender that the given argument is not a mobname
+     */
     NOT_A_MOB(Locales.COMMAND_MESSAGES_NOT_A_MOB.getString()),
+    /**
+     * Tells the sender that the given mob cannot be spawned
+     */
     NOT_SPAWNABLE(Locales.COMMAND_MESSAGES_NOT_SPAWNABLE.getString());
 
     private final String msg;
 
-    CommandResult(String msg) {
+    private CommandResult(String msg) {
         this.msg = msg;
     }
 
-    public String getMessage() {
+    protected String getMessage() {
         return this.msg;
     }
 }

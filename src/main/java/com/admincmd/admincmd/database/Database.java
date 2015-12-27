@@ -54,10 +54,20 @@ public abstract class Database {
         }
     }
 
+    /**
+     * Gets the type of the loaded database.
+     *
+     * @return {@link com.admincmd.admincmd.database.Database.Type}
+     */
     public Type getType() {
         return type;
     }
 
+    /**
+     * Tests the database connection.
+     *
+     * @return true if connection was successful
+     */
     public final boolean testConnection() {
         try {
             getConnection();
@@ -158,6 +168,11 @@ public abstract class Database {
         closeStatement(s);
     }
 
+    /**
+     * Reactivates the connection to the Database.
+     *
+     * @throws SQLException
+     */
     public abstract void reactivateConnection() throws SQLException;
 
 }
