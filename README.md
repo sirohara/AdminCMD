@@ -1,6 +1,6 @@
-![Logo](http://img401.imageshack.us/img401/6918/admincmdlogobig.png) 
+<img align="center" src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo">
 
-![Build Status] (https://travis-ci.org/AdminCMD/AdminCMD.svg)
+AdminCMD [![Build Status](https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master)](https://travis-ci.org/AdminCMD/AdminCMD)
 
 Unleash the power of Bukkit!
 
