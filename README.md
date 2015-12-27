@@ -2,11 +2,12 @@
 
 <a href="https://travis-ci.org/AdminCMD/AdminCMD"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
 
+<div>
     <h2>Unleash the power of Bukkit!</h2>
 
     <h2>Informations</h2>
     <hr>
-    <ul>
+    <ul style="text-align:left">
         <li> Blog : http://www.admincmd.com</li>
         <li> Wiki : http://wiki.admincmd.com</li>
         <li> Issues: http://bug.admincmd.com</li>
@@ -27,7 +28,7 @@
 
     <h2>Developers</h2>
     <hr>
-    <ul>
+    <ul style="text-align:left">
         <li><a href="https://github.com/Belphemur/">Belphemur</a></li>
         <li><a href="https://github.com/TheJeterLP/">TheJeterLP</a></li>
         <li><a href="https://github.com/BossLetsPlays/">BossLetsPlays</a></li>
@@ -36,9 +37,10 @@
 
     <h2>Thanks to</h2>
     <hr>
-    <ul>
+    <ul style="text-align:left">
         <li> The whole <a href="https://github.com/RedThirdDivision">RedThirdDivision</a> for helping us out!</li>
         <li> <a href="https://github.com/Lathanael">Lathanael</a> for helping so much out on the Bukkit version!</li>
     </ul>
+</div>
 
 
