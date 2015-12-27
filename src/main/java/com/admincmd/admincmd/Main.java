@@ -34,6 +34,7 @@ import com.admincmd.admincmd.events.PlayerJoinListener;
 import com.admincmd.admincmd.events.WorldListener;
 import com.admincmd.admincmd.home.HomeManager;
 import com.admincmd.admincmd.player.PlayerManager;
+import com.admincmd.admincmd.spawn.SpawnManager;
 import com.admincmd.admincmd.utils.ACLogger;
 import com.admincmd.admincmd.utils.EventManager;
 import com.admincmd.admincmd.world.WorldManager;
@@ -54,6 +55,7 @@ public class Main extends JavaPlugin {
         DatabaseFactory.init();
 
         PlayerManager.init();
+        SpawnManager.init();
         WorldManager.init();
         HomeManager.init();
 
@@ -70,6 +72,10 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         AddonManager.disableAddons();
 
+        PlayerManager.save();
+        WorldManager.save();
+        HomeManager.save();
+        
         try {
             DatabaseFactory.getDatabase().closeConnection();
         } catch (SQLException ex) {

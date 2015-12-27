@@ -67,10 +67,8 @@ public class DatabaseFactory {
                         + "`location` varchar(320) NOT NULL,"
                         + "`name` varchar(64) NOT NULL"
                         + ");";
-                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawns` ("
-                        + "`type` INTEGER NOT NULL,"
-                        + "`group` varchar(64) NOT NULL,"
-                        + "`location` varchar(320) NOT NULL"
+                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
+                        + "`location` TEXT NOT NULL"
                         + ");";
                 
                 WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
@@ -95,10 +93,8 @@ public class DatabaseFactory {
                         + "`location` varchar(320) NOT NULL,"
                         + "`name` varchar(64) NOT NULL"
                         + ");";
-                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawns` ("
-                        + "`type` INTEGER NOT NULL,"
-                        + "`group` varchar(64) NOT NULL,"
-                        + "`location` varchar(320) NOT NULL"
+                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
+                        + "`location` TEXT NOT NULL"
                         + ");";
                 
                 WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("

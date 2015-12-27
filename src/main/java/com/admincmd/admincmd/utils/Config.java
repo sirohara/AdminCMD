@@ -32,6 +32,7 @@ public enum Config {
     MYSQL_DATABASE("MySQL.Database", "minecraft", "The name of the dataabse"),
     MYSQL_USER("MySQL.User", "root", "The user of the database"),
     MYSQL_PASSWORD("MySQL.Password", "password", "The password of the user"),
+    GLOBAL_SPAWNS("Options.WorldSpawns", false, "Set to true if you want one spawn for every world. false means one spawn for the whole server."),
     DEBUG("Options.Debug", false, "Enables debugging chat.");
 
     private Config(String path, Object val, String description) {
