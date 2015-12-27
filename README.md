@@ -19,6 +19,10 @@ Featuring the most widely used commands in server management such as: inventory 
 banishment of bad players, limitation to teleporting, setting spawn and home way points, and much, much more! 
 Blockface approved and rated as one of the best plug-in by server owners.
 
+Contributing
+------------
+If you want to contribute, please read the ![Contributing Guidelines](CONTRIBUTING.md)
+
 Developers
 ------------
 * [Belphemur](https://github.com/Belphemur/)

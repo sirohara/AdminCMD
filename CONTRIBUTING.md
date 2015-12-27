@@ -1,3 +1,9 @@
+![Logo](http://img401.imageshack.us/img401/6918/admincmdlogobig.png) 
+
+![Build Status] (https://travis-ci.org/AdminCMD/AdminCMD.svg)
+
+Unleash the power of Bukkit!
+
 Developer requirements
 ------------
 
