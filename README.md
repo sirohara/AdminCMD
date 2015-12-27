@@ -1,6 +1,6 @@
-<a href="http://admincmd.com"><img src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo"></a>
+<a href="http://admincmd.com" target="_blank"><img src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo"></a>
 
-<a href="https://travis-ci.org/AdminCMD/AdminCMD"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
+<a href="https://travis-ci.org/AdminCMD/AdminCMD" target="_blank"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
 
 <div>
     <h2>Unleash the power of Bukkit!</h2>
