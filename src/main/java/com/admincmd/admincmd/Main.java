@@ -24,12 +24,14 @@ import com.admincmd.admincmd.commands.HomeCommands;
 import com.admincmd.admincmd.commands.MobCommands;
 import com.admincmd.admincmd.commands.PlayerCommands;
 import com.admincmd.admincmd.commands.ServerCommands;
+import com.admincmd.admincmd.commands.SpawnCommands;
 import com.admincmd.admincmd.commands.WorldCommands;
 import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.database.DatabaseFactory;
 import com.admincmd.admincmd.events.PlayerCommandListener;
 import com.admincmd.admincmd.events.PlayerDamageListener;
+import com.admincmd.admincmd.events.PlayerDeathListener;
 import com.admincmd.admincmd.events.PlayerJoinListener;
 import com.admincmd.admincmd.events.WorldListener;
 import com.admincmd.admincmd.home.HomeManager;
@@ -48,12 +50,15 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        INSTANCE = this;
         long start = System.currentTimeMillis();
+
+        INSTANCE = this;
+
         Config.load();
         Locales.load();
+        
         DatabaseFactory.init();
-
+        
         PlayerManager.init();
         SpawnManager.init();
         WorldManager.init();
@@ -75,7 +80,7 @@ public class Main extends JavaPlugin {
         PlayerManager.save();
         WorldManager.save();
         HomeManager.save();
-        
+
         try {
             DatabaseFactory.getDatabase().closeConnection();
         } catch (SQLException ex) {
@@ -100,6 +105,7 @@ public class Main extends JavaPlugin {
         manager.registerClass(HomeCommands.class);
         manager.registerClass(WorldCommands.class);
         manager.registerClass(MobCommands.class);
+        manager.registerClass(SpawnCommands.class);
     }
 
     private void registerEvents() {
@@ -107,6 +113,7 @@ public class Main extends JavaPlugin {
         EventManager.registerEvent(PlayerCommandListener.class);
         EventManager.registerEvent(WorldListener.class);
         EventManager.registerEvent(PlayerDamageListener.class);
+        EventManager.registerEvent(PlayerDeathListener.class);
     }
 
 }

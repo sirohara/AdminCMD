@@ -18,12 +18,36 @@
  */
 package com.admincmd.admincmd.utils;
 
+import com.admincmd.admincmd.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class Utils {
-
+    
     public static String replaceColors(String string) {
         return string.replaceAll("&((?i)[0-9a-fk-or])", "§$1");
     }
     
+    public static void respawn(final Player p) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Object nmsPlayer = p.getClass().getMethod("getHandle").invoke(p);
+                    Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+                    Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+                    for (Object o : enumClass.getEnumConstants()) {
+                        if (o.toString().equals("PERFORM_RESPAWN")) {
+                            packet = packet.getClass().getConstructor(enumClass).newInstance(o);
+                        }
+                    }
+                    Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+                    con.getClass().getMethod("a", packet.getClass()).invoke(con, packet);
+                } catch (Throwable t) {
+                    ACLogger.severe("Error sending respawn packet!", t);
+                }
+            }
+        });
+    }
     
 }
