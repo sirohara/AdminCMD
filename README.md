@@ -1,6 +1,6 @@
-![Logo](http://img401.imageshack.us/img401/6918/admincmdlogobig.png)
+![Logo](http://img401.imageshack.us/img401/6918/admincmdlogobig.png) Unleash the power of Bukkit!
 
-Unleash the power of Bukkit!
+![Build Status] (https://travis-ci.org/AdminCMD/AdminCMD.svg)
 
 Informations
 ------------
