@@ -12,6 +12,13 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     
+    <distributionManagement>
+        <repository>
+            <id>AdminCMDRepo.write</id>
+            <url>${AdminCMDRepo.write.url}</url> 
+        </repository>
+    </distributionManagement>
+    
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>${project.name}</finalName>
@@ -83,6 +90,10 @@
         <repository>
             <id>Sonatype-public</id>
             <url>http://oss.sonatype.org/content/groups/public/</url>
-        </repository>                   
+        </repository>   
+        <repository>
+            <id>AdminCMDRepo.read</id>
+            <url>${AdminCMDRepo.read.url}</url>
+        </repository>               
     </repositories>
 </project>
