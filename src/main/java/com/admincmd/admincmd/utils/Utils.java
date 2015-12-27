@@ -28,6 +28,10 @@ public class Utils {
         return string.replaceAll("&((?i)[0-9a-fk-or])", "§$1");
     }
     
+    public static String removeColors(String string) {
+        return string.replaceAll("§((?i)[0-9a-fk-or])", "");
+    }
+    
     public static void respawn(final Player p) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
             @Override
