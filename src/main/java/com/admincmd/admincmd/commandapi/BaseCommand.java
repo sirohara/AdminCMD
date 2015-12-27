@@ -46,28 +46,28 @@ public @interface BaseCommand {
     /**
      * Determines the command name.
      *
-     * @return
+     * @return the command
      */
     String command();
 
     /**
      * Determines the permission which is needed to execute this command.
      *
-     * @return
+     * @return the permission
      */
     String permission() default "";
 
     /**
      * Used to determine a certain subcommand this method is for.
      *
-     * @return
+     * @return the subcommand
      */
     String subCommand() default "";
 
     /**
-     * Used to add any aliases for this command.
+     * Used to add any aliases for this command. Seperated by a comma
      *
-     * @return
+     * @return the aliases
      */
     String aliases() default "";
 

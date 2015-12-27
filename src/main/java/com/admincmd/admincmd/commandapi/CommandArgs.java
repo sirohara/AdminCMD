@@ -83,8 +83,8 @@ public class CommandArgs {
     /**
      * Parses an argument to a String
      *
-     * @param index
-     * @return
+     * @param index the position of the argument
+     * @return the argument
      */
     public String getString(int index) {
         return args.get(index);
@@ -93,8 +93,8 @@ public class CommandArgs {
     /**
      * Parses an argument to an integer
      *
-     * @param index
-     * @return
+     * @param index the position of the argument
+     * @return the argument as int
      */
     public int getInt(int index) {
         return Integer.valueOf(args.get(index));
@@ -103,8 +103,8 @@ public class CommandArgs {
     /**
      * parses an argument to a double
      *
-     * @param index
-     * @return
+     * @param index the position of the argument
+     * @return the argument as double
      */
     public double getDouble(int index) {
         return Double.valueOf(args.get(index));
@@ -114,8 +114,8 @@ public class CommandArgs {
      * Parses an argument to a Player on the server. Throws a
      * NullPointerException if the player is not online.
      *
-     * @param index
-     * @return
+     * @param index the position of the argument
+     * @return the argument as Player
      */
     public Player getPlayer(int index) {
         return Bukkit.getPlayer(args.get(index));
@@ -124,7 +124,7 @@ public class CommandArgs {
     /**
      * Checks if the argument at the index is a Player on the server.
      *
-     * @param index
+     * @param index the position of the argument
      * @return true if player is found
      */
     public boolean isPlayer(int index) {
@@ -134,7 +134,7 @@ public class CommandArgs {
     /**
      * Checks if the argument at the index is an integer
      *
-     * @param index
+     * @param index the position of the argument
      * @return true if it is a number
      */
     public boolean isInteger(int index) {
@@ -149,7 +149,7 @@ public class CommandArgs {
     /**
      * Checks if the argument at the index is a double
      *
-     * @param index
+     * @param index the position of the argument
      * @return true if it is a number
      */
     public boolean isDouble(int index) {
@@ -164,7 +164,7 @@ public class CommandArgs {
     /**
      * Checks if the argument at the index is a loaded World
      *
-     * @param index
+     * @param index the position of the argument
      * @return true if it is a world name
      */
     public boolean isWorld(int index) {
@@ -174,7 +174,7 @@ public class CommandArgs {
     /**
      * Gets a world by name at the given index
      *
-     * @param index
+     * @param index the position of the argument
      * @return {@link com.admincmd.admincmd.world.ACWorld}
      */
     public ACWorld getWorld(int index) {
@@ -231,7 +231,7 @@ public class CommandArgs {
         /**
          * parses the value to an Integer
          *
-         * @return
+         * @return the value as Integer
          */
         public int getInt() {
             return Integer.valueOf(value);
@@ -240,7 +240,7 @@ public class CommandArgs {
         /**
          * parses the value to a double
          *
-         * @return
+         * @return the value as Double
          */
         public double getDouble() {
             return Double.valueOf(value);

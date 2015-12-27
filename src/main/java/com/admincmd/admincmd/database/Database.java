@@ -80,8 +80,8 @@ public abstract class Database {
     /**
      * Gets the connection
      *
-     * @return
-     * @throws SQLException
+     * @return the database connection
+     * @throws SQLException if connection failed
      */
     public final Connection getConnection() throws SQLException {
         if (conn == null || conn.isClosed()) {
@@ -93,7 +93,7 @@ public abstract class Database {
     /**
      * Used to reactivate the connection
      *
-     * @param conn
+     * @param conn if connection failed
      */
     public final void setConnection(Connection conn) {
         this.conn = conn;
@@ -102,7 +102,7 @@ public abstract class Database {
     /**
      * closes the actual connection to the database
      *
-     * @throws SQLException
+     * @throws SQLException if connection can't be closed.
      */
     public final void closeConnection() throws SQLException {
         if (conn != null && !conn.isClosed()) {
@@ -113,8 +113,8 @@ public abstract class Database {
     /**
      * closes a statement
      *
-     * @param s
-     * @throws SQLException
+     * @param s the statement to close
+     * @throws SQLException if the statement can't be closed
      */
     public final void closeStatement(Statement s) throws SQLException {
         if (s != null) {
@@ -126,8 +126,8 @@ public abstract class Database {
     /**
      * closes a resultset
      *
-     * @param rs
-     * @throws SQLException
+     * @param rs the resultset to close
+     * @throws SQLException if the ResultSet can't be closed
      */
     public final void closeResultSet(ResultSet rs) throws SQLException {
         if (rs != null) {
@@ -138,8 +138,8 @@ public abstract class Database {
     /**
      * creates a new statement
      *
-     * @return
-     * @throws SQLException
+     * @return The created statement
+     * @throws SQLException if Statement can't be created
      */
     public final Statement getStatement() throws SQLException {
         return getConnection().createStatement();
@@ -148,9 +148,9 @@ public abstract class Database {
     /**
      * creates a new PreparedStatement
      *
-     * @param query
-     * @return
-     * @throws SQLException
+     * @param query The query for the prepared statement
+     * @return the PreparedStatement
+     * @throws SQLException if the Statement can't be created.
      */
     public final PreparedStatement getPreparedStatement(String query) throws SQLException {
         return getConnection().prepareStatement(query);
@@ -159,8 +159,8 @@ public abstract class Database {
     /**
      * Creates a new Statement and executes it
      *
-     * @param query
-     * @throws SQLException
+     * @param query the query to execute
+     * @throws SQLException if statement can't be executed
      */
     public final void executeStatement(String query) throws SQLException {
         Statement s = getStatement();
@@ -171,7 +171,7 @@ public abstract class Database {
     /**
      * Reactivates the connection to the Database.
      *
-     * @throws SQLException
+     * @throws SQLException if connection failed
      */
     public abstract void reactivateConnection() throws SQLException;
 

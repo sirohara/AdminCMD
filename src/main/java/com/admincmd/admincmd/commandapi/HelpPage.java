@@ -32,7 +32,7 @@ public class HelpPage {
     /**
      * Creates a new helppage for the provided command.
      *
-     * @param command
+     * @param command the command this HelpPage is for
      */
     public HelpPage(String command) {
         this.command = command;
@@ -56,8 +56,8 @@ public class HelpPage {
      * Automatically gets all help texts from the given arguments of the
      * {@link com.admincmd.admincmd.utils.Locales} and prepares the message.
      *
-     * @param command
-     * @param arguments
+     * @param command the command this HelpPage is for
+     * @param arguments the arguments to search for
      */
     public HelpPage(String command, String... arguments) {
         this.command = command;
@@ -101,16 +101,16 @@ public class HelpPage {
     /**
      * Manually add a message to a given argument.
      *
-     * @param argument
-     * @param description
+     * @param argument the argument the message is for
+     * @param description the message
      */
     public final void addPage(String argument, String description) {
         helpPages.add(new CommandHelp(command + argument, description));
     }
 
     /**
-     * Checks if the sender wants to see the help by typing /<command> help or
-     * /<command> ? and sends the text if he did.
+     * Checks if the sender wants to see the help by typing /command help or
+     * /command ? and sends the text if he did.
      *
      * @param s the commandsender
      * @param args the arguments
