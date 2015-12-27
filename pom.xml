@@ -201,6 +201,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>3.6.4</version>
+        </dependency>
     </dependencies>
     
     <repositories>
@@ -219,6 +224,10 @@
         <repository>
             <id>AdminCMDRepo.read</id>
             <url>${AdminCMDRepo.read.url}</url>
-        </repository>               
+        </repository> 
+        <repository>
+            <id>ProtocolLib-Repo</id>
+            <url>http://repo.dmulloy2.net/content/groups/public/</url>
+        </repository>              
     </repositories>
 </project>

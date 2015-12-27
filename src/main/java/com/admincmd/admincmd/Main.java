@@ -21,6 +21,7 @@ package com.admincmd.admincmd;
 import com.admincmd.admincmd.addon.AddonManager;
 import com.admincmd.admincmd.commandapi.CommandManager;
 import com.admincmd.admincmd.commands.HomeCommands;
+import com.admincmd.admincmd.commands.MaintenanceCommands;
 import com.admincmd.admincmd.commands.MobCommands;
 import com.admincmd.admincmd.commands.PlayerCommands;
 import com.admincmd.admincmd.commands.ServerCommands;
@@ -29,6 +30,7 @@ import com.admincmd.admincmd.commands.WorldCommands;
 import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.database.DatabaseFactory;
+import com.admincmd.admincmd.events.PingListener;
 import com.admincmd.admincmd.events.PlayerCommandListener;
 import com.admincmd.admincmd.events.PlayerDamageListener;
 import com.admincmd.admincmd.events.PlayerDeathListener;
@@ -45,16 +47,16 @@ import java.sql.SQLException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
-
+    
     private static Main INSTANCE;
     private final CommandManager manager = new CommandManager(this);
-
+    
     @Override
     public void onEnable() {
         long start = System.currentTimeMillis();
-
+        
         INSTANCE = this;
-
+        
         Config.load();
         Locales.load();
         
@@ -64,30 +66,34 @@ public class Main extends JavaPlugin {
         SpawnManager.init();
         WorldManager.init();
         HomeManager.init();
-
+        
         registerCommands();
         registerEvents();
-
+        
+        if (checkForProtocolLib()) {
+            ACLogger.info("ProtocolLib was found. Maintenance feature is available.");
+        }
+        
         AddonManager.loadAddons();
-
+        
         long timeTook = System.currentTimeMillis() - start;
         ACLogger.info("Plugin start took " + timeTook + " miliseconds");
     }
-
+    
     @Override
     public void onDisable() {
         AddonManager.disableAddons();
-
+        
         PlayerManager.save();
         WorldManager.save();
         HomeManager.save();
-
+        
         try {
             DatabaseFactory.getDatabase().closeConnection();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
+        
         System.gc();
     }
 
@@ -99,7 +105,11 @@ public class Main extends JavaPlugin {
     public static Main getInstance() {
         return INSTANCE;
     }
-
+    
+    public boolean checkForProtocolLib() {
+        return getServer().getPluginManager().getPlugin("ProtocolLib") != null;
+    }
+    
     private void registerCommands() {
         manager.registerClass(ServerCommands.class);
         manager.registerClass(PlayerCommands.class);
@@ -107,8 +117,9 @@ public class Main extends JavaPlugin {
         manager.registerClass(WorldCommands.class);
         manager.registerClass(MobCommands.class);
         manager.registerClass(SpawnCommands.class);
+        manager.registerClass(MaintenanceCommands.class);
     }
-
+    
     private void registerEvents() {
         EventManager.registerEvent(PlayerJoinListener.class);
         EventManager.registerEvent(PlayerCommandListener.class);
@@ -116,6 +127,7 @@ public class Main extends JavaPlugin {
         EventManager.registerEvent(PlayerDamageListener.class);
         EventManager.registerEvent(PlayerDeathListener.class);
         EventManager.registerEvent(SignListener.class);
+        new PingListener().addPingResponsePacketListener();
     }
-
+    
 }

@@ -39,7 +39,8 @@ public class PlayerDeathListener extends BukkitListener {
     @EventHandler
     public void onDeath(final PlayerDeathEvent e) {
         if (Config.DIRECT_RESPAWN.getBoolean()) {
-            Utils.respawn(e.getEntity());
+            //TODO: Find correct packet!
+            //Utils.respawn(e.getEntity());
         }
     }
 

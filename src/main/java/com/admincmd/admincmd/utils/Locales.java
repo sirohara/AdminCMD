@@ -41,6 +41,8 @@ public enum Locales {
     HELP("Help.Help", "Help"),
     HELP_SERVER_ACRELOAD_1("Help.Server.Reload.1", "Reloads the whole server."),
     HELP_SERVER_ACRELOAD_2("Help.Server.Reload.2", "Reloads a single plugin."),
+    HELP_MAINTENANCE_MAINTENANCE_1("Help.Maintenance.Maintenance.1", "Turns the maintenance mode on"),
+    HELP_MAINTENANCE_MAINTENANCE_2("Help.Maintenance.Maintenance.2", "Turns the maintenance mode off"),
     HELP_PLAYER_CW_1("Help.Player.CW.1", "Toggles commandwatcher"),
     HELP_PLAYER_CW_2("Help.Player.CW.2", "Toggles commandwatcher for the player"),
     HELP_PLAYER_FLY_1("Help.Player.Fly.1", "Toggles flying"),
@@ -95,8 +97,9 @@ public enum Locales {
     WORLD_TIME_SET("World.Time.Set", "The time in world %world% has been set to %time%."),
     WORLD_DAY_SET("World.Day.Set", "The time in world %world% has been set to daytime."),
     WORLD_NIGHT_SET("World.Night.Set", "The time in world %world% has been set to nighttime."),
-    MOB_KILLALL("Mob.Killall" , "%num% mobs have been killed in world %world%."),
-    MOB_SPAWNED("Mob.Spawn", "%num% mobs have been spawned at the location you are looking too.");
+    MOB_KILLALL("Mob.Killall", "%num% mobs have been killed in world %world%."),
+    MOB_SPAWNED("Mob.Spawn", "%num% mobs have been spawned at the location you are looking too."),
+    MAINTENANCE_TOGGLED("Maintenance.Toggled", "Maintenance is now %status%.");
 
     private Locales(String path, Object val) {
         this.path = path;

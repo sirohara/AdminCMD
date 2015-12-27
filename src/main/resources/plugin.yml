@@ -3,3 +3,4 @@ name: ${project.artifactId}
 version: ${project.version} (BUILD ${git.build.time})
 authors: [Balor, TheJeterLP, JKMalan, BossLetsPlays]
 description: This plugin implements the basic commands for running a server.
+softdepend: [ProtocolLib, Vault]

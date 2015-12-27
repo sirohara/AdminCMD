@@ -21,18 +21,39 @@ package com.admincmd.admincmd.events;
 import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.BukkitListener;
+import com.admincmd.admincmd.utils.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 public class PlayerJoinListener extends BukkitListener {
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onLogin(PlayerLoginEvent event) {
+        if (!Config.MAINTENANCE_ENABLED.getBoolean()) {
+            return;
+        }
+
+        if (!event.getPlayer().hasPermission("admincmd.maintenance.bypass")) {
+            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, Config.MAINTENANCE_KICKMESSAGE.getString());
+        }
+    }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         if (!PlayerManager.hasPlayedBefore(e.getPlayer())) {
             PlayerManager.insert(e.getPlayer());
+        }
+
+        if (Config.MAINTENANCE_ENABLED.getBoolean()) {
+            if (!e.getPlayer().hasPermission("admincmd.maintenance.bypass")) {
+                e.getPlayer().kickPlayer(Config.MAINTENANCE_KICKMESSAGE.getString());
+                return;
+            }
         }
 
         final BukkitPlayer bp = PlayerManager.getPlayer(e.getPlayer());
