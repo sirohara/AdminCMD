@@ -1,13 +1,12 @@
-<a href="http://admincmd.com"><img style="display:block; margin: 0 auto;" src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo"></a>
+<a href="http://admincmd.com"><img src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo"></a>
 
-<a href="https://travis-ci.org/AdminCMD/AdminCMD"><img style="display:block; margin: 0 auto;" src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
+<a href="https://travis-ci.org/AdminCMD/AdminCMD"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
 
-<div style="text-align:center">
     <h2>Unleash the power of Bukkit!</h2>
 
     <h2>Informations</h2>
     <hr>
-    <ul style="text-align:left">
+    <ul>
         <li> Blog : http://www.admincmd.com</li>
         <li> Wiki : http://wiki.admincmd.com</li>
         <li> Issues: http://bug.admincmd.com</li>
@@ -28,7 +27,7 @@
 
     <h2>Developers</h2>
     <hr>
-    <ul style="text-align:left">
+    <ul>
         <li><a href="https://github.com/Belphemur/">Belphemur</a></li>
         <li><a href="https://github.com/TheJeterLP/">TheJeterLP</a></li>
         <li><a href="https://github.com/BossLetsPlays/">BossLetsPlays</a></li>
@@ -37,10 +36,9 @@
 
     <h2>Thanks to</h2>
     <hr>
-    <ul style="text-align:left">
+    <ul>
         <li> The whole <a href="https://github.com/RedThirdDivision">RedThirdDivision</a> for helping us out!</li>
         <li> <a href="https://github.com/Lathanael">Lathanael</a> for helping so much out on the Bukkit version!</li>
     </ul>
-</div>
 
 
