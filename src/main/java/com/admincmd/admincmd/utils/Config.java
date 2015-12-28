@@ -35,6 +35,7 @@ public enum Config {
     GLOBAL_SPAWNS("Options.WorldSpawns", false, "Set to true if you want one spawn for every world. false means one spawn for the whole server."),
     DIRECT_RESPAWN("Options.DirectRespawn", true, "Set to false if you want players to manually click the respawn button."),
     DEBUG("Options.Debug", false, "Enables debugging chat."),
+    MESSAGE_FORMAT("Player.Format", "%prefix%name%suffix", "Here you can add the prefix or suffixes to playernames."),
     MAINTENANCE_ENABLED("Maintenance.Enabled", false, "Enables Maintenance."),
     MAINTENANCE_MOTD_LINE_1("Maintenance.Motd.Line1", "&c&nServer is in Maintenance", "Maintenance motd line 1"),
     MAINTENANCE_MOTD_LINE_2("Maintenance.Motd.Line2", "&eWe are actually working on the server!", "Maintenance motd line 2"),

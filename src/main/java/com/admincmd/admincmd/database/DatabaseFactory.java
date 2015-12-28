@@ -59,7 +59,8 @@ public class DatabaseFactory {
                         + "`commandwatcher` BOOLEAN,"
                         + "`spy` BOOLEAN,"
                         + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN"
+                        + "`muted` BOOLEAN,"
+                        + "`nickname` varchar(64) DEFAULT 'none'"
                         + ");";
                 HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
                         + "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -85,7 +86,8 @@ public class DatabaseFactory {
                         + "`commandwatcher` BOOLEAN,"
                         + "`spy` BOOLEAN,"
                         + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN"
+                        + "`muted` BOOLEAN,"
+                        + "`nickname` varchar(64) DEFAULT 'none'"
                         + ");";
                 HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
                         + "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"

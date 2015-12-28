@@ -28,6 +28,7 @@ public abstract class SQLPlayer {
 
     private final UUID uuid;
     private boolean fly, god, invisible, cmdwatcher, spy, muted;
+    private String nickname;
     private int id;
     private Database db;
 
@@ -45,6 +46,7 @@ public abstract class SQLPlayer {
                 boolean cw = rs.getBoolean("commandwatcher");
                 boolean spy = rs.getBoolean("spy");
                 boolean muted = rs.getBoolean("muted");
+                String nickname = rs.getString("nickname");
                 int id = rs.getInt("ID");
 
                 this.god = god;
@@ -53,9 +55,10 @@ public abstract class SQLPlayer {
                 this.cmdwatcher = cw;
                 this.spy = spy;
                 this.muted = muted;
+                this.nickname = nickname;
                 this.id = id;
             }
-
+            
             db.closeResultSet(rs);
             db.closeStatement(s);
         } catch (SQLException ex) {
@@ -111,21 +114,30 @@ public abstract class SQLPlayer {
     public void setMuted(boolean muted) {
         this.muted = muted;
     }
-    
+
     public int getId() {
         return id;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public void update() {
         try {
-            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ? WHERE `id` = ?;");
+            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ? WHERE `id` = ?;");
             st.setBoolean(1, this.god);
             st.setBoolean(2, this.invisible);
             st.setBoolean(3, this.cmdwatcher);
             st.setBoolean(4, this.spy);
             st.setBoolean(5, this.fly);
             st.setBoolean(6, this.muted);
-            st.setInt(7, this.id);
+            st.setString(7, this.nickname);
+            st.setInt(8, this.id);
             st.executeUpdate();
             db.closeStatement(st);
         } catch (SQLException ex) {

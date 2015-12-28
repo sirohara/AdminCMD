@@ -28,6 +28,7 @@ import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
+import com.admincmd.admincmd.utils.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -70,7 +71,7 @@ public class PlayerCommands {
                 String msg = Locales.PLAYER_GAMEMODE_CHANGED.getString().replaceAll("%status%", gm.toString());
                 Messager.sendMessage(target, msg, Messager.MessageType.INFO);
 
-                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", target.getDisplayName()).replaceAll("%status%", gm.toString());
+                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%status%", gm.toString());
                 Messager.sendMessage(sender, msg2, Messager.MessageType.INFO);
                 return CommandResult.SUCCESS;
             } else if (args.getLength() == 3) {
@@ -83,7 +84,7 @@ public class PlayerCommands {
                 String msg = Locales.PLAYER_GAMEMODE_CHANGED.getString().replaceAll("%status%", gm.toString());
                 Messager.sendMessage(target, msg, Messager.MessageType.INFO);
 
-                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", target.getDisplayName()).replaceAll("%status%", gm.toString());
+                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%status%", gm.toString());
                 Messager.sendMessage(sender, msg2, Messager.MessageType.INFO);
                 return CommandResult.SUCCESS;
             } else {
@@ -160,7 +161,7 @@ public class PlayerCommands {
             p.setGod(!p.isGod());
 
             String s = p.isGod() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
-            String msg = Locales.PLAYER_GOD_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", target.getDisplayName());
+            String msg = Locales.PLAYER_GOD_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
             String msg2 = Locales.PLAYER_GOD_TOGGLED.getString().replaceAll("%status%", s);
             Messager.sendMessage(target, msg2, Messager.MessageType.INFO);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
@@ -199,7 +200,7 @@ public class PlayerCommands {
 
             target.setAllowFlight(p.isFly());
             String s = p.isFly() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
-            String msg = Locales.PLAYER_FLY_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", target.getDisplayName());
+            String msg = Locales.PLAYER_FLY_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
             String msg2 = Locales.PLAYER_FLY_TOGGLED.getString().replaceAll("%status%", s);
             Messager.sendMessage(target, msg2, Messager.MessageType.INFO);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
@@ -234,7 +235,7 @@ public class PlayerCommands {
             BukkitPlayer p = PlayerManager.getPlayer(target);
             p.setCmdwatcher(!p.isCmdwatcher());
             String s = p.isFly() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
-            String msg = Locales.PLAYER_CW_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", target.getDisplayName());
+            String msg = Locales.PLAYER_CW_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
             String msg2 = Locales.PLAYER_CW_TOGGLED.getString().replaceAll("%status%", s);
             Messager.sendMessage(target, msg2, Messager.MessageType.INFO);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);

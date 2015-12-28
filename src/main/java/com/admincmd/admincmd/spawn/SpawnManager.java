@@ -56,7 +56,7 @@ public class SpawnManager {
     }
 
     public static Location getSpawn(Player p) {
-        if (Config.GLOBAL_SPAWNS.getBoolean()) {
+        if (!Config.GLOBAL_SPAWNS.getBoolean()) {
             if (spawn != null) {
                 return spawn;
             } else {
@@ -71,11 +71,11 @@ public class SpawnManager {
     public static void setSpawn(Player p) {
         if (!Config.GLOBAL_SPAWNS.getBoolean()) {
             if (spawn == null) {
-                createSpawn(spawn);
+                createSpawn(p.getLocation());
             } else {
                 try {
                     PreparedStatement st = db.getPreparedStatement("UPDATE `ac_spawn` SET `location` = ?;");
-                    st.setString(1, LocationSerialization.serialLocation(spawn));
+                    st.setString(1, LocationSerialization.serialLocation(p.getLocation()));
                     st.executeUpdate();
                     db.closeStatement(st);
                     spawn = p.getLocation();
@@ -90,7 +90,7 @@ public class SpawnManager {
 
     private static void createSpawn(Location s) {
         try {
-            PreparedStatement pst = db.getPreparedStatement("INSERT INTO `ac_spawna` (`location`) VALUES (?);");
+            PreparedStatement pst = db.getPreparedStatement("INSERT INTO `ac_spawn` (`location`) VALUES (?);");
             pst.setString(1, LocationSerialization.serialLocation(s));
             pst.executeUpdate();
             db.closeStatement(pst);

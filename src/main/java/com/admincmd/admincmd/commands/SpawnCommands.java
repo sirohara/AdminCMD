@@ -27,6 +27,7 @@ import com.admincmd.admincmd.commandapi.HelpPage;
 import com.admincmd.admincmd.spawn.SpawnManager;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
+import com.admincmd.admincmd.utils.Utils;
 import org.bukkit.entity.Player;
 
 @CommandHandler
@@ -74,7 +75,7 @@ public class SpawnCommands {
             Player t = f.getPlayer();
             t.teleport(SpawnManager.getSpawn(t));
             Messager.sendMessage(t, Locales.SPAWN_TP, Messager.MessageType.INFO);
-            Messager.sendMessage(sender, Locales.SPAWN_TP_OTHER.getString().replaceAll("%player%", t.getDisplayName()), Messager.MessageType.INFO);
+            Messager.sendMessage(sender, Locales.SPAWN_TP_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(t)), Messager.MessageType.INFO);
             return CommandResult.SUCCESS;
         } else {
             return CommandResult.ERROR;

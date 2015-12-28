@@ -43,8 +43,10 @@ import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.spawn.SpawnManager;
 import com.admincmd.admincmd.utils.ACLogger;
 import com.admincmd.admincmd.utils.EventManager;
+import com.admincmd.admincmd.utils.Vault;
 import com.admincmd.admincmd.world.WorldManager;
 import java.sql.SQLException;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
@@ -72,7 +74,14 @@ public class Main extends JavaPlugin {
         registerEvents();
         
         if (checkForProtocolLib()) {
-            ACLogger.info("ProtocolLib was found. Maintenance feature is available.");
+            ACLogger.info("Hooked into ProtocolLib.");
+        }
+        
+        if (checkForVault()) {
+            if (!Vault.setupChat()) {
+                ACLogger.severe("Vault could not be set up.");
+            }
+            ACLogger.info("Hooked into Vault.");
         }
         
         AddonManager.loadAddons();
@@ -108,7 +117,13 @@ public class Main extends JavaPlugin {
     }
     
     public boolean checkForProtocolLib() {
-        return getServer().getPluginManager().getPlugin("ProtocolLib") != null;
+        Plugin pl = getServer().getPluginManager().getPlugin("ProtocolLib");
+        return pl != null && pl.isEnabled();
+    }
+    
+    public boolean checkForVault() {
+        Plugin pl = getServer().getPluginManager().getPlugin("Vault");
+        return pl != null && pl.isEnabled();
     }
     
     private void registerCommands() {

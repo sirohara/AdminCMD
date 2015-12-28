@@ -60,14 +60,20 @@ public class SignListener extends BukkitListener {
         }
 
         for (int i = 0; i < lines.length; i++) {
-            ChatColor color;
+            ChatColor color = null;
             if (i == 0) {
                 color = ChatColor.BLUE;
-            } else {
+            } else if (i == 1) {
                 color = ChatColor.GOLD;
             }
 
-            String line = color + lines[i];
+            String line;
+            if (color != null) {
+                line = color + lines[i];
+            } else {
+                line = lines[i];
+            }
+
             if (line.length() > 16) {
                 e.getBlock().breakNaturally();
                 Messager.sendMessage(p, "The line is too long to fit on the sign!", Messager.MessageType.ERROR);
@@ -105,10 +111,8 @@ public class SignListener extends BukkitListener {
             return;
         }
 
-        for (int i = 1; i < lines.size(); i++) {
-            String command = lines.get(i);
-            e.getPlayer().performCommand(command);
-        }
+        String command = lines.get(1);
+        e.getPlayer().performCommand(command.replaceFirst("/", ""));
     }
 
 }
