@@ -234,8 +234,8 @@
             <url>http://oss.sonatype.org/content/groups/public/</url>
         </repository>   
         <repository>
-            <id>AdminCMDRepo.read</id>
-            <url>${AdminCMDRepo.read.url}</url>
+            <id>AdminCMDRepo</id>
+            <url>https://mymavenrepo.com/repo/Dn0x5WN5HvP6PyylqIxn/</url>
         </repository> 
         <repository>
             <id>ProtocolLib-Repo</id>
