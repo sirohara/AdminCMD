@@ -34,7 +34,7 @@ import org.bukkit.entity.Player;
 @CommandHandler
 public class MaintenanceCommands {
 
-    private final HelpPage reload = new HelpPage("maintenance", "on", "off");
+    private final HelpPage maintenance = new HelpPage("maintenance", "on", "off");
 
     @BaseCommand(command = "maintenance", sender = BaseCommand.Sender.CONSOLE, permission = "admincmd.maintenance.enable")
     public CommandResult executeConsole(CommandSender sender, CommandArgs args) {
@@ -43,7 +43,7 @@ public class MaintenanceCommands {
 
     @BaseCommand(command = "maintenance", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.maintenance.enable")
     public CommandResult executePlayer(CommandSender sender, CommandArgs args) {
-        if (reload.sendHelp(sender, args)) {
+        if (maintenance.sendHelp(sender, args)) {
             return CommandResult.SUCCESS;
         }
 

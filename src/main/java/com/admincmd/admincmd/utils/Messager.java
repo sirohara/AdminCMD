@@ -25,7 +25,8 @@ public class Messager {
 
     public enum MessageType {
         INFO(Locales.MESSAGE_PREFIX_INFO.getString()),
-        ERROR(Locales.MESSAGE_PREFIX_ERROR.getString());
+        ERROR(Locales.MESSAGE_PREFIX_ERROR.getString()),
+        NONE("");
             
         private final String prefix;
 

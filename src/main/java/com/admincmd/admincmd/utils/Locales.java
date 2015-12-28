@@ -73,6 +73,9 @@ public enum Locales {
     HELP_WORLD_TIME_5("Help.World.Time.5", "Unpauses the time in your current world or the given world"),
     HELP_MOB_KILLALL_1("Help.Mob.Killall.1", "Kills all the mobs in your or the given world"),
     HELP_MOB_SPAWNMOB_1("Help.Mob.Spawnmob.1", "Spawns the given mob the given amount times to the Locfation you are looking to"),
+    HELP_SPAWN_SETSPAWN_1("Help.Spawn.Setspawn.1", "Sets the spawnpoint to your location."),
+    HELP_SPAWN_SPAWN_1("Help.Spawn.Spawn.1", "Teleports you to the spawnpoint"),
+    HELP_SPAWN_SPAWN_2("Help.Spawn.Spawn.2", "Teleports the given player to the spawnpoint"),
     HOME_HOME("Home.Home", "Homes"),
     HOME_SET("Home.Set", "The home was added."),
     HOME_DELETED("Home.Deleted", "The home %home% was deleted."),
@@ -99,7 +102,10 @@ public enum Locales {
     WORLD_NIGHT_SET("World.Night.Set", "The time in world %world% has been set to nighttime."),
     MOB_KILLALL("Mob.Killall", "%num% mobs have been killed in world %world%."),
     MOB_SPAWNED("Mob.Spawn", "%num% mobs have been spawned at the location you are looking too."),
-    MAINTENANCE_TOGGLED("Maintenance.Toggled", "Maintenance is now %status%.");
+    MAINTENANCE_TOGGLED("Maintenance.Toggled", "Maintenance is now %status%."),
+    SPAWN_SET("Spawn.Set", "The spawnpoint has been set to your location."),
+    SPAWN_TP("Spawn.Teleport.You", "Teleported to the spawnpoint."),
+    SPAWN_TP_OTHER("Spawn.Teleport.Other", "%player% was teleported to the spawnpoint.");
 
     private Locales(String path, Object val) {
         this.path = path;

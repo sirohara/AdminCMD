@@ -21,7 +21,6 @@ package com.admincmd.admincmd.events;
 import com.admincmd.admincmd.spawn.SpawnManager;
 import com.admincmd.admincmd.utils.BukkitListener;
 import com.admincmd.admincmd.utils.Config;
-import com.admincmd.admincmd.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,8 +38,7 @@ public class PlayerDeathListener extends BukkitListener {
     @EventHandler
     public void onDeath(final PlayerDeathEvent e) {
         if (Config.DIRECT_RESPAWN.getBoolean()) {
-            //TODO: Find correct packet!
-            //Utils.respawn(e.getEntity());
+            e.getEntity().spigot().respawn();
         }
     }
 
