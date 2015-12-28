@@ -30,6 +30,7 @@ import com.admincmd.admincmd.commands.WorldCommands;
 import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.database.DatabaseFactory;
+import com.admincmd.admincmd.events.ChatListener;
 import com.admincmd.admincmd.events.PingListener;
 import com.admincmd.admincmd.events.PlayerCommandListener;
 import com.admincmd.admincmd.events.PlayerDamageListener;
@@ -127,6 +128,7 @@ public class Main extends JavaPlugin {
         EventManager.registerEvent(PlayerDamageListener.class);
         EventManager.registerEvent(PlayerDeathListener.class);
         EventManager.registerEvent(SignListener.class);
+        EventManager.registerEvent(ChatListener.class);
         new PingListener().addPingResponsePacketListener();
     }
     
