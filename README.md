@@ -25,6 +25,7 @@
     <h2>Contributing</h2>
     <hr>
     <p>If you want to contribute, please read the <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>
+    <p>Here is a list of stuff that needs to be done: <a href="TODO.md">TODO.md</a></p>
 
     <h2>Developers</h2>
     <hr>
