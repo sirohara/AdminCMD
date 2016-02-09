@@ -2,7 +2,7 @@ Commands
 ------------
 
 * ~~/heal~~ (jkmalan)
-* /ip
+* ~~/ip~~ (jkmalan)
 * /invsee
 * /lightning
 * /list

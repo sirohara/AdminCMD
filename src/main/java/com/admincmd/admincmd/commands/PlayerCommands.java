@@ -43,6 +43,7 @@ public class PlayerCommands {
     private final HelpPage enderchest = new HelpPage("enderchest", "", "<-p player>");
     private final HelpPage gm = new HelpPage("gamemode", "", "<-p player>", "<0|1|2|3>", "<-p player> <0|1|2|3>");
     private final HelpPage heal = new HelpPage("heal", "", "<-p player>");
+    private final HelpPage ip = new HelpPage("ip", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -277,6 +278,38 @@ public class PlayerCommands {
         }
 
         return CommandResult.ERROR;
+    }
+
+    @BaseCommand(command = "ip", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.ip", aliases = "")
+    public CommandResult executeIp(Player sender, CommandArgs args) {
+        if (ip.sendHelp(sender, args)) {
+            return CommandResult.NO_PERMISSION_OTHER;
+        }
+
+        if (args.isEmpty()) {
+            String ip = sender.getAddress().getAddress().toString();
+            String msg = Locales.PLAYER_IP_SELF.getString().replaceAll("%ip", ip);
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.ip.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            String ip = target.getAddress().getAddress().toString();
+            String msg = Locales.PLAYER_IP_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%ip%", ip);
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        return CommandResult.ERROR;
+
     }
 
 }
