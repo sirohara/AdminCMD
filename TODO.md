@@ -7,12 +7,13 @@ Commands
 * /lightning
 * /list
 * ~~/location~~ (jkmalan)
-* /msg
+* ~~/msg~~ (jkmalan)
+  * ~~/reply~~
 * /mute
 * /nick
 * /skull
 * /slap
-* /spy
+* ~~/spy~~ (jkmalan) (Might be better implemented with an event)
 * /sudo
 * /uuid
 * /unmute

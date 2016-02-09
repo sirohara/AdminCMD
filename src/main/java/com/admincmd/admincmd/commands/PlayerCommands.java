@@ -30,10 +30,13 @@ import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Utils;
 import com.comphenix.net.sf.cglib.core.Local;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @CommandHandler
 public class PlayerCommands {
@@ -47,6 +50,9 @@ public class PlayerCommands {
     private final HelpPage ip = new HelpPage("ip", "", "<-p player>");
     private final HelpPage openinv = new HelpPage("openinv", "", "<-p player>");
     private final HelpPage loc = new HelpPage("loc", "", "<-p player>");
+    private final HelpPage msg = new HelpPage("msg", "", "<player>", "<message>");
+    private final HelpPage reply = new HelpPage("reply", "", "<message>");
+    private final HelpPage spy = new HelpPage("spy", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -376,6 +382,110 @@ public class PlayerCommands {
             msg = msg.replaceAll("%y%", loc.getY() + "");
             msg = msg.replaceAll("%z%", loc.getZ() + "");
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        return CommandResult.ERROR;
+
+    }
+
+    @BaseCommand(command = "msg", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.msg", aliases = "pm,message")
+    public CommandResult executeMsg(Player sender, CommandArgs args) {
+        if (msg.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.getLength() == 2) {
+            if (!args.isPlayer(0)) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = args.getPlayer(0);
+            PlayerManager.getPlayer(target).setLastMsg(sender.getName());
+            String msgSpy = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", sender.getDisplayName());
+            msgSpy = msgSpy.replaceAll("%target%", target.getDisplayName());
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (PlayerManager.getPlayer(p).isSpy()) {
+                    Messager.sendMessage(p, msgSpy, Messager.MessageType.NONE);
+                }
+            }
+
+            String msgSender = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", "You");
+            msgSender = msgSender.replaceAll("%target%", target.getDisplayName());
+            String msgTarget = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%target%", "You");
+            msgTarget = msgTarget.replaceAll("%sender%", sender.getDisplayName());
+            Messager.sendMessage(target, msgTarget, Messager.MessageType.NONE);
+            return Messager.sendMessage(sender, msgSender, Messager.MessageType.NONE);
+        }
+
+        return CommandResult.ERROR;
+
+    }
+
+    @BaseCommand(command = "reply", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.reply", aliases = "")
+    public CommandResult executeReply(Player sender, CommandArgs args) {
+        if (reply.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        String lastMsg = PlayerManager.getPlayer(sender).getLastMsg();
+        if (lastMsg != null && args.getLength() > 1) {
+            Player target = Bukkit.getPlayer(lastMsg);
+            if (target == null) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            PlayerManager.getPlayer(target).setLastMsg(sender.getName());
+            String msgSpy = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", sender.getDisplayName());
+            msgSpy = msgSpy.replaceAll("%target%", target.getDisplayName());
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (PlayerManager.getPlayer(p).isSpy()) {
+                    Messager.sendMessage(p, msgSpy, Messager.MessageType.NONE);
+                }
+            }
+
+            String msgSender = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", "You");
+            msgSender = msgSender.replaceAll("%target%", target.getDisplayName());
+            String msgTarget = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%target%", "You");
+            msgTarget = msgTarget.replaceAll("%sender%", sender.getDisplayName());
+            Messager.sendMessage(target, msgTarget, Messager.MessageType.NONE);
+            return Messager.sendMessage(sender, msgSender, Messager.MessageType.NONE);
+        }
+
+        return CommandResult.ERROR;
+
+    }
+
+    @BaseCommand(command = "spy", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.spy", aliases = "spymsg")
+    public CommandResult executeSpy(Player sender, CommandArgs args) {
+        if (spy.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            BukkitPlayer p = PlayerManager.getPlayer(sender);
+            p.setSpy(!p.isSpy());
+            String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String msg = Locales.PLAYER_SPY_TOGGLED.getString().replaceAll("%status%", s);
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.spy.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            BukkitPlayer p = PlayerManager.getPlayer(flag.getPlayer());
+            p.setSpy(!p.isSpy());
+            String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String msgTarget = Locales.PLAYER_SPY_TOGGLED.getString().replaceAll("%status%", s);
+            String msgSender = Locales.PLAYER_SPY_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(flag.getPlayer()));
+            Messager.sendMessage(sender, msgTarget, Messager.MessageType.INFO);
+            return Messager.sendMessage(sender, msgSender, Messager.MessageType.INFO);
         }
 
         return CommandResult.ERROR;

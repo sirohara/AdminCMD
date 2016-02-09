@@ -28,7 +28,7 @@ public abstract class SQLPlayer {
 
     private final UUID uuid;
     private boolean fly, god, invisible, cmdwatcher, spy, muted;
-    private String nickname;
+    private String nickname, lastMsg;
     private int id;
     private Database db;
 
@@ -48,6 +48,7 @@ public abstract class SQLPlayer {
                 boolean muted = rs.getBoolean("muted");
                 String nickname = rs.getString("nickname");
                 int id = rs.getInt("ID");
+                String lastMsg = rs.getString("lastMsg");
 
                 this.god = god;
                 this.fly = fly;
@@ -57,6 +58,7 @@ public abstract class SQLPlayer {
                 this.muted = muted;
                 this.nickname = nickname;
                 this.id = id;
+                this.lastMsg = lastMsg;
             }
             
             db.closeResultSet(rs);
@@ -127,6 +129,14 @@ public abstract class SQLPlayer {
         this.nickname = nickname;
     }
 
+    public String getLastMsg() {
+        return lastMsg;
+    }
+
+    public void setLastMsg(String lastMsg) {
+        this.lastMsg = lastMsg;
+    }
+
     public void update() {
         try {
             PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ? WHERE `id` = ?;");
@@ -138,6 +148,7 @@ public abstract class SQLPlayer {
             st.setBoolean(6, this.muted);
             st.setString(7, this.nickname);
             st.setInt(8, this.id);
+            st.setString(9, this.lastMsg);
             st.executeUpdate();
             db.closeStatement(st);
         } catch (SQLException ex) {
