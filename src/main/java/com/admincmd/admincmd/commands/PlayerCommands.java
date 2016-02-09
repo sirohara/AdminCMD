@@ -29,7 +29,9 @@ import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Utils;
+import com.comphenix.net.sf.cglib.core.Local;
 import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandHandler
@@ -40,6 +42,7 @@ public class PlayerCommands {
     private final HelpPage god = new HelpPage("god", "", "<-p player>");
     private final HelpPage enderchest = new HelpPage("enderchest", "", "<-p player>");
     private final HelpPage gm = new HelpPage("gamemode", "", "<-p player>", "<0|1|2|3>", "<-p player> <0|1|2|3>");
+    private final HelpPage heal = new HelpPage("heal", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -243,6 +246,37 @@ public class PlayerCommands {
 
         return CommandResult.ERROR;
 
+    }
+
+    @BaseCommand(command = "heal", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.heal", aliases = "pheal")
+    public CommandResult executeHeal(Player sender, CommandArgs args) {
+        if (heal.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            sender.setHealth(sender.getMaxHealth());
+            return Messager.sendMessage(sender, Locales.PLAYER_HEAL_SELF, Messager.MessageType.INFO);
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.heal.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            target.setHealth(target.getMaxHealth());
+            String msgSender = Locales.PLAYER_HEAL_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
+            Messager.sendMessage(sender, msgSender, Messager.MessageType.INFO);
+            return Messager.sendMessage(target, Locales.PLAYER_HEAL_SELF, Messager.MessageType.INFO);
+        }
+
+        return CommandResult.ERROR;
     }
 
 }
