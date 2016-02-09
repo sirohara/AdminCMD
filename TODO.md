@@ -6,7 +6,7 @@ Commands
 * ~~/invsee~~ (jkmalan) (Offline not implemented)
 * /lightning
 * /list
-* /location
+* ~~/location~~ (jkmalan)
 * /msg
 * /mute
 * /nick

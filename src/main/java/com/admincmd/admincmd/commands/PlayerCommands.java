@@ -31,6 +31,7 @@ import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Utils;
 import com.comphenix.net.sf.cglib.core.Local;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -45,6 +46,7 @@ public class PlayerCommands {
     private final HelpPage heal = new HelpPage("heal", "", "<-p player>");
     private final HelpPage ip = new HelpPage("ip", "", "<-p player>");
     private final HelpPage openinv = new HelpPage("openinv", "", "<-p player>");
+    private final HelpPage loc = new HelpPage("loc", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -337,6 +339,43 @@ public class PlayerCommands {
             Player target = flag.getPlayer();
             sender.openInventory(target.getInventory());
             return CommandResult.SUCCESS;
+        }
+
+        return CommandResult.ERROR;
+
+    }
+
+    @BaseCommand(command = "loc", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.loc", aliases = "location,coords")
+    public CommandResult executeLocation(Player sender, CommandArgs args) {
+        if (loc.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            Location loc = sender.getLocation();
+            String msg = Locales.PLAYER_LOCATION_SELF.getString().replaceAll("%x%", loc.getX() + "");
+            msg = msg.replaceAll("%y%", loc.getY() + "");
+            msg = msg.replaceAll("%z%", loc.getZ() + "");
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.loc.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            Location loc = target.getLocation();
+            String msg = Locales.PLAYER_LOCATION_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
+            msg = msg.replaceAll("%x%", loc.getX() + "");
+            msg = msg.replaceAll("%y%", loc.getY() + "");
+            msg = msg.replaceAll("%z%", loc.getZ() + "");
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
         }
 
         return CommandResult.ERROR;
