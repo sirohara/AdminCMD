@@ -59,6 +59,8 @@ public enum Locales {
     HELP_PLAYER_HEAL_2("Help.Player.Heal.2", "Fully restores the health of the player"),
     HELP_PLAYER_IP_1("Help.Player.Ip.1", "Returns your ip address"),
     HELP_PLAYER_IP_2("Help.Player.Ip.2", "Returns the ip address of the player"),
+    HELP_PLAYER_OPENINV_1("Help.Player.OpenInv.1", "Opens your own inventory..."),
+    HELP_PLAYER_OPENINV_2("Help.Player.OpenInv.2", "Opens the inventory of the player"),
     HELP_TELEPORT_HOME_1("Help.Home.Home.1", "List's all homes"),
     HELP_TELEPORT_HOME_2("Help.Home.Home.2", "Teleports you to the given home"),
     HELP_TELEPORT_SETHOME_1("Help.Home.Sethome.1", "Creates a new home at your location with the given name"),

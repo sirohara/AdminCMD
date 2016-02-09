@@ -3,7 +3,7 @@ Commands
 
 * ~~/heal~~ (jkmalan)
 * ~~/ip~~ (jkmalan)
-* /invsee
+* ~~/invsee~~ (jkmalan) (Offline not implemented)
 * /lightning
 * /list
 * /location

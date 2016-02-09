@@ -44,6 +44,7 @@ public class PlayerCommands {
     private final HelpPage gm = new HelpPage("gamemode", "", "<-p player>", "<0|1|2|3>", "<-p player> <0|1|2|3>");
     private final HelpPage heal = new HelpPage("heal", "", "<-p player>");
     private final HelpPage ip = new HelpPage("ip", "", "<-p player>");
+    private final HelpPage openinv = new HelpPage("openinv", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -306,6 +307,36 @@ public class PlayerCommands {
             String ip = target.getAddress().getAddress().toString();
             String msg = Locales.PLAYER_IP_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%ip%", ip);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        return CommandResult.ERROR;
+
+    }
+
+    @BaseCommand(command = "openinv", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.openinv", aliases = "invsee,oi")
+    public CommandResult executeOpenInv(Player sender, CommandArgs args) {
+        if (openinv.sendHelp(sender, args)) {
+            return CommandResult.NO_PERMISSION_OTHER;
+        }
+
+        if (args.isEmpty()) {
+            sender.openInventory(sender.getInventory());
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.openinv.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            sender.openInventory(target.getInventory());
+            return CommandResult.SUCCESS;
         }
 
         return CommandResult.ERROR;
