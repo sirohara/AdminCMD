@@ -5,7 +5,7 @@ Commands
 * ~~/ip~~ (jkmalan)
 * ~~/invsee~~ (jkmalan) (Offline not implemented)
 * /lightning
-* /list
+* ~~/list~~ (jkmalan)
 * ~~/location~~ (jkmalan)
 * ~~/msg~~ (jkmalan)
   * ~~/reply~~

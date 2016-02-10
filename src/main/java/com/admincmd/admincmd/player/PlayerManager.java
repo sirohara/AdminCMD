@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -93,6 +94,7 @@ public class PlayerManager {
             s.setBoolean(5, false);
             s.setBoolean(6, false);
             s.setBoolean(7, false);
+            s.setBoolean(10, false);
             s.executeUpdate();
             conn.closeStatement(s);
             
@@ -105,6 +107,16 @@ public class PlayerManager {
     
     public static boolean hasPlayedBefore(OfflinePlayer p) {
         return getPlayer(p) != null;
+    }
+
+    public static HashMap<UUID, BukkitPlayer> getHiddenPlayers() {
+        HashMap<UUID, BukkitPlayer> hiddenPlayers = new HashMap<>();
+        for (Map.Entry<UUID, BukkitPlayer> p : players.entrySet()) {
+            if (p.getValue().getHidden()) {
+                hiddenPlayers.put(p.getKey(), p.getValue());
+            }
+        }
+        return hiddenPlayers;
     }
     
 }

@@ -53,6 +53,7 @@ public class PlayerCommands {
     private final HelpPage msg = new HelpPage("msg", "", "<player>", "<message>");
     private final HelpPage reply = new HelpPage("reply", "", "<message>");
     private final HelpPage spy = new HelpPage("spy", "", "<-p player>");
+    private final HelpPage list = new HelpPage("who", "");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -490,6 +491,27 @@ public class PlayerCommands {
 
         return CommandResult.ERROR;
 
+    }
+
+    @BaseCommand(command = "who", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.list", aliases = "plist,online")
+    public CommandResult executeList(Player sender, CommandArgs args) {
+        if (list.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            String playerList = "";
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (!PlayerManager.getHiddenPlayers().containsKey(p.getUniqueId())) {
+                    playerList += p.getDisplayName() + " ";
+                }
+            }
+
+            playerList = playerList.trim().replaceAll(" ", ", ");
+            String msg = Locales.PLAYER_LIST_FORMAT.getString().replaceAll("%playerList%", playerList);
+            return Messager.sendMessage(sender, msg, Messager.MessageType.NONE);
+        }
+        return CommandResult.ERROR;
     }
 
 }
