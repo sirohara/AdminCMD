@@ -1,4 +1,4 @@
-<a href="http://admincmd.com" target="_blank"><img src="http://img401.imageshack.us/img401/6918/admincmdlogobig.png" alt="Logo"></a>
+<a href="http://admincmd.com" target="_blank"><img src="https://www.admincmd.com/static/2016/02/10/admincmd-logo-big.png" alt="Logo"></a>
 
 <a href="https://travis-ci.org/AdminCMD/AdminCMD" target="_blank"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
 
@@ -11,7 +11,7 @@
         <li> Blog : http://www.admincmd.com</li>
         <li> Wiki : http://wiki.admincmd.com</li>
         <li> Issues: http://bug.admincmd.com</li>
-        <li> License : <a href="https://www.gnu.org/licenses/gpl-2.0.html)">GPLv2</a></li>
+        <li> License : <a href="https://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a></li>
     </ul>
 
     <h2>Description</h2>
