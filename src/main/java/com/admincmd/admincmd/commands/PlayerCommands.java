@@ -36,6 +36,7 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @CommandHandler
@@ -50,7 +51,7 @@ public class PlayerCommands {
     private final HelpPage ip = new HelpPage("ip", "", "<-p player>");
     private final HelpPage openinv = new HelpPage("openinv", "", "<-p player>");
     private final HelpPage loc = new HelpPage("loc", "", "<-p player>");
-    private final HelpPage msg = new HelpPage("msg", "", "<player>", "<message>");
+    private final HelpPage msg = new HelpPage("msg", "", "<player> <message>");
     private final HelpPage reply = new HelpPage("reply", "", "<message>");
     private final HelpPage spy = new HelpPage("spy", "", "<-p player>");
     private final HelpPage list = new HelpPage("who", "");
@@ -360,9 +361,10 @@ public class PlayerCommands {
 
         if (args.isEmpty()) {
             Location loc = sender.getLocation();
-            String msg = Locales.PLAYER_LOCATION_SELF.getString().replaceAll("%x%", loc.getX() + "");
-            msg = msg.replaceAll("%y%", loc.getY() + "");
-            msg = msg.replaceAll("%z%", loc.getZ() + "");
+            DecimalFormat decimalFormat = new DecimalFormat("##.#");
+            String msg = Locales.PLAYER_LOCATION_SELF.getString().replaceAll("%x%", decimalFormat.format(loc.getX()));
+            msg = msg.replaceAll("%y%", decimalFormat.format(loc.getY()));
+            msg = msg.replaceAll("%z%", decimalFormat.format(loc.getZ()));
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
         }
 
@@ -379,9 +381,10 @@ public class PlayerCommands {
             Player target = flag.getPlayer();
             Location loc = target.getLocation();
             String msg = Locales.PLAYER_LOCATION_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target));
-            msg = msg.replaceAll("%x%", loc.getX() + "");
-            msg = msg.replaceAll("%y%", loc.getY() + "");
-            msg = msg.replaceAll("%z%", loc.getZ() + "");
+            DecimalFormat decimalFormat = new DecimalFormat("##.#");
+            msg = msg.replaceAll("%x%", decimalFormat.format(loc.getX()));
+            msg = msg.replaceAll("%y%", decimalFormat.format(loc.getY()));
+            msg = msg.replaceAll("%z%", decimalFormat.format(loc.getZ()));
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
         }
 
@@ -395,15 +398,21 @@ public class PlayerCommands {
             return CommandResult.SUCCESS;
         }
 
-        if (args.getLength() == 2) {
+        if (args.getLength() >= 2) {
             if (!args.isPlayer(0)) {
                 return CommandResult.NOT_ONLINE;
+            }
+
+            String message = "";
+            for (int i = 1; i < args.getLength(); i++) {
+                message += args.getString(i) + " ";
             }
 
             Player target = args.getPlayer(0);
             PlayerManager.getPlayer(target).setLastMsg(sender.getName());
             String msgSpy = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", sender.getDisplayName());
             msgSpy = msgSpy.replaceAll("%target%", target.getDisplayName());
+            msgSpy = msgSpy.replaceAll("%message%", message);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (PlayerManager.getPlayer(p).isSpy()) {
                     Messager.sendMessage(p, msgSpy, Messager.MessageType.NONE);
@@ -412,8 +421,10 @@ public class PlayerCommands {
 
             String msgSender = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", "You");
             msgSender = msgSender.replaceAll("%target%", target.getDisplayName());
+            msgSender = msgSender.replaceAll("%message%", message);
             String msgTarget = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%target%", "You");
             msgTarget = msgTarget.replaceAll("%sender%", sender.getDisplayName());
+            msgTarget = msgTarget.replaceAll("%message%", message);
             Messager.sendMessage(target, msgTarget, Messager.MessageType.NONE);
             return Messager.sendMessage(sender, msgSender, Messager.MessageType.NONE);
         }
@@ -429,15 +440,21 @@ public class PlayerCommands {
         }
 
         String lastMsg = PlayerManager.getPlayer(sender).getLastMsg();
-        if (lastMsg != null && args.getLength() > 1) {
+        if (lastMsg != null && args.getLength() >= 1) {
             Player target = Bukkit.getPlayer(lastMsg);
             if (target == null) {
                 return CommandResult.NOT_ONLINE;
             }
 
+            String message = "";
+            for (String temp : args.getArgs()) {
+                message += temp + " ";
+            }
+
             PlayerManager.getPlayer(target).setLastMsg(sender.getName());
             String msgSpy = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", sender.getDisplayName());
             msgSpy = msgSpy.replaceAll("%target%", target.getDisplayName());
+            msgSpy = msgSpy.replaceAll("%message%", message);
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (PlayerManager.getPlayer(p).isSpy()) {
                     Messager.sendMessage(p, msgSpy, Messager.MessageType.NONE);
@@ -446,8 +463,10 @@ public class PlayerCommands {
 
             String msgSender = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%sender%", "You");
             msgSender = msgSender.replaceAll("%target%", target.getDisplayName());
+            msgSender = msgSender.replaceAll("%message%", message);
             String msgTarget = Locales.PLAYER_MSG_FORMAT.getString().replaceAll("%target%", "You");
             msgTarget = msgTarget.replaceAll("%sender%", sender.getDisplayName());
+            msgTarget = msgTarget.replaceAll("%message%", message);
             Messager.sendMessage(target, msgTarget, Messager.MessageType.NONE);
             return Messager.sendMessage(sender, msgSender, Messager.MessageType.NONE);
         }
@@ -466,7 +485,7 @@ public class PlayerCommands {
             BukkitPlayer p = PlayerManager.getPlayer(sender);
             p.setSpy(!p.isSpy());
             String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
-            String msg = Locales.PLAYER_SPY_TOGGLED.getString().replaceAll("%status%", s);
+            String msg = Locales.PLAYER_SPY_TOGGLED_SELF.getString().replaceAll("%status%", s);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
         }
 
@@ -483,7 +502,7 @@ public class PlayerCommands {
             BukkitPlayer p = PlayerManager.getPlayer(flag.getPlayer());
             p.setSpy(!p.isSpy());
             String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
-            String msgTarget = Locales.PLAYER_SPY_TOGGLED.getString().replaceAll("%status%", s);
+            String msgTarget = Locales.PLAYER_SPY_TOGGLED_SELF.getString().replaceAll("%status%", s);
             String msgSender = Locales.PLAYER_SPY_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(flag.getPlayer()));
             Messager.sendMessage(sender, msgTarget, Messager.MessageType.INFO);
             return Messager.sendMessage(sender, msgSender, Messager.MessageType.INFO);
@@ -502,7 +521,7 @@ public class PlayerCommands {
         if (args.isEmpty()) {
             String playerList = "";
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!PlayerManager.getHiddenPlayers().containsKey(p.getUniqueId())) {
+                if (!PlayerManager.getPlayer(p).isInvisible()) {
                     playerList += p.getDisplayName() + " ";
                 }
             }

@@ -27,7 +27,7 @@ import java.util.UUID;
 public abstract class SQLPlayer {
 
     private final UUID uuid;
-    private boolean fly, god, invisible, cmdwatcher, spy, muted, hidden;
+    private boolean fly, god, invisible, cmdwatcher, spy, muted;
     private String nickname, lastMsg;
     private int id;
     private Database db;
@@ -49,7 +49,6 @@ public abstract class SQLPlayer {
                 String nickname = rs.getString("nickname");
                 int id = rs.getInt("ID");
                 String lastMsg = rs.getString("lastMsg");
-                boolean hidden = rs.getBoolean("hidden");
 
                 this.god = god;
                 this.fly = fly;
@@ -60,7 +59,6 @@ public abstract class SQLPlayer {
                 this.nickname = nickname;
                 this.id = id;
                 this.lastMsg = lastMsg;
-                this.hidden = hidden;
             }
             
             db.closeResultSet(rs);
@@ -139,17 +137,9 @@ public abstract class SQLPlayer {
         this.lastMsg = lastMsg;
     }
 
-    public boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
     public void update() {
         try {
-            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ? WHERE `id` = ?;");
+            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ?, 'lastMsg' = ? WHERE `id` = ?;");
             st.setBoolean(1, this.god);
             st.setBoolean(2, this.invisible);
             st.setBoolean(3, this.cmdwatcher);
@@ -159,7 +149,6 @@ public abstract class SQLPlayer {
             st.setString(7, this.nickname);
             st.setInt(8, this.id);
             st.setString(9, this.lastMsg);
-            st.setBoolean(10, this.hidden);
             st.executeUpdate();
             db.closeStatement(st);
         } catch (SQLException ex) {
