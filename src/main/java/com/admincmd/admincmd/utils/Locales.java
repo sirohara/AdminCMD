@@ -115,6 +115,8 @@ public enum Locales {
     PLAYER_SPY_TOGGLED_SELF("Player.Spy.Toggled.Self", "Your spy mode is now %status%"),
     PLAYER_SPY_TOGGLED_OTHER("Player.Spy.Toggled.Other", "%player%'s spy mode is now %status%"),
     PLAYER_LIST_FORMAT("Player.List.Format", "Online Players: %playerList%"),
+    PLAYER_VANISH_TOGGLED_SELF("Player.Vanish.Toggled.Self", "Your invisible mode is now %status%"),
+    PLAYER_VANISH_TOGGLED_OTHER("Player.Vanish.Toggled.Other", "%player%'s invisible mode is now %status%"),
     SERVER_RELOAD_FULL("Server.Reload.Full", "The server has been reloaded."),
     SERVER_RELOAD_NOT_FOUND("Server.Reload.NotFound", "There is no plugin by that name installed."),
     SERVER_RELOAD_SINGLE("Server.Reload.Single", "The plugin has been reloaded."),

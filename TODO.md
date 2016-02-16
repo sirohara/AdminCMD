@@ -17,5 +17,5 @@ Commands
 * /sudo
 * /uuid
 * /unmute
-* /vanish
+* ~~/vanish~~ (jkmalan) (Currently combines Invisibility and Fakequit)
 * /whois

@@ -55,6 +55,7 @@ public class PlayerCommands {
     private final HelpPage reply = new HelpPage("reply", "", "<message>");
     private final HelpPage spy = new HelpPage("spy", "", "<-p player>");
     private final HelpPage list = new HelpPage("who", "");
+    private final HelpPage vanish = new HelpPage("vanish", "", "<-p player>");
 
     //TODO: Console execution
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
@@ -530,6 +531,42 @@ public class PlayerCommands {
             String msg = Locales.PLAYER_LIST_FORMAT.getString().replaceAll("%playerList%", playerList);
             return Messager.sendMessage(sender, msg, Messager.MessageType.NONE);
         }
+        return CommandResult.ERROR;
+    }
+
+    @BaseCommand(command = "vanish", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.vanish", aliases = "invisible,poof")
+    public CommandResult executeVanish(Player sender, CommandArgs args) {
+        if (vanish.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            BukkitPlayer p = PlayerManager.getPlayer(sender);
+            p.setInvisible(p.isInvisible());
+            String s = p.isInvisible() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String msg = Locales.PLAYER_VANISH_TOGGLED_SELF.getString().replaceAll("%status%", s);
+            return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+        }
+
+        if (args.hasFlag("p")) {
+            if (!sender.hasPermission("admincmd.player.vanish.other")) {
+                return CommandResult.NO_PERMISSION_OTHER;
+            }
+
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            BukkitPlayer p = PlayerManager.getPlayer(flag.getPlayer());
+            p.setInvisible(!p.isInvisible());
+            String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String msgTarget = Locales.PLAYER_VANISH_TOGGLED_SELF.getString().replaceAll("%status%", s);
+            String msgSender = Locales.PLAYER_VANISH_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(flag.getPlayer()));
+            Messager.sendMessage(sender, msgTarget, Messager.MessageType.INFO);
+            return Messager.sendMessage(sender, msgSender, Messager.MessageType.INFO);
+        }
+
         return CommandResult.ERROR;
     }
 
