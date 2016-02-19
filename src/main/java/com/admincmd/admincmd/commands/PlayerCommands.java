@@ -542,7 +542,16 @@ public class PlayerCommands {
 
         if (args.isEmpty()) {
             BukkitPlayer p = PlayerManager.getPlayer(sender);
-            p.setInvisible(p.isInvisible());
+            p.setInvisible(!p.isInvisible());
+            if (p.isInvisible()) {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    op.hidePlayer(p.getPlayer());
+                }
+            } else {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    op.showPlayer(p.getPlayer());
+                }
+            }
             String s = p.isInvisible() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
             String msg = Locales.PLAYER_VANISH_TOGGLED_SELF.getString().replaceAll("%status%", s);
             return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
@@ -560,7 +569,16 @@ public class PlayerCommands {
 
             BukkitPlayer p = PlayerManager.getPlayer(flag.getPlayer());
             p.setInvisible(!p.isInvisible());
-            String s = p.isSpy() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            if (p.isInvisible()) {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    op.hidePlayer(p.getPlayer());
+                }
+            } else {
+                for (Player op : Bukkit.getOnlinePlayers()) {
+                    op.showPlayer(p.getPlayer());
+                }
+            }
+            String s = p.isInvisible() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
             String msgTarget = Locales.PLAYER_VANISH_TOGGLED_SELF.getString().replaceAll("%status%", s);
             String msgSender = Locales.PLAYER_VANISH_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(flag.getPlayer()));
             Messager.sendMessage(sender, msgTarget, Messager.MessageType.INFO);
