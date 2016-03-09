@@ -29,15 +29,12 @@ import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Utils;
-import com.comphenix.net.sf.cglib.core.Local;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import java.text.DecimalFormat;
-import java.util.List;
+import org.bukkit.command.CommandSender;
 
 @CommandHandler
 public class PlayerCommands {
@@ -57,7 +54,52 @@ public class PlayerCommands {
     private final HelpPage list = new HelpPage("who", "");
     private final HelpPage vanish = new HelpPage("vanish", "", "<-p player>");
 
-    //TODO: Console execution
+    @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.CONSOLE, aliases = "gm")
+    public CommandResult executeGamemodeConsole(CommandSender sender, CommandArgs args) {
+        if (gm.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.isEmpty()) {
+            return CommandResult.NOT_ONLINE;
+        }
+
+        if (args.hasFlag("p")) {
+            Flag flag = args.getFlag("p");
+            if (!flag.isPlayer()) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            Player target = flag.getPlayer();
+            if (args.getLength() == 2) {
+                GameMode gm = target.getGameMode() == GameMode.SURVIVAL ? GameMode.CREATIVE : GameMode.SURVIVAL;
+                target.setGameMode(gm);
+                String msg = Locales.PLAYER_GAMEMODE_CHANGED.getString().replaceAll("%status%", gm.toString());
+                Messager.sendMessage(target, msg, Messager.MessageType.INFO);
+
+                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%status%", gm.toString());
+                Messager.sendMessage(sender, msg2, Messager.MessageType.INFO);
+                return CommandResult.SUCCESS;
+            } else if (args.getLength() == 3) {
+                if (!args.isInteger(2)) {
+                    return CommandResult.NOT_A_NUMBER;
+                }
+                int num = args.getInt(2);
+                GameMode gm = GameMode.getByValue(num);
+                target.setGameMode(gm);
+                String msg = Locales.PLAYER_GAMEMODE_CHANGED.getString().replaceAll("%status%", gm.toString());
+                Messager.sendMessage(target, msg, Messager.MessageType.INFO);
+
+                String msg2 = Locales.PLAYER_GAMEMODE_CHANGED_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(target)).replaceAll("%status%", gm.toString());
+                Messager.sendMessage(sender, msg2, Messager.MessageType.INFO);
+                return CommandResult.SUCCESS;
+            } else {
+                return CommandResult.ERROR;
+            }
+        }
+        return CommandResult.ERROR;
+    }
+
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.gamemode", aliases = "gm")
     public CommandResult executeGamemode(Player sender, CommandArgs args) {
         if (gm.sendHelp(sender, args)) {
