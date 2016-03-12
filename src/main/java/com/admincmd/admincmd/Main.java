@@ -41,11 +41,11 @@ import com.admincmd.admincmd.events.WorldListener;
 import com.admincmd.admincmd.home.HomeManager;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.spawn.SpawnManager;
+import com.admincmd.admincmd.update.Updater;
 import com.admincmd.admincmd.utils.ACLogger;
 import com.admincmd.admincmd.utils.EventManager;
 import com.admincmd.admincmd.utils.Vault;
 import com.admincmd.admincmd.world.WorldManager;
-import de.thejeterlp.bukkit.updater.Updater;
 import java.sql.SQLException;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -89,8 +89,7 @@ public class Main extends JavaPlugin {
         AddonManager.loadAddons();
 
 
-        Updater u = new Updater(this, 31318, "admincmd");
-        u.search();
+        new Updater(31318, "admincmd").search();
 
         long timeTook = System.currentTimeMillis() - start;
         ACLogger.info("Plugin start took " + timeTook + " milliseconds");

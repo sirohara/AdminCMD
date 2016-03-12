@@ -67,8 +67,7 @@
                         <configuration>
                             <minimizeJar>false</minimizeJar>
                             <artifactSet>
-                                <includes>         
-                                    <include>de.TheJeterLP.Bukkit:Updater</include>                          
+                                <includes>                                 
                                     <include>org.xerial:sqlite-jdbc</include>
                                     <include>mysql:mysql-connector-java</include>
                                 </includes>
@@ -211,12 +210,6 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
             <version>1.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>de.TheJeterLP.Bukkit</groupId>
-            <artifactId>Updater</artifactId>
-            <version>1.1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     
