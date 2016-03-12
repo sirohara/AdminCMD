@@ -88,11 +88,9 @@ public class Main extends JavaPlugin {
 
         AddonManager.loadAddons();
 
-        // NumberFormatException at line 201 in Updater#versionCheck()
-        // Results from badly named Bukkit Dev download
 
-        // Updater u = new Updater(this, 31318, "admincmd");
-        // u.search();
+        Updater u = new Updater(this, 31318, "admincmd");
+        u.search();
 
         long timeTook = System.currentTimeMillis() - start;
         ACLogger.info("Plugin start took " + timeTook + " milliseconds");
