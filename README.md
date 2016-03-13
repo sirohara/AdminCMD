@@ -1,6 +1,6 @@
 <a href="http://admincmd.com" target="_blank"><img src="https://www.admincmd.com/static/2016/02/10/admincmd-logo-big.png" alt="Logo"></a>
 
-<a href="https://travis-ci.org/AdminCMD/AdminCMD" target="_blank"><img src="https://travis-ci.org/AdminCMD/AdminCMD.png?branch=master" alt="Build Status"></a>
+<a href="https://drone.io/github.com/AdminCMD/AdminCMD" target="_blank"><img src="https://drone.io/github.com/AdminCMD/AdminCMD/status.png" alt="Build Status"></a>
 
 <div>
     <h2>Unleash the power of Bukkit!</h2>
