@@ -53,6 +53,8 @@ public class PlayerCommands {
     private final HelpPage spy = new HelpPage("spy", "", "<-p player>");
     private final HelpPage list = new HelpPage("who", "");
     private final HelpPage vanish = new HelpPage("vanish", "", "<-p player>");
+    private final HelpPage mute = new HelpPage("mute", "", "<player>");
+    private final HelpPage unmute = new HelpPage("unmute", "", "<player>");
 
     @BaseCommand(command = "gamemode", sender = BaseCommand.Sender.CONSOLE, aliases = "gm")
     public CommandResult executeGamemodeConsole(CommandSender sender, CommandArgs args) {
@@ -630,4 +632,27 @@ public class PlayerCommands {
         return CommandResult.ERROR;
     }
 
+    @BaseCommand(command = "mute", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.player.mute", aliases = "unmute")
+    public CommandResult executeMute(Player sender, CommandArgs args) {
+        if (mute.sendHelp(sender, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.getLength() == 1) {
+            if (!args.isPlayer(0)) {
+                return CommandResult.NOT_ONLINE;
+            }
+
+            BukkitPlayer p = PlayerManager.getPlayer(args.getPlayer(0));
+            p.setMuted(!p.isMuted());
+
+            String s = p.isInvisible() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String msgTarget = Locales.PLAYER_MUTE_TOGGLED_SELF.getString().replaceAll("%status%", s);
+            String msgSender = Locales.PLAYER_MUTE_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(args.getPlayer(0)));
+            Messager.sendMessage(p.getPlayer(), msgTarget, Messager.MessageType.INFO);
+            return Messager.sendMessage(sender, msgSender, Messager.MessageType.INFO);
+        }
+
+        return CommandResult.ERROR;
+    }
 }

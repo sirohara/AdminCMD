@@ -9,13 +9,13 @@ Commands
 * ~~/location~~ (jkmalan)
 * ~~/msg~~ (jkmalan)
   * ~~/reply~~
-* /mute
+* ~~/mute~~ (jkmalan) (Designed to be a toggle)
 * /nick
 * /skull
 * /slap
 * ~~/spy~~ (jkmalan) (Might be better implemented with an event)
 * /sudo
 * /uuid
-* /unmute
+* ~~/unmute~~ (jkmalan) (Currently a toggle of the mute command)
 * ~~/vanish~~ (jkmalan) (Currently combines Invisibility and Fakequit)
 * /whois
