@@ -72,7 +72,7 @@ Used IDEs
 * [NetBeans](https://netbeans.org) (used by TheJeterLP)
   * Built-in Maven support
   * Built-in Git support
-* [IntelliJ](https://www.jetbrains.com/idea/) (used by Belphemur)
+* [IntelliJ](https://www.jetbrains.com/idea/) (used by Belphemur and Jkmalan)
   * Built-in Maven support
   * Built-in Git support
 * [Eclipse](https://eclipse.org) (used by BossLetsPlays and Jkmalan)
