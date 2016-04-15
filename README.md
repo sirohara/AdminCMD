@@ -9,7 +9,7 @@
     <hr>
     <ul style="text-align:left">
         <li> Blog : http://www.admincmd.com</li>
-        <li> Wiki : http://wiki.admincmd.com</li>
+        <li> Wiki : http://www.admincmd.com/wiki</li>
         <li> Issues: http://bug.admincmd.com</li>
         <li> License : <a href="https://www.gnu.org/licenses/gpl-2.0.html">GPLv2</a></li>
     </ul>

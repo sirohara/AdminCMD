@@ -646,7 +646,7 @@ public class PlayerCommands {
             BukkitPlayer p = PlayerManager.getPlayer(args.getPlayer(0));
             p.setMuted(!p.isMuted());
 
-            String s = p.isInvisible() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
+            String s = p.isMuted() ? Locales.COMMAND_MESSAGES_ENABLED.getString() : Locales.COMMAND_MESSAGES_DISABLED.getString();
             String msgTarget = Locales.PLAYER_MUTE_TOGGLED_SELF.getString().replaceAll("%status%", s);
             String msgSender = Locales.PLAYER_MUTE_TOGGLED_OTHER.getString().replaceAll("%status%", s).replaceAll("%player%", Utils.replacePlayerPlaceholders(args.getPlayer(0)));
             Messager.sendMessage(p.getPlayer(), msgTarget, Messager.MessageType.INFO);
