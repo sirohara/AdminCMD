@@ -1,22 +1,27 @@
 /*
  * This file is part of AdminCMD
  * Copyright (C) 2015 AdminCMD Team
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package com.admincmd.admincmd.commands;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.bukkit.entity.Player;
 
 import com.admincmd.admincmd.commandapi.BaseCommand;
 import com.admincmd.admincmd.commandapi.CommandArgs;
@@ -29,10 +34,6 @@ import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Messager.MessageType;
 import com.google.common.base.Joiner;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @CommandHandler
 public class HomeCommands {
@@ -42,11 +43,12 @@ public class HomeCommands {
     public HomeCommands() {
         helpPages.put("home", new HelpPage("home", "", "<name>"));
         helpPages.put("sethome", new HelpPage("sethome", "<name>"));
-        helpPages.put("edithome", new HelpPage("edithome", "<name>"));
         helpPages.put("delhome", new HelpPage("delhome", "<name>"));
+        helpPages.put("edithome", new HelpPage("edithome", "<name>"));
+        helpPages.put("listhome", new HelpPage("listhome", "<name>"));
     }
 
-    @BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp")
+    @BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "h")
     public CommandResult executeHome(Player p, CommandArgs args) {
         if (helpPages.get("home").sendHelp(p, args)) {
             return CommandResult.SUCCESS;
@@ -89,7 +91,7 @@ public class HomeCommands {
         return Messager.sendMessage(sender, Locales.HOME_SET, MessageType.INFO);
     }
 
-    @BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rmhome")
+    @BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rh")
     public CommandResult executeRemovehome(Player sender, CommandArgs args) {
         if (helpPages.get("delhome").sendHelp(sender, args)) {
             return CommandResult.SUCCESS;
@@ -103,12 +105,13 @@ public class HomeCommands {
         if (h == null) {
             return Messager.sendMessage(sender, Locales.HOME_NOHOME, MessageType.ERROR);
         }
+
         HomeManager.deleteHome(h);
         String msg = Locales.HOME_DELETED.getString().replaceAll("%home%", h.getName());
         return Messager.sendMessage(sender, msg, MessageType.INFO);
     }
 
-    @BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp")
+    @BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "eh")
     public CommandResult executeEdithome(Player sender, CommandArgs args) {
         if (helpPages.get("edithome").sendHelp(sender, args)) {
             return CommandResult.SUCCESS;
@@ -128,4 +131,17 @@ public class HomeCommands {
         return Messager.sendMessage(sender, Locales.HOME_UPDATED, MessageType.INFO);
     }
 
+    @BaseCommand(command = "listhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "lh")
+    public CommandResult executeListHome(Player p, CommandArgs args) {
+        if (helpPages.get("listhome").sendHelp(p, args)) {
+            return CommandResult.SUCCESS;
+        }
+
+        if (args.getLength() != 0) {
+            return CommandResult.ERROR;
+        }
+
+        String homes = Locales.HOME_LISTHOME.getString() + " (" + HomeManager.getHomes(p).size() + "): §6" + Joiner.on(" ").join(HomeManager.getHomes(p).keySet());
+        return Messager.sendMessage(p, homes, MessageType.INFO);
+    }
 }

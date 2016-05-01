@@ -1,28 +1,29 @@
 /*
  * This file is part of AdminCMD
  * Copyright (C) 2015 AdminCMD Team
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package com.admincmd.admincmd.player;
 
-import com.admincmd.admincmd.database.Database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
+
+import com.admincmd.admincmd.database.Database;
 
 public abstract class SQLPlayer {
 
@@ -60,7 +61,7 @@ public abstract class SQLPlayer {
                 this.id = id;
                 this.lastMsg = lastMsg;
             }
-            
+
             db.closeResultSet(rs);
             db.closeStatement(s);
         } catch (SQLException ex) {
@@ -139,7 +140,7 @@ public abstract class SQLPlayer {
 
     public void update() {
         try {
-            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ?, 'lastMsg' = ? WHERE `id` = ?;");
+            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ?, `lastMsg` = ? WHERE `id` = ?;");
             st.setBoolean(1, this.god);
             st.setBoolean(2, this.invisible);
             st.setBoolean(3, this.cmdwatcher);

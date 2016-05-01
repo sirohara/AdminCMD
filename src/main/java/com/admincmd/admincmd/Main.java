@@ -1,22 +1,27 @@
 /*
  * This file is part of AdminCMD
  * Copyright (C) 2015 AdminCMD Team
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package com.admincmd.admincmd;
+
+import java.sql.SQLException;
+
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.admincmd.admincmd.addon.AddonManager;
 import com.admincmd.admincmd.commandapi.CommandManager;
@@ -26,9 +31,8 @@ import com.admincmd.admincmd.commands.MobCommands;
 import com.admincmd.admincmd.commands.PlayerCommands;
 import com.admincmd.admincmd.commands.ServerCommands;
 import com.admincmd.admincmd.commands.SpawnCommands;
+import com.admincmd.admincmd.commands.TeleportCommands;
 import com.admincmd.admincmd.commands.WorldCommands;
-import com.admincmd.admincmd.utils.Config;
-import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.database.DatabaseFactory;
 import com.admincmd.admincmd.events.ChatListener;
 import com.admincmd.admincmd.events.PingListener;
@@ -39,16 +43,16 @@ import com.admincmd.admincmd.events.PlayerJoinListener;
 import com.admincmd.admincmd.events.SignListener;
 import com.admincmd.admincmd.events.WorldListener;
 import com.admincmd.admincmd.home.HomeManager;
+import com.admincmd.admincmd.home.WarpPointManager;
 import com.admincmd.admincmd.player.PlayerManager;
 import com.admincmd.admincmd.spawn.SpawnManager;
 import com.admincmd.admincmd.update.Updater;
 import com.admincmd.admincmd.utils.ACLogger;
+import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.utils.EventManager;
+import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Vault;
 import com.admincmd.admincmd.world.WorldManager;
-import java.sql.SQLException;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
@@ -70,6 +74,7 @@ public class Main extends JavaPlugin {
         SpawnManager.init();
         WorldManager.init();
         HomeManager.init();
+        WarpPointManager.init();
 
         registerCommands();
         registerEvents();
@@ -102,6 +107,7 @@ public class Main extends JavaPlugin {
         PlayerManager.save();
         WorldManager.save();
         HomeManager.save();
+        WarpPointManager.save();
 
         try {
             DatabaseFactory.getDatabase().closeConnection();
@@ -139,6 +145,7 @@ public class Main extends JavaPlugin {
         manager.registerClass(MobCommands.class);
         manager.registerClass(SpawnCommands.class);
         manager.registerClass(MaintenanceCommands.class);
+        manager.registerClass(TeleportCommands.class);
     }
 
     private void registerEvents() {

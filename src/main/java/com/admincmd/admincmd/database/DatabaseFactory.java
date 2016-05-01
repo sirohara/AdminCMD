@@ -1,32 +1,33 @@
 /*
  * This file is part of AdminCMD
  * Copyright (C) 2015 AdminCMD Team
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package com.admincmd.admincmd.database;
 
-import com.admincmd.admincmd.utils.Config;
-import com.admincmd.admincmd.Main;
-import com.admincmd.admincmd.utils.ACLogger;
 import java.io.File;
 import java.sql.SQLException;
 
+import com.admincmd.admincmd.Main;
+import com.admincmd.admincmd.utils.ACLogger;
+import com.admincmd.admincmd.utils.Config;
+
 public class DatabaseFactory {
 
-    private static Database db = null; 
+    private static Database db = null;
 
     public static void init() {
         if (Config.MYSQL_USE.getBoolean()) {
@@ -48,6 +49,7 @@ public class DatabaseFactory {
         try {
             String PLAYER_TABLE;
             String HOME_TABLE;
+            String WPS_TABLE;
             String SPAWN_TABLE;
             String WORLD_TABLE;
             if (db.getType() == Database.Type.SQLITE) {
@@ -72,11 +74,16 @@ public class DatabaseFactory {
                 SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
                         + "`location` TEXT NOT NULL"
                         + ");";
-                
                 WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
                         + "`name` varchar(64) PRIMARY KEY NOT NULL,"
                         + "`paused` BOOLEAN NOT NULL,"
                         + "`time` varchar(128) NOT NULL"
+                        + ");";
+                WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
+                		+ "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + "`playerid` INTEGER NOT NULL,"
+                        + "`location` varchar(320) NOT NULL,"
+                        + "`name` varchar(64) NOT NULL"
                         + ");";
             } else {
                 PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
@@ -100,17 +107,23 @@ public class DatabaseFactory {
                 SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
                         + "`location` TEXT NOT NULL"
                         + ");";
-                
                 WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
                         + "`name` varchar(64) PRIMARY KEY NOT NULL,"
                         + "`paused` BOOLEAN NOT NULL,"
                         + "`time` varchar(128) NOT NULL"
+                        + ");";
+                WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
+                		+ "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"
+                        + "`playerid` INTEGER NOT NULL,"
+                        + "`location` varchar(320) NOT NULL,"
+                        + "`name` varchar(64) NOT NULL"
                         + ");";
             }
             db.executeStatement(PLAYER_TABLE);
             db.executeStatement(HOME_TABLE);
             db.executeStatement(SPAWN_TABLE);
             db.executeStatement(WORLD_TABLE);
+            db.executeStatement(WPS_TABLE);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

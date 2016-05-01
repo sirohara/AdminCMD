@@ -1,27 +1,29 @@
 /*
  * This file is part of AdminCMD
  * Copyright (C) 2015 AdminCMD Team
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 package com.admincmd.admincmd.utils;
 
-import com.admincmd.admincmd.Main;
 import java.io.File;
 import java.io.IOException;
+
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.admincmd.admincmd.Main;
 
 public enum Locales {
 
@@ -72,11 +74,20 @@ public enum Locales {
     HELP_PLAYER_VANISH_2("Help.Player.Vanish.2", "Toggles vanish mode for the player"),
     HELP_PLAYER_MUTE_1("Help.Player.Mute.1", "Toggles mute mode"),
     HELP_PLAYER_MUTE_2("Help.Player.Mute.2", "Toggles mute mode for the player"),
+
     HELP_TELEPORT_HOME_1("Help.Home.Home.1", "List's all homes"),
     HELP_TELEPORT_HOME_2("Help.Home.Home.2", "Teleports you to the given home"),
     HELP_TELEPORT_SETHOME_1("Help.Home.Sethome.1", "Creates a new home at your location with the given name"),
-    HELP_TELEPORT_EDITHOME_1("Help.Home.Edithome.1", "Sets the location of the given home to your location"),
     HELP_TELEPORT_DELHOME_1("Help.Home.Delhome.1", "Deletes the given home"),
+    HELP_TELEPORT_EDITHOME_1("Help.Home.Edithome.1", "Sets the location of the given home to your location"),
+    HELP_TELEPORT_LISTHOME_1("Help.Home.ListHome.1", "List's all homes"),
+
+    HELP_TELEPORT_TWP_1("Help.Warp.TWP.1", "List's all warp points"),
+    HELP_TELEPORT_TWP_2("Help.Warp.TWP.2", "Teleports you to the given warp point"),
+    HELP_TELEPORT_WP_1("Help.Warp.WP.1", "Creates a new warp point at your location with the given name"),
+    HELP_TELEPORT_RWP_1("Help.Warp.RWP.1", "Deletes the given warp point"),
+    HELP_TELEPORT_LWP_1("Help.Warp.LWP.1", "List's all warp points"),
+
     HELP_WORLD_SUN_1("Help.World.Sun.1", "Sets the weather to sun in your current world."),
     HELP_WORLD_SUN_2("Help.World.Sun.2", "Sets the weather to sun in the given world"),
     HELP_WORLD_DAY_1("Help.World.Day.1", "Sets the time to daytime in your current world."),
@@ -93,12 +104,22 @@ public enum Locales {
     HELP_SPAWN_SETSPAWN_1("Help.Spawn.Setspawn.1", "Sets the spawnpoint to your location."),
     HELP_SPAWN_SPAWN_1("Help.Spawn.Spawn.1", "Teleports you to the spawnpoint"),
     HELP_SPAWN_SPAWN_2("Help.Spawn.Spawn.2", "Teleports the given player to the spawnpoint"),
+
     HOME_HOME("Home.Home", "Homes"),
+    HOME_LISTHOME("Home.List", "Homes"),
     HOME_SET("Home.Set", "The home was added."),
     HOME_DELETED("Home.Deleted", "The home %home% was deleted."),
     HOME_UPDATED("Home.Updated", "The home was updated to your current location."),
-    HOME_NOHOME("Home.NoHome", "You have not set this home. Try /home to list your homes."),
+    HOME_NOHOME("Home.NoHome", "You have not set this home. Try /home or /listhome to list your homes."),
     HOME_ALREADY_EXISTING("Home.AlreadyExisting", "This home is already existing! Try /home to list all homes."),
+
+    WARP_WP("Warp.WP", "Warp Points"),
+    WARP_LISTWPS("Warp.List", "Warp Points"),
+    WARP_SET("Warp.Set", "The warp point was added."),
+    WARP_DELETED("Warp.Deleted", "The warp point %wp% was deleted."),
+    WARP_NOWP("Warp.NoWP", "You have not set this warp point. Try /wp or /lwp to list all warp points."),
+    WARP_ALREADY_EXISTING("Warp.AlreadyExisting", "This warp point is already existing! Try /wp or /lwp to list all warp points."),
+
     PLAYER_CW_TOGGLED("Player.CW.Toggled", "Your commandwatcher is now %status%"),
     PLAYER_CW_TOGGLED_OTHER("Player.CW.ToggledOther", "%player%'s commandwatcher is now %status%"),
     PLAYER_CW_RAN("Player.CW.Ran", "%player% ran Command: %command%"),
