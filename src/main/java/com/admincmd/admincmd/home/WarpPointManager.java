@@ -38,6 +38,7 @@ public class WarpPointManager {
 
     private static final HashMap<String, Home> wps = new HashMap<>();
     private static final int homeid = -1; // home id is constantly -1 to share the warp point within all players
+    private static int saved = 0;
 
     public static Home getWP(String name) {
         if (!wps.containsKey(name)) return null;
@@ -46,6 +47,17 @@ public class WarpPointManager {
 
     public static void deleteWP(String name) {
         wps.put(name, null);
+
+        // save deletion immediately
+        saved++;
+        try {
+            PreparedStatement s = DatabaseFactory.getDatabase().getPreparedStatement("DELETE FROM `ac_wps` WHERE `name` = ?;");
+            s.setString(1, name);
+            s.executeUpdate();
+            DatabaseFactory.getDatabase().closeStatement(s);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static HashMap<String, Home> getWPs() {
@@ -58,6 +70,34 @@ public class WarpPointManager {
         if (player == null) return;
         Home wp = new Home(target, player, name);
         wps.put(name, wp);
+
+        // save creation immediately
+        saved++;
+        try {
+            PreparedStatement s = DatabaseFactory.getDatabase().getPreparedStatement("SELECT `id` FROM `ac_wps` WHERE `id` = ? LIMIT 1;");
+            s.setInt(1, homeid);
+            ResultSet rs = s.executeQuery();
+
+            if (rs.next()) {
+                PreparedStatement sta = DatabaseFactory.getDatabase().getPreparedStatement("UPDATE `ac_wps` SET `location` = ? WHERE `id` = ?;");
+                sta.setString(1, wp.getSerializedLocation());
+                sta.setInt(2, homeid);
+                sta.executeUpdate();
+                DatabaseFactory.getDatabase().closeStatement(sta);
+            } else {
+                PreparedStatement sta = DatabaseFactory.getDatabase().getPreparedStatement("INSERT INTO `ac_wps` (`playerid`, `location`, `name`) VALUES (?, ?, ?);");
+                sta.setInt(1, wp.getOwner().getId());
+                sta.setString(2, wp.getSerializedLocation());
+                sta.setString(3, wp.getName());
+                sta.executeUpdate();
+                DatabaseFactory.getDatabase().closeStatement(sta);
+            }
+
+            DatabaseFactory.getDatabase().closeResultSet(rs);
+            DatabaseFactory.getDatabase().closeStatement(s);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static void init() {
@@ -85,48 +125,6 @@ public class WarpPointManager {
 
     public static void save() {
         if (wps.isEmpty()) return;
-        int saved = 0;
-        for (final String name : wps.keySet()) {
-            Home wp = wps.get(name);
-            saved++;
-            if (wp == null) {
-                try {
-                    PreparedStatement s = DatabaseFactory.getDatabase().getPreparedStatement("DELETE FROM `ac_wps` WHERE `name` = ?;");
-                    s.setString(1, name);
-                    s.executeUpdate();
-                    DatabaseFactory.getDatabase().closeStatement(s);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-                continue;
-            }
-
-            try {
-                PreparedStatement s = DatabaseFactory.getDatabase().getPreparedStatement("SELECT `id` FROM `ac_wps` WHERE `id` = ? LIMIT 1;");
-                s.setInt(1, homeid);
-                ResultSet rs = s.executeQuery();
-
-                if (rs.next()) {
-                    PreparedStatement sta = DatabaseFactory.getDatabase().getPreparedStatement("UPDATE `ac_wps` SET `location` = ? WHERE `id` = ?;");
-                    sta.setString(1, wp.getSerializedLocation());
-                    sta.setInt(2, homeid);
-                    sta.executeUpdate();
-                    DatabaseFactory.getDatabase().closeStatement(sta);
-                } else {
-                    PreparedStatement sta = DatabaseFactory.getDatabase().getPreparedStatement("INSERT INTO `ac_wps` (`playerid`, `location`, `name`) VALUES (?, ?, ?);");
-                    sta.setInt(1, wp.getOwner().getId());
-                    sta.setString(2, wp.getSerializedLocation());
-                    sta.setString(3, wp.getName());
-                    sta.executeUpdate();
-                    DatabaseFactory.getDatabase().closeStatement(sta);
-                }
-
-                DatabaseFactory.getDatabase().closeResultSet(rs);
-                DatabaseFactory.getDatabase().closeStatement(s);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
         wps.clear();
         ACLogger.info("Saved " + saved + " homes!");
     }
