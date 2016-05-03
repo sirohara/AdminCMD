@@ -38,110 +38,112 @@ import com.google.common.base.Joiner;
 @CommandHandler
 public class HomeCommands {
 
-    private final Map<String, HelpPage> helpPages = new HashMap<>();
+	private final Map<String, HelpPage> helpPages = new HashMap<>();
 
-    public HomeCommands() {
-        helpPages.put("home", new HelpPage("home", "", "<name>"));
-        helpPages.put("sethome", new HelpPage("sethome", "<name>"));
-        helpPages.put("delhome", new HelpPage("delhome", "<name>"));
-        helpPages.put("edithome", new HelpPage("edithome", "<name>"));
-        helpPages.put("listhome", new HelpPage("listhome", "<name>"));
-    }
+	public HomeCommands() {
+		helpPages.put("home", new HelpPage("home", "", "<name>"));
+		helpPages.put("sethome", new HelpPage("sethome", "<name>"));
+		helpPages.put("delhome", new HelpPage("delhome", "<name>"));
+		helpPages.put("edithome", new HelpPage("edithome", "<name>"));
+		helpPages.put("listhome", new HelpPage("listhome", "<name>"));
+	}
 
-    @BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "h")
-    public CommandResult executeHome(Player p, CommandArgs args) {
-        if (helpPages.get("home").sendHelp(p, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "h")
+	public CommandResult executeHome(Player p, CommandArgs args) {
+		if (helpPages.get("home").sendHelp(p, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() > 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() > 1) {
+			return CommandResult.ERROR;
+		}
 
-        if (args.isEmpty()) {
-            String homes = Locales.HOME_HOME.getString() + " (" + HomeManager.getHomes(p).size() + "): §6" + Joiner.on(", ").join(HomeManager.getHomes(p).keySet());
-            return Messager.sendMessage(p, homes, MessageType.INFO);
-        } else {
-            Home h = HomeManager.getHome(p, args.getString(0));
-            if (h != null) {
-                h.teleport();
-                return CommandResult.SUCCESS;
-            } else {
-                return Messager.sendMessage(p, Locales.HOME_NOHOME, MessageType.ERROR);
-            }
-        }
-    }
+		if (args.isEmpty()) {
+			String homes = Locales.HOME_HOME.getString() + " (" + HomeManager.getHomes(p).size() + "): §6"
+					+ Joiner.on(", ").join(HomeManager.getHomes(p).keySet());
+			return Messager.sendMessage(p, homes, MessageType.INFO);
+		} else {
+			Home h = HomeManager.getHome(p, args.getString(0));
+			if (h != null) {
+				h.teleport();
+				return CommandResult.SUCCESS;
+			} else {
+				return Messager.sendMessage(p, Locales.HOME_NOHOME, MessageType.ERROR);
+			}
+		}
+	}
 
-    @BaseCommand(command = "sethome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "sh")
-    public CommandResult executeSethome(Player sender, CommandArgs args) {
-        if (helpPages.get("sethome").sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "sethome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "sh")
+	public CommandResult executeSethome(Player sender, CommandArgs args) {
+		if (helpPages.get("sethome").sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 1) {
+			return CommandResult.ERROR;
+		}
 
-        Home h = HomeManager.getHome(sender, args.getString(0));
-        if (h != null) {
-            return Messager.sendMessage(sender, Locales.HOME_ALREADY_EXISTING, MessageType.ERROR);
-        }
+		Home h = HomeManager.getHome(sender, args.getString(0));
+		if (h != null) {
+			return Messager.sendMessage(sender, Locales.HOME_ALREADY_EXISTING, MessageType.ERROR);
+		}
 
-        HomeManager.createHome(sender, args.getString(0));
-        return Messager.sendMessage(sender, Locales.HOME_SET, MessageType.INFO);
-    }
+		HomeManager.createHome(sender, args.getString(0));
+		return Messager.sendMessage(sender, Locales.HOME_SET, MessageType.INFO);
+	}
 
-    @BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rh")
-    public CommandResult executeRemovehome(Player sender, CommandArgs args) {
-        if (helpPages.get("delhome").sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rh")
+	public CommandResult executeRemovehome(Player sender, CommandArgs args) {
+		if (helpPages.get("delhome").sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 1) {
+			return CommandResult.ERROR;
+		}
 
-        Home h = HomeManager.getHome(sender, args.getString(0));
-        if (h == null) {
-            return Messager.sendMessage(sender, Locales.HOME_NOHOME, MessageType.ERROR);
-        }
+		Home h = HomeManager.getHome(sender, args.getString(0));
+		if (h == null) {
+			return Messager.sendMessage(sender, Locales.HOME_NOHOME, MessageType.ERROR);
+		}
 
-        HomeManager.deleteHome(h);
-        String msg = Locales.HOME_DELETED.getString().replaceAll("%home%", h.getName());
-        return Messager.sendMessage(sender, msg, MessageType.INFO);
-    }
+		HomeManager.deleteHome(h);
+		String msg = Locales.HOME_DELETED.getString().replaceAll("%home%", h.getName());
+		return Messager.sendMessage(sender, msg, MessageType.INFO);
+	}
 
-    @BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "eh")
-    public CommandResult executeEdithome(Player sender, CommandArgs args) {
-        if (helpPages.get("edithome").sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "eh")
+	public CommandResult executeEdithome(Player sender, CommandArgs args) {
+		if (helpPages.get("edithome").sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 1) {
+			return CommandResult.ERROR;
+		}
 
-        Home h = HomeManager.getHome(sender, args.getString(0));
+		Home h = HomeManager.getHome(sender, args.getString(0));
 
-        if (h == null) {
-            return Messager.sendMessage(sender, Locales.HOME_NOHOME, MessageType.ERROR);
-        }
+		if (h == null) {
+			return Messager.sendMessage(sender, Locales.HOME_NOHOME, MessageType.ERROR);
+		}
 
-        h.updateLocation(sender.getLocation());
-        return Messager.sendMessage(sender, Locales.HOME_UPDATED, MessageType.INFO);
-    }
+		h.updateLocation(sender.getLocation());
+		return Messager.sendMessage(sender, Locales.HOME_UPDATED, MessageType.INFO);
+	}
 
-    @BaseCommand(command = "listhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "lh")
-    public CommandResult executeListHome(Player p, CommandArgs args) {
-        if (helpPages.get("listhome").sendHelp(p, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "listhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "lh")
+	public CommandResult executeListHome(Player p, CommandArgs args) {
+		if (helpPages.get("listhome").sendHelp(p, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 0) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 0) {
+			return CommandResult.ERROR;
+		}
 
-        String homes = Locales.HOME_LISTHOME.getString() + " (" + HomeManager.getHomes(p).size() + "): §6" + Joiner.on(" ").join(HomeManager.getHomes(p).keySet());
-        return Messager.sendMessage(p, homes, MessageType.INFO);
-    }
+		String homes = Locales.HOME_LISTHOME.getString() + " (" + HomeManager.getHomes(p).size() + "): §6"
+				+ Joiner.on(" ").join(HomeManager.getHomes(p).keySet());
+		return Messager.sendMessage(p, homes, MessageType.INFO);
+	}
 }

@@ -26,61 +26,60 @@ import org.bukkit.Location;
 
 public class Home {
 
-    private Location loc;
-    private final BukkitPlayer owner;
-    private final String name;
-    private final int id;
+	private Location loc;
+	private final BukkitPlayer owner;
+	private final String name;
+	private final int id;
 
-    public Home(Location loc, BukkitPlayer owner, String name) {
-        this.loc = loc;
-        this.owner = owner;
-        this.name = name;
-        this.id = -1;
-    }
+	public Home(Location loc, BukkitPlayer owner, String name) {
+		this.loc = loc;
+		this.owner = owner;
+		this.name = name;
+		this.id = -1;
+	}
 
+	public Home(String serializedLocation, BukkitPlayer owner, String name, int id) {
+		this.loc = LocationSerialization.deserialLocation(serializedLocation);
+		this.owner = owner;
+		this.name = name;
+		this.id = id;
+	}
 
-    public Home(String serializedLocation, BukkitPlayer owner, String name, int id) {
-        this.loc = LocationSerialization.deserialLocation(serializedLocation);
-        this.owner = owner;
-        this.name = name;
-        this.id = id;
-    }
-    
-    public int getID() {
-        return id;
-    }
+	public int getID() {
+		return id;
+	}
 
-    public Location getLocation() {
-        return loc;
-    }
+	public Location getLocation() {
+		return loc;
+	}
 
-    public void updateLocation(Location loc) {
-        this.loc = loc;
-    }
+	public void updateLocation(Location loc) {
+		this.loc = loc;
+	}
 
-    public void updateLocation(String serializedLocation) {
-        this.loc = LocationSerialization.deserialLocation(serializedLocation);
-    }
+	public void updateLocation(String serializedLocation) {
+		this.loc = LocationSerialization.deserialLocation(serializedLocation);
+	}
 
-    public String getSerializedLocation() {
-        return LocationSerialization.serialLocation(loc);
-    }
+	public String getSerializedLocation() {
+		return LocationSerialization.serialLocation(loc);
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public BukkitPlayer getOwner() {
-        return owner;
-    }
+	public BukkitPlayer getOwner() {
+		return owner;
+	}
 
-    public ACWorld getWorld() {
-        return WorldManager.getWorld(loc);
-    }
+	public ACWorld getWorld() {
+		return WorldManager.getWorld(loc);
+	}
 
-    public void teleport() {
-        if (getOwner().getPlayer() != null) {
-            getOwner().getPlayer().teleport(loc);
-        }
-    }
+	public void teleport() {
+		if (getOwner().getPlayer() != null) {
+			getOwner().getPlayer().teleport(loc);
+		}
+	}
 }

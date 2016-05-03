@@ -27,138 +27,139 @@ import com.admincmd.admincmd.database.Database;
 
 public abstract class SQLPlayer {
 
-    private final UUID uuid;
-    private boolean fly, god, invisible, cmdwatcher, spy, muted;
-    private String nickname, lastMsg;
-    private int id;
-    private Database db;
+	private final UUID uuid;
+	private boolean fly, god, invisible, cmdwatcher, spy, muted;
+	private String nickname, lastMsg;
+	private int id;
+	private Database db;
 
-    public SQLPlayer(UUID uuid, Database db) {
-        this.db = db;
-        this.uuid = uuid;
-        try {
-            PreparedStatement s = db.getPreparedStatement("SELECT * FROM `ac_player` WHERE `uuid` = ?;");
-            s.setString(1, uuid.toString());
-            ResultSet rs = s.executeQuery();
-            if (rs.next()) {
-                boolean god = rs.getBoolean("god");
-                boolean fly = rs.getBoolean("fly");
-                boolean inv = rs.getBoolean("invisible");
-                boolean cw = rs.getBoolean("commandwatcher");
-                boolean spy = rs.getBoolean("spy");
-                boolean muted = rs.getBoolean("muted");
-                String nickname = rs.getString("nickname");
-                int id = rs.getInt("ID");
-                String lastMsg = rs.getString("lastMsg");
+	public SQLPlayer(UUID uuid, Database db) {
+		this.db = db;
+		this.uuid = uuid;
+		try {
+			PreparedStatement s = db.getPreparedStatement("SELECT * FROM `ac_player` WHERE `uuid` = ?;");
+			s.setString(1, uuid.toString());
+			ResultSet rs = s.executeQuery();
+			if (rs.next()) {
+				boolean god = rs.getBoolean("god");
+				boolean fly = rs.getBoolean("fly");
+				boolean inv = rs.getBoolean("invisible");
+				boolean cw = rs.getBoolean("commandwatcher");
+				boolean spy = rs.getBoolean("spy");
+				boolean muted = rs.getBoolean("muted");
+				String nickname = rs.getString("nickname");
+				int id = rs.getInt("ID");
+				String lastMsg = rs.getString("lastMsg");
 
-                this.god = god;
-                this.fly = fly;
-                this.invisible = inv;
-                this.cmdwatcher = cw;
-                this.spy = spy;
-                this.muted = muted;
-                this.nickname = nickname;
-                this.id = id;
-                this.lastMsg = lastMsg;
-            }
+				this.god = god;
+				this.fly = fly;
+				this.invisible = inv;
+				this.cmdwatcher = cw;
+				this.spy = spy;
+				this.muted = muted;
+				this.nickname = nickname;
+				this.id = id;
+				this.lastMsg = lastMsg;
+			}
 
-            db.closeResultSet(rs);
-            db.closeStatement(s);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+			db.closeResultSet(rs);
+			db.closeStatement(s);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 
-    }
+	}
 
-    public boolean isFly() {
-        return fly;
-    }
+	public boolean isFly() {
+		return fly;
+	}
 
-    public void setFly(boolean fly) {
-        this.fly = fly;
-    }
+	public void setFly(boolean fly) {
+		this.fly = fly;
+	}
 
-    public boolean isGod() {
-        return god;
-    }
+	public boolean isGod() {
+		return god;
+	}
 
-    public void setGod(boolean god) {
-        this.god = god;
-    }
+	public void setGod(boolean god) {
+		this.god = god;
+	}
 
-    public boolean isInvisible() {
-        return invisible;
-    }
+	public boolean isInvisible() {
+		return invisible;
+	}
 
-    public void setInvisible(boolean invisible) {
-        this.invisible = invisible;
-    }
+	public void setInvisible(boolean invisible) {
+		this.invisible = invisible;
+	}
 
-    public boolean isCmdwatcher() {
-        return cmdwatcher;
-    }
+	public boolean isCmdwatcher() {
+		return cmdwatcher;
+	}
 
-    public void setCmdwatcher(boolean cmdwatcher) {
-        this.cmdwatcher = cmdwatcher;
-    }
+	public void setCmdwatcher(boolean cmdwatcher) {
+		this.cmdwatcher = cmdwatcher;
+	}
 
-    public boolean isSpy() {
-        return spy;
-    }
+	public boolean isSpy() {
+		return spy;
+	}
 
-    public void setSpy(boolean spy) {
-        this.spy = spy;
-    }
+	public void setSpy(boolean spy) {
+		this.spy = spy;
+	}
 
-    public boolean isMuted() {
-        return muted;
-    }
+	public boolean isMuted() {
+		return muted;
+	}
 
-    public void setMuted(boolean muted) {
-        this.muted = muted;
-    }
+	public void setMuted(boolean muted) {
+		this.muted = muted;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getNickname() {
-        return nickname;
-    }
+	public String getNickname() {
+		return nickname;
+	}
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-    public String getLastMsg() {
-        return lastMsg;
-    }
+	public String getLastMsg() {
+		return lastMsg;
+	}
 
-    public void setLastMsg(String lastMsg) {
-        this.lastMsg = lastMsg;
-    }
+	public void setLastMsg(String lastMsg) {
+		this.lastMsg = lastMsg;
+	}
 
-    public void update() {
-        try {
-            PreparedStatement st = db.getPreparedStatement("UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ?, `lastMsg` = ? WHERE `id` = ?;");
-            st.setBoolean(1, this.god);
-            st.setBoolean(2, this.invisible);
-            st.setBoolean(3, this.cmdwatcher);
-            st.setBoolean(4, this.spy);
-            st.setBoolean(5, this.fly);
-            st.setBoolean(6, this.muted);
-            st.setString(7, this.nickname);
-            st.setInt(8, this.id);
-            st.setString(9, this.lastMsg);
-            st.executeUpdate();
-            db.closeStatement(st);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+	public void update() {
+		try {
+			PreparedStatement st = db.getPreparedStatement(
+					"UPDATE `ac_player` SET `god` = ?, `invisible` = ?, `commandwatcher` = ?, `spy` = ?, `fly` = ?, `muted` = ?, `nickname` = ?, `lastMsg` = ? WHERE `id` = ?;");
+			st.setBoolean(1, this.god);
+			st.setBoolean(2, this.invisible);
+			st.setBoolean(3, this.cmdwatcher);
+			st.setBoolean(4, this.spy);
+			st.setBoolean(5, this.fly);
+			st.setBoolean(6, this.muted);
+			st.setString(7, this.nickname);
+			st.setInt(8, this.id);
+			st.setString(9, this.lastMsg);
+			st.executeUpdate();
+			db.closeStatement(st);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    public UUID getUuid() {
-        return uuid;
-    }
+	public UUID getUuid() {
+		return uuid;
+	}
 
 }

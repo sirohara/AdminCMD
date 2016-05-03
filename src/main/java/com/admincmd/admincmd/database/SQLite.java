@@ -24,22 +24,22 @@ import java.sql.SQLException;
 
 public class SQLite extends Database {
 
-    private final File dbFile;
+	private final File dbFile;
 
-    /**
-     * Creates a new instance for SQLite databases.
-     *
-     * @param dbFile Database file
-     */
-    public SQLite(File dbFile) { 
-        super("org.sqlite.JDBC", Type.SQLITE);
-        dbFile.getParentFile().mkdirs();
-        this.dbFile = dbFile;
-    }
+	/**
+	 * Creates a new instance for SQLite databases.
+	 *
+	 * @param dbFile Database file
+	 */
+	public SQLite(File dbFile) {
+		super("org.sqlite.JDBC", Type.SQLITE);
+		dbFile.getParentFile().mkdirs();
+		this.dbFile = dbFile;
+	}
 
-    @Override
-    public void reactivateConnection() throws SQLException {
-        setConnection(DriverManager.getConnection("jdbc:sqlite://" + dbFile.getAbsolutePath()));
-    }
+	@Override
+	public void reactivateConnection() throws SQLException {
+		setConnection(DriverManager.getConnection("jdbc:sqlite://" + dbFile.getAbsolutePath()));
+	}
 
 }

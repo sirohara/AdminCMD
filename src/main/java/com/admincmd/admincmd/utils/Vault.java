@@ -26,32 +26,33 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class Vault {
 
-    private static Chat chat = null;
+	private static Chat chat = null;
 
-    public static String getPrefix(Player p) {
-        if (chat == null) {
-            return "";
-        }
-        return chat.getPlayerPrefix(p.getWorld().getName(), p);
-    }
+	public static String getPrefix(Player p) {
+		if (chat == null) {
+			return "";
+		}
+		return chat.getPlayerPrefix(p.getWorld().getName(), p);
+	}
 
-    public static String getSuffix(Player p) {
-        if (chat == null) {
-            return "";
-        }
-        return chat.getPlayerSuffix(p.getWorld().getName(), p) + ChatColor.RESET;
-    }
+	public static String getSuffix(Player p) {
+		if (chat == null) {
+			return "";
+		}
+		return chat.getPlayerSuffix(p.getWorld().getName(), p) + ChatColor.RESET;
+	}
 
-    public static boolean setupChat() {
-        try {
-            RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
-            if (chatProvider != null && chatProvider.getProvider() != null) {
-                chat = chatProvider.getProvider();
-                return chat != null && chat.isEnabled();
-            }
-            return false;
-        } catch (Throwable e) {
-            return false;
-        }
-    }
+	public static boolean setupChat() {
+		try {
+			RegisteredServiceProvider<Chat> chatProvider = Bukkit.getServer().getServicesManager()
+					.getRegistration(net.milkbowl.vault.chat.Chat.class);
+			if (chatProvider != null && chatProvider.getProvider() != null) {
+				chat = chatProvider.getProvider();
+				return chat != null && chat.isEnabled();
+			}
+			return false;
+		} catch (Throwable e) {
+			return false;
+		}
+	}
 }

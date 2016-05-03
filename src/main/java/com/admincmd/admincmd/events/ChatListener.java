@@ -28,13 +28,13 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener extends BukkitListener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerChat(final AsyncPlayerChatEvent e) {
-        BukkitPlayer p = PlayerManager.getPlayer(e.getPlayer());
-        if (p.isMuted()) {
-            Messager.sendMessage(e.getPlayer(), Locales.PLAYER_MUTED, Messager.MessageType.ERROR);
-            e.setCancelled(true);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onPlayerChat(final AsyncPlayerChatEvent e) {
+		BukkitPlayer p = PlayerManager.getPlayer(e.getPlayer());
+		if (p.isMuted()) {
+			Messager.sendMessage(e.getPlayer(), Locales.PLAYER_MUTED, Messager.MessageType.ERROR);
+			e.setCancelled(true);
+		}
+	}
 
 }

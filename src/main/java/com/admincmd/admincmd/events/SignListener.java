@@ -34,85 +34,88 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class SignListener extends BukkitListener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onSignChange(final SignChangeEvent e) {
-        for (int i = 0; i < e.getLines().length; i++) {
-            String line = e.getLines()[i];
-            line = Utils.replaceColors(line);
-            e.setLine(i, line);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onSignChange(final SignChangeEvent e) {
+		for (int i = 0; i < e.getLines().length; i++) {
+			String line = e.getLines()[i];
+			line = Utils.replaceColors(line);
+			e.setLine(i, line);
+		}
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onSignEdit(final SignChangeEvent e) {
-        Player p = e.getPlayer();
-        String[] lines = e.getLines();
+	@EventHandler(ignoreCancelled = true)
+	public void onSignEdit(final SignChangeEvent e) {
+		Player p = e.getPlayer();
+		String[] lines = e.getLines();
 
-        if (lines.length < 2) {
-            return;
-        }
-        if (!lines[0].equalsIgnoreCase("[command]")) {
-            return;
-        }
-        if (!p.hasPermission("admincmd.commandsign.create")) {
-            Messager.sendMessage(p, Locales.COMMAND_MESSAGES_NO_PERMISSION.getString().replaceAll("%perm%", "admincmd.commandsign.create"), Messager.MessageType.NONE);
-            return;
-        }
+		if (lines.length < 2) {
+			return;
+		}
+		if (!lines[0].equalsIgnoreCase("[command]")) {
+			return;
+		}
+		if (!p.hasPermission("admincmd.commandsign.create")) {
+			Messager.sendMessage(p, Locales.COMMAND_MESSAGES_NO_PERMISSION.getString().replaceAll("%perm%",
+					"admincmd.commandsign.create"), Messager.MessageType.NONE);
+			return;
+		}
 
-        for (int i = 0; i < lines.length; i++) {
-            ChatColor color = null;
-            if (i == 0) {
-                color = ChatColor.BLUE;
-            } else if (i == 1) {
-                color = ChatColor.GOLD;
-            }
+		for (int i = 0; i < lines.length; i++) {
+			ChatColor color = null;
+			if (i == 0) {
+				color = ChatColor.BLUE;
+			} else if (i == 1) {
+				color = ChatColor.GOLD;
+			}
 
-            String line;
-            if (color != null) {
-                line = color + lines[i];
-            } else {
-                line = lines[i];
-            }
+			String line;
+			if (color != null) {
+				line = color + lines[i];
+			} else {
+				line = lines[i];
+			}
 
-            if (line.length() > 16) {
-                e.getBlock().breakNaturally();
-                Messager.sendMessage(p, "The line is too long to fit on the sign!", Messager.MessageType.ERROR);
-                break;
-            }
+			if (line.length() > 16) {
+				e.getBlock().breakNaturally();
+				Messager.sendMessage(p, "The line is too long to fit on the sign!", Messager.MessageType.ERROR);
+				break;
+			}
 
-            e.setLine(i, line);
-        }
-    }
+			e.setLine(i, line);
+		}
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onSignCLick(final PlayerInteractEvent e) {
-        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-        if (!(e.getClickedBlock().getState() instanceof Sign)) {
-            return;
-        }
-        Sign s = (Sign) e.getClickedBlock().getState();
-        List<String> lines = new ArrayList<>();
+	@EventHandler(ignoreCancelled = true)
+	public void onSignCLick(final PlayerInteractEvent e) {
+		if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+			return;
+		}
+		if (!(e.getClickedBlock().getState() instanceof Sign)) {
+			return;
+		}
+		Sign s = (Sign) e.getClickedBlock().getState();
+		List<String> lines = new ArrayList<>();
 
-        for (String string : s.getLines()) {
-            lines.add(Utils.removeColors(string));
-        }
+		for (String string : s.getLines()) {
+			lines.add(Utils.removeColors(string));
+		}
 
-        if (lines.size() < 2) {
-            return;
-        }
-        if (!e.getPlayer().hasPermission("admincmd.commandsign.use")) {
-            Messager.sendMessage(e.getPlayer(), Locales.COMMAND_MESSAGES_NO_PERMISSION.getString().replaceAll("%perm%", "admincmd.commandsign.use"), Messager.MessageType.NONE);
-            return;
-        }
+		if (lines.size() < 2) {
+			return;
+		}
+		if (!e.getPlayer().hasPermission("admincmd.commandsign.use")) {
+			Messager.sendMessage(e.getPlayer(),
+					Locales.COMMAND_MESSAGES_NO_PERMISSION.getString().replaceAll("%perm%", "admincmd.commandsign.use"),
+					Messager.MessageType.NONE);
+			return;
+		}
 
-        if (!lines.get(0).equalsIgnoreCase("[command]")) {
-            return;
-        }
+		if (!lines.get(0).equalsIgnoreCase("[command]")) {
+			return;
+		}
 
-        String command = lines.get(1);
-        e.getPlayer().performCommand(command.replaceFirst("/", ""));
-    }
+		String command = lines.get(1);
+		e.getPlayer().performCommand(command.replaceFirst("/", ""));
+	}
 
 }

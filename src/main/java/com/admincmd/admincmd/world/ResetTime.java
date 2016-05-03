@@ -18,20 +18,19 @@
  */
 package com.admincmd.admincmd.world;
 
-
 public class ResetTime implements Runnable {
-    
-    private final ACWorld w;
-    
-    public ResetTime(ACWorld w) {
-        this.w = w;
-    }
-    
-    @Override
-    public void run() {
-        if (w.isTimePaused()) {
-            w.getWorld().setTime(w.getTimePauseMoment());
-        }
-    }
-    
+
+	private final ACWorld w;
+
+	public ResetTime(ACWorld w) {
+		this.w = w;
+	}
+
+	@Override
+	public void run() {
+		if (w.isTimePaused()) {
+			w.getWorld().setTime(w.getTimePauseMoment());
+		}
+	}
+
 }

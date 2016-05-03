@@ -28,32 +28,32 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class PlayerDamageListener extends BukkitListener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onDamage(final EntityDamageEvent e) {
-        if (!(e.getEntity() instanceof Player)) {
-            return;
-        }
-        Player p = (Player) e.getEntity();
-        BukkitPlayer bp = PlayerManager.getPlayer(p);
+	@EventHandler(ignoreCancelled = true)
+	public void onDamage(final EntityDamageEvent e) {
+		if (!(e.getEntity() instanceof Player)) {
+			return;
+		}
+		Player p = (Player) e.getEntity();
+		BukkitPlayer bp = PlayerManager.getPlayer(p);
 
-        if (bp.isGod()) {
-            e.setCancelled(true);
-            e.setDamage(0.0);
-        }
-    }
+		if (bp.isGod()) {
+			e.setCancelled(true);
+			e.setDamage(0.0);
+		}
+	}
 
-    @EventHandler(ignoreCancelled = true)
-    public void onHunger(final FoodLevelChangeEvent e) {
-        if (!(e.getEntity() instanceof Player)) {
-            return;
-        }
-        
-        Player p = (Player) e.getEntity();
-        
-        BukkitPlayer bp = PlayerManager.getPlayer(p);
-        if (bp.isGod()) {
-            e.setCancelled(true);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onHunger(final FoodLevelChangeEvent e) {
+		if (!(e.getEntity() instanceof Player)) {
+			return;
+		}
+
+		Player p = (Player) e.getEntity();
+
+		BukkitPlayer bp = PlayerManager.getPlayer(p);
+		if (bp.isGod()) {
+			e.setCancelled(true);
+		}
+	}
 
 }

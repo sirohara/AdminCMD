@@ -25,12 +25,12 @@ import org.bukkit.event.Listener;
 
 public class BukkitListener implements Listener {
 
-    public void register() {
-        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
-    }
-    
-    public void register(Addon a) {
-        a.getServer().getPluginManager().registerEvents(this, a);
-    }
+	public void register() {
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+	}
+
+	public void register(Addon a) {
+		a.getServer().getPluginManager().registerEvents(this, a);
+	}
 
 }

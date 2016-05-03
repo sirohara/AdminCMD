@@ -27,110 +27,112 @@ import com.admincmd.admincmd.utils.Config;
 
 public class DatabaseFactory {
 
-    private static Database db = null;
+	private static Database db = null;
 
-    public static void init() {
-        if (Config.MYSQL_USE.getBoolean()) {
-            db = new MySQL(Config.MYSQL_IP.getString(), Config.MYSQL_USER.getString(), Config.MYSQL_PASSWORD.getString(), Config.MYSQL_DATABASE.getString(), Config.MYSQL_PORT.getInteger());
-        } else {
-            db = new SQLite(new File(Main.getInstance().getDataFolder(), "Database.db"));
-        }
+	public static void init() {
+		if (Config.MYSQL_USE.getBoolean()) {
+			db = new MySQL(Config.MYSQL_IP.getString(), Config.MYSQL_USER.getString(),
+					Config.MYSQL_PASSWORD.getString(), Config.MYSQL_DATABASE.getString(),
+					Config.MYSQL_PORT.getInteger());
+		} else {
+			db = new SQLite(new File(Main.getInstance().getDataFolder(), "Database.db"));
+		}
 
-        if (db.testConnection()) {
-            ACLogger.info("The connection was successful!");
-            createTables();
-        } else {
-            ACLogger.severe("Could not connect to the Database!");
-        }
+		if (db.testConnection()) {
+			ACLogger.info("The connection was successful!");
+			createTables();
+		} else {
+			ACLogger.severe("Could not connect to the Database!");
+		}
 
-    }
+	}
 
-    private static void createTables() {
-        try {
-            String PLAYER_TABLE;
-            String HOME_TABLE;
-            String WPS_TABLE;
-            String SPAWN_TABLE;
-            String WORLD_TABLE;
-            if (db.getType() == Database.Type.SQLITE) {
-                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
-                        + "`ID` INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + "`uuid` varchar(64) NOT NULL,"
-                        + "`god` BOOLEAN,"
-                        + "`invisible` BOOLEAN,"
-                        + "`commandwatcher` BOOLEAN,"
-                        + "`spy` BOOLEAN,"
-                        + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN,"
-                        + "`nickname` varchar(64) DEFAULT 'none',"
-                        + "`lastMsg` varchar(64) DEFAULT 'none'"
-                        + ");";
-                HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
-                        + "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + "`playerid` INTEGER NOT NULL,"
-                        + "`location` varchar(320) NOT NULL,"
-                        + "`name` varchar(64) NOT NULL"
-                        + ");";
-                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
-                        + "`location` TEXT NOT NULL"
-                        + ");";
-                WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
-                        + "`name` varchar(64) PRIMARY KEY NOT NULL,"
-                        + "`paused` BOOLEAN NOT NULL,"
-                        + "`time` varchar(128) NOT NULL"
-                        + ");";
-                WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
-                		+ "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + "`playerid` INTEGER NOT NULL,"
-                        + "`location` varchar(320) NOT NULL,"
-                        + "`name` varchar(64) NOT NULL"
-                        + ");";
-            } else {
-                PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
-                        + "`ID` INTEGER PRIMARY KEY AUTO_INCREMENT,"
-                        + "`uuid` varchar(64) NOT NULL,"
-                        + "`god` BOOLEAN,"
-                        + "`invisible` BOOLEAN,"
-                        + "`commandwatcher` BOOLEAN,"
-                        + "`spy` BOOLEAN,"
-                        + "`fly` BOOLEAN,"
-                        + "`muted` BOOLEAN,"
-                        + "`nickname` varchar(64) DEFAULT 'none',"
-                        + "`lastMsg` varchar(64) DEFAULT 'none'"
-                        + ");";
-                HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
-                        + "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"
-                        + "`playerid` INTEGER NOT NULL,"
-                        + "`location` varchar(320) NOT NULL,"
-                        + "`name` varchar(64) NOT NULL"
-                        + ");";
-                SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
-                        + "`location` TEXT NOT NULL"
-                        + ");";
-                WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
-                        + "`name` varchar(64) PRIMARY KEY NOT NULL,"
-                        + "`paused` BOOLEAN NOT NULL,"
-                        + "`time` varchar(128) NOT NULL"
-                        + ");";
-                WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
-                		+ "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"
-                        + "`playerid` INTEGER NOT NULL,"
-                        + "`location` varchar(320) NOT NULL,"
-                        + "`name` varchar(64) NOT NULL"
-                        + ");";
-            }
-            db.executeStatement(PLAYER_TABLE);
-            db.executeStatement(HOME_TABLE);
-            db.executeStatement(SPAWN_TABLE);
-            db.executeStatement(WORLD_TABLE);
-            db.executeStatement(WPS_TABLE);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+	private static void createTables() {
+		try {
+			String PLAYER_TABLE;
+			String HOME_TABLE;
+			String WPS_TABLE;
+			String SPAWN_TABLE;
+			String WORLD_TABLE;
+			if (db.getType() == Database.Type.SQLITE) {
+				PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
+						+ "`ID` INTEGER PRIMARY KEY AUTOINCREMENT,"
+						+ "`uuid` varchar(64) NOT NULL,"
+						+ "`god` BOOLEAN,"
+						+ "`invisible` BOOLEAN,"
+						+ "`commandwatcher` BOOLEAN,"
+						+ "`spy` BOOLEAN,"
+						+ "`fly` BOOLEAN,"
+						+ "`muted` BOOLEAN,"
+						+ "`nickname` varchar(64) DEFAULT 'none',"
+						+ "`lastMsg` varchar(64) DEFAULT 'none'"
+						+ ");";
+				HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
+						+ "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+						+ "`playerid` INTEGER NOT NULL,"
+						+ "`location` varchar(320) NOT NULL,"
+						+ "`name` varchar(64) NOT NULL"
+						+ ");";
+				SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
+						+ "`location` TEXT NOT NULL"
+						+ ");";
+				WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
+						+ "`name` varchar(64) PRIMARY KEY NOT NULL,"
+						+ "`paused` BOOLEAN NOT NULL,"
+						+ "`time` varchar(128) NOT NULL"
+						+ ");";
+				WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
+						+ "`id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+						+ "`playerid` INTEGER NOT NULL,"
+						+ "`location` varchar(320) NOT NULL,"
+						+ "`name` varchar(64) NOT NULL"
+						+ ");";
+			} else {
+				PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS `ac_player` ("
+						+ "`ID` INTEGER PRIMARY KEY AUTO_INCREMENT,"
+						+ "`uuid` varchar(64) NOT NULL,"
+						+ "`god` BOOLEAN,"
+						+ "`invisible` BOOLEAN,"
+						+ "`commandwatcher` BOOLEAN,"
+						+ "`spy` BOOLEAN,"
+						+ "`fly` BOOLEAN,"
+						+ "`muted` BOOLEAN,"
+						+ "`nickname` varchar(64) DEFAULT 'none',"
+						+ "`lastMsg` varchar(64) DEFAULT 'none'"
+						+ ");";
+				HOME_TABLE = "CREATE TABLE IF NOT EXISTS `ac_homes` ("
+						+ "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"
+						+ "`playerid` INTEGER NOT NULL,"
+						+ "`location` varchar(320) NOT NULL,"
+						+ "`name` varchar(64) NOT NULL"
+						+ ");";
+				SPAWN_TABLE = "CREATE TABLE IF NOT EXISTS `ac_spawn` ("
+						+ "`location` TEXT NOT NULL"
+						+ ");";
+				WORLD_TABLE = "CREATE TABLE IF NOT EXISTS `ac_worlds` ("
+						+ "`name` varchar(64) PRIMARY KEY NOT NULL,"
+						+ "`paused` BOOLEAN NOT NULL,"
+						+ "`time` varchar(128) NOT NULL"
+						+ ");";
+				WPS_TABLE = "CREATE TABLE IF NOT EXISTS `ac_wps` ("
+						+ "`id` INTEGER PRIMARY KEY AUTO_INCREMENT,"
+						+ "`playerid` INTEGER NOT NULL,"
+						+ "`location` varchar(320) NOT NULL,"
+						+ "`name` varchar(64) NOT NULL"
+						+ ");";
+			}
+			db.executeStatement(PLAYER_TABLE);
+			db.executeStatement(HOME_TABLE);
+			db.executeStatement(SPAWN_TABLE);
+			db.executeStatement(WORLD_TABLE);
+			db.executeStatement(WPS_TABLE);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
 
-    public static Database getDatabase() {
-        return db;
-    }
+	public static Database getDatabase() {
+		return db;
+	}
 
 }

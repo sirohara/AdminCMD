@@ -30,24 +30,24 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class PlayerCommandListener extends BukkitListener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        BukkitPlayer p = PlayerManager.getPlayer(e.getPlayer());
-        for (Player bp : Bukkit.getOnlinePlayers()) {
-            BukkitPlayer bpc = PlayerManager.getPlayer(bp);
-            if (!bpc.isCmdwatcher()) {
-                continue;
-            }
-            if (p.getId() == bpc.getId()) {
-                continue;
-            }
-            
-            String message = Locales.PLAYER_CW_RAN.getString();
-            message = message.replaceAll("%player%", e.getPlayer().getDisplayName());
-            message = message.replaceAll("%command%", e.getMessage());
-            
-            Messager.sendMessage(bp, message, Messager.MessageType.INFO);
-        }
-    }
+	@EventHandler(ignoreCancelled = true)
+	public void onCommand(PlayerCommandPreprocessEvent e) {
+		BukkitPlayer p = PlayerManager.getPlayer(e.getPlayer());
+		for (Player bp : Bukkit.getOnlinePlayers()) {
+			BukkitPlayer bpc = PlayerManager.getPlayer(bp);
+			if (!bpc.isCmdwatcher()) {
+				continue;
+			}
+			if (p.getId() == bpc.getId()) {
+				continue;
+			}
+
+			String message = Locales.PLAYER_CW_RAN.getString();
+			message = message.replaceAll("%player%", e.getPlayer().getDisplayName());
+			message = message.replaceAll("%command%", e.getMessage());
+
+			Messager.sendMessage(bp, message, Messager.MessageType.INFO);
+		}
+	}
 
 }

@@ -20,14 +20,14 @@ package com.admincmd.admincmd.utils;
 
 public class MotD {
 
-    private final String motd;
+	private final String motd;
 
-    public MotD(String line1, String line2) {
-        this.motd = Utils.replaceColors(line1 + "\n" + line2);
-    }
+	public MotD(String line1, String line2) {
+		this.motd = Utils.replaceColors(line1 + "\n" + line2);
+	}
 
-    public String getMotd() {
-        return motd;
-    }
+	public String getMotd() {
+		return motd;
+	}
 
 }

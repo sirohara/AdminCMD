@@ -29,17 +29,17 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class PlayerDeathListener extends BukkitListener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRespawn(final PlayerRespawnEvent e) {
-        Location s = SpawnManager.getSpawn(e.getPlayer());
-        e.setRespawnLocation(s);
-    }
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onRespawn(final PlayerRespawnEvent e) {
+		Location s = SpawnManager.getSpawn(e.getPlayer());
+		e.setRespawnLocation(s);
+	}
 
-    @EventHandler
-    public void onDeath(final PlayerDeathEvent e) {
-        if (Config.DIRECT_RESPAWN.getBoolean()) {
-            e.getEntity().spigot().respawn();
-        }
-    }
+	@EventHandler
+	public void onDeath(final PlayerDeathEvent e) {
+		if (Config.DIRECT_RESPAWN.getBoolean()) {
+			e.getEntity().spigot().respawn();
+		}
+	}
 
 }

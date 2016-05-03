@@ -30,176 +30,176 @@ import java.util.logging.Logger;
 
 public class ACLogger {
 
-    private static final Logger logger = Logger.getLogger("AdminCMD");
-    private static final String PREFIX = "[AdminCMD] ";
+	private static final Logger logger = Logger.getLogger("AdminCMD");
+	private static final String PREFIX = "[AdminCMD] ";
 
-    /**
-     * Logs information to console
-     *
-     * @param message The message to log
-     */
-    public static void info(final String message) {
-        logger.log(Level.INFO, PREFIX + message);
-    }
+	/**
+	 * Logs information to console
+	 *
+	 * @param message The message to log
+	 */
+	public static void info(final String message) {
+		logger.log(Level.INFO, PREFIX + message);
+	}
 
-    /**
-     * Logs warnings to console
-     *
-     * @param message The warning to log
-     */
-    public static void warn(final String message) {
-        logger.log(Level.WARNING, PREFIX + message);
-    }
+	/**
+	 * Logs warnings to console
+	 *
+	 * @param message The warning to log
+	 */
+	public static void warn(final String message) {
+		logger.log(Level.WARNING, PREFIX + message);
+	}
 
-    /**
-     * Logs errors to console
-     *
-     * @param message The error to log
-     */
-    public static void severe(final String message) {
-        logger.log(Level.SEVERE, PREFIX + message);
-    }
+	/**
+	 * Logs errors to console
+	 *
+	 * @param message The error to log
+	 */
+	public static void severe(final String message) {
+		logger.log(Level.SEVERE, PREFIX + message);
+	}
 
-    /**
-     * Logs errors and exceptions to console
-     *
-     * @param message The error to log
-     * @param ex The exception to log
-     */
-    public static void severe(final String message, final Throwable ex) {
-        logger.log(Level.SEVERE, PREFIX + message, ex);
-        printError(message, ex);
-    }
+	/**
+	 * Logs errors and exceptions to console
+	 *
+	 * @param message The error to log
+	 * @param ex The exception to log
+	 */
+	public static void severe(final String message, final Throwable ex) {
+		logger.log(Level.SEVERE, PREFIX + message, ex);
+		printError(message, ex);
+	}
 
-    /**
-     * Logs debug messages to console
-     *
-     * @param message The debug message to log
-     */
-    public static void debug(final String message) {
-        if (!Config.DEBUG.getBoolean()) {
-            return;
-        }
-        logger.log(Level.INFO, PREFIX + message);
-        writeToDebug(message);
-    }
+	/**
+	 * Logs debug messages to console
+	 *
+	 * @param message The debug message to log
+	 */
+	public static void debug(final String message) {
+		if (!Config.DEBUG.getBoolean()) {
+			return;
+		}
+		logger.log(Level.INFO, PREFIX + message);
+		writeToDebug(message);
+	}
 
-    /**
-     * Logs debug messages and exceptions to console
-     *
-     * @param message The debug message to log
-     * @param ex The exception to log
-     */
-    public static void debug(final String message, final Throwable ex) {
-        if (!Config.DEBUG.getBoolean()) {
-            return;
-        }
-        logger.log(Level.INFO, PREFIX + message, ex);
-        writeToDebug(message, ex);
-    }
+	/**
+	 * Logs debug messages and exceptions to console
+	 *
+	 * @param message The debug message to log
+	 * @param ex The exception to log
+	 */
+	public static void debug(final String message, final Throwable ex) {
+		if (!Config.DEBUG.getBoolean()) {
+			return;
+		}
+		logger.log(Level.INFO, PREFIX + message, ex);
+		writeToDebug(message, ex);
+	}
 
-    private static String prefix() {
-        DateFormat date = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss] ");
-        Calendar cal = Calendar.getInstance();
-        return date.format(cal.getTime());
-    }
+	private static String prefix() {
+		DateFormat date = new SimpleDateFormat("[dd-MM-yyyy HH:mm:ss] ");
+		Calendar cal = Calendar.getInstance();
+		return date.format(cal.getTime());
+	}
 
-    private static void writeToDebug(String message) {
-        BufferedWriter bw = null;
-        File file = new File(Main.getInstance().getDataFolder(), "logs");
-        file.mkdirs();
-        try {
-            bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
-            bw.write(prefix() + ":" + message);
-            bw.newLine();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.flush();
-                    bw.close();
-                }
-            } catch (Exception ex) {
-            }
-        }
-    }
+	private static void writeToDebug(String message) {
+		BufferedWriter bw = null;
+		File file = new File(Main.getInstance().getDataFolder(), "logs");
+		file.mkdirs();
+		try {
+			bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
+			bw.write(prefix() + ":" + message);
+			bw.newLine();
+		} catch (Exception ex) {
+		} finally {
+			try {
+				if (bw != null) {
+					bw.flush();
+					bw.close();
+				}
+			} catch (Exception ex) {
+			}
+		}
+	}
 
-    private static void writeToDebug(String message, Throwable t) {
-        BufferedWriter bw = null;
-        File file = new File(Main.getInstance().getDataFolder(), "logs");
-        file.mkdirs();
-        try {
-            bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
-            bw.newLine();
-            bw.newLine();
-            bw.write("///////////////////////////////////////////////////////////////////////////////");
-            bw.newLine();
-            bw.newLine();
-            bw.write(prefix() + ": An Exception happened!");
-            bw.newLine();
-            bw.write(prefix() + message);
-            bw.newLine();
-            bw.write(getStackTrace(t));
-            bw.newLine();
-            bw.newLine();
-            bw.write("///////////////////////////////////////////////////////////////////////////////");
-            bw.newLine();
-            bw.newLine();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.flush();
-                    bw.close();
-                }
-            } catch (Exception ex) {
-            }
-        }
-    }
+	private static void writeToDebug(String message, Throwable t) {
+		BufferedWriter bw = null;
+		File file = new File(Main.getInstance().getDataFolder(), "logs");
+		file.mkdirs();
+		try {
+			bw = new BufferedWriter(new FileWriter(file + File.separator + "debug.log", true));
+			bw.newLine();
+			bw.newLine();
+			bw.write("///////////////////////////////////////////////////////////////////////////////");
+			bw.newLine();
+			bw.newLine();
+			bw.write(prefix() + ": An Exception happened!");
+			bw.newLine();
+			bw.write(prefix() + message);
+			bw.newLine();
+			bw.write(getStackTrace(t));
+			bw.newLine();
+			bw.newLine();
+			bw.write("///////////////////////////////////////////////////////////////////////////////");
+			bw.newLine();
+			bw.newLine();
+		} catch (Exception ex) {
+		} finally {
+			try {
+				if (bw != null) {
+					bw.flush();
+					bw.close();
+				}
+			} catch (Exception ex) {
+			}
+		}
+	}
 
-    private static void printError(String message, Throwable t) {
-        BufferedWriter bw = null;
-        File file = new File(Main.getInstance().getDataFolder(), "logs" + File.separator + "errors");
-        file.mkdirs();
-        try {
+	private static void printError(String message, Throwable t) {
+		BufferedWriter bw = null;
+		File file = new File(Main.getInstance().getDataFolder(), "logs" + File.separator + "errors");
+		file.mkdirs();
+		try {
 
-            DateFormat date = new SimpleDateFormat("dd-MM-yyyy");
-            Calendar cal = Calendar.getInstance();
-            String d = date.format(cal.getTime());
+			DateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+			String d = date.format(cal.getTime());
 
-            bw = new BufferedWriter(new FileWriter(file + File.separator + d + ".log", true));
-            bw.write(prefix() + ": An Exception happened!");
-            bw.newLine();
-            bw.write(prefix() + message);
-            bw.newLine();
-            bw.write(getStackTrace(t));
-            bw.newLine();
-            bw.newLine();
-            bw.write("///////////////////////////////////////////////////////////////////////////////");
-            bw.newLine();
-            bw.newLine();
-        } catch (Exception ex) {
-        } finally {
-            try {
-                if (bw != null) {
-                    bw.flush();
-                    bw.close();
-                }
-            } catch (Exception ex) {
-            }
-        }
-    }
+			bw = new BufferedWriter(new FileWriter(file + File.separator + d + ".log", true));
+			bw.write(prefix() + ": An Exception happened!");
+			bw.newLine();
+			bw.write(prefix() + message);
+			bw.newLine();
+			bw.write(getStackTrace(t));
+			bw.newLine();
+			bw.newLine();
+			bw.write("///////////////////////////////////////////////////////////////////////////////");
+			bw.newLine();
+			bw.newLine();
+		} catch (Exception ex) {
+		} finally {
+			try {
+				if (bw != null) {
+					bw.flush();
+					bw.close();
+				}
+			} catch (Exception ex) {
+			}
+		}
+	}
 
-    private static String getStackTrace(Throwable t) {
-        String ret = prefix() + ": " + t + ": " + t.getMessage();
+	private static String getStackTrace(Throwable t) {
+		String ret = prefix() + ": " + t + ": " + t.getMessage();
 
-        StackTraceElement[] elements = t.getStackTrace();
+		StackTraceElement[] elements = t.getStackTrace();
 
-        for (StackTraceElement element : elements) {
-            ret += "\n" + prefix() + ": " + element;
-        }
+		for (StackTraceElement element : elements) {
+			ret += "\n" + prefix() + ": " + element;
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 
 }

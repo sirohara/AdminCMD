@@ -36,42 +36,44 @@ import com.comphenix.protocol.wrappers.WrappedServerPing.CompressedImage;
 
 public class PingListener {
 
-    public void addPingResponsePacketListener() {
-        if (!Main.getInstance().checkForProtocolLib()) {
-            Config.MAINTENANCE_ENABLED.set(false, true);
-            return;
-        }
+	public void addPingResponsePacketListener() {
+		if (!Main.getInstance().checkForProtocolLib()) {
+			Config.MAINTENANCE_ENABLED.set(false, true);
+			return;
+		}
 
-        ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+		ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
 
-        try {
-            protocolManager.addPacketListener(new PacketAdapter(PacketAdapter.params(Main.getInstance(), Server.OUT_SERVER_INFO).serverSide().gamePhase(GamePhase.BOTH).listenerPriority(ListenerPriority.HIGHEST).optionAsync()) {
-                @Override
-                public void onPacketSending(PacketEvent event) {
-                    try {
-                        if (!Config.MAINTENANCE_ENABLED.getBoolean()) {
-                            return;
-                        }
-                        WrappedServerPing ping = event.getPacket().getServerPings().getValues().get(0);
-                        String pingMessage = Config.MAINTENANCE_VERSION.getString();
-                        ping.setVersionProtocol(-1);
-                        ping.setVersionName(pingMessage);
-                        MotD motd = new MotD(Config.MAINTENANCE_MOTD_LINE_1.getString(), Config.MAINTENANCE_MOTD_LINE_2.getString());
-                        ping.setMotD(motd.getMotd());
-                        File iconfile = new File(Config.MAINTENANCE_ICON.getString());
-                        if (iconfile.exists()) {
-                            CompressedImage favicon = CompressedImage.fromPng(new FileInputStream(iconfile));
-                            ping.setFavicon(favicon);
-                        }
-                        event.getPacket().getServerPings().getValues().set(0, ping);
-                    } catch (Exception e) {
-                        ACLogger.severe("Error setting Maintenance values!", e);
-                    }
-                }
-            }
-            );
-        } catch (Exception e) {
-            ACLogger.severe("Error setting Maintenance values!", e);
-        }
-    }
+		try {
+			protocolManager.addPacketListener(
+					new PacketAdapter(PacketAdapter.params(Main.getInstance(), Server.OUT_SERVER_INFO).serverSide()
+							.gamePhase(GamePhase.BOTH).listenerPriority(ListenerPriority.HIGHEST).optionAsync()) {
+						@Override
+						public void onPacketSending(PacketEvent event) {
+							try {
+								if (!Config.MAINTENANCE_ENABLED.getBoolean()) {
+									return;
+								}
+								WrappedServerPing ping = event.getPacket().getServerPings().getValues().get(0);
+								String pingMessage = Config.MAINTENANCE_VERSION.getString();
+								ping.setVersionProtocol(-1);
+								ping.setVersionName(pingMessage);
+								MotD motd = new MotD(Config.MAINTENANCE_MOTD_LINE_1.getString(),
+										Config.MAINTENANCE_MOTD_LINE_2.getString());
+								ping.setMotD(motd.getMotd());
+								File iconfile = new File(Config.MAINTENANCE_ICON.getString());
+								if (iconfile.exists()) {
+									CompressedImage favicon = CompressedImage.fromPng(new FileInputStream(iconfile));
+									ping.setFavicon(favicon);
+								}
+								event.getPacket().getServerPings().getValues().set(0, ping);
+							} catch (Exception e) {
+								ACLogger.severe("Error setting Maintenance values!", e);
+							}
+						}
+					});
+		} catch (Exception e) {
+			ACLogger.severe("Error setting Maintenance values!", e);
+		}
+	}
 }

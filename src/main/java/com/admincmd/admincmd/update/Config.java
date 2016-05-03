@@ -25,90 +25,89 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Config {
 
-    public enum Values {
+	public enum Values {
 
-        /**
-         * Represents the Enabled boolean
-         */
-        ENABLED("Enabled", true, "Is the updater enabled?"),
-        /**
-         * Represents the Update-Type boolean
-         */
-        UPDATE_TYPE("Update-Type", UpdateType.DOWNLOAD.toString(), "DOWNLOAD: Download the new version. ANNOUNCE: Only say that a new version was released."),
-        /**
-         * Represents the Release-Type boolean
-         */
-        RELEASE_TYPE("Release-Type", ReleaseType.RELEASE.toString(), "ALPHA: Only download alpha files. BETA: Only download files. RELEASE: Only download release files. ALL: Download all files."),
-        /**
-         * Represents the debug boolean.
-         */
-        DEBUG("Debug", false, "Toggles the debug logging");
+		/**
+		 * Represents the Enabled boolean
+		 */
+		ENABLED("Enabled", true, "Is the updater enabled?"), /**
+																 * Represents the Update-Type boolean
+																 */
+		UPDATE_TYPE("Update-Type", UpdateType.DOWNLOAD.toString(),
+				"DOWNLOAD: Download the new version. ANNOUNCE: Only say that a new version was released."), /**
+																											 * Represents the Release-Type boolean
+																											 */
+		RELEASE_TYPE("Release-Type", ReleaseType.RELEASE.toString(),
+				"ALPHA: Only download alpha files. BETA: Only download files. RELEASE: Only download release files. ALL: Download all files."), /**
+																																				 * Represents the debug boolean.
+																																				 */
+		DEBUG("Debug", false, "Toggles the debug logging");
 
-        private final Object value;
-        private final String path;
-        private final String comment;
+		private final Object value;
+		private final String path;
+		private final String comment;
 
-        private Values(String path, Object val, String comment) {
-            this.path = path;
-            this.value = val;
-            this.comment = comment;
-        }
+		private Values(String path, Object val, String comment) {
+			this.path = path;
+			this.value = val;
+			this.comment = comment;
+		}
 
-        public Object getDefaultValue() {
-            return value;
-        }
+		public Object getDefaultValue() {
+			return value;
+		}
 
-        public String getPath() {
-            return path;
-        }
+		public String getPath() {
+			return path;
+		}
 
-        public String getComment() {
-            return comment;
-        }
+		public String getComment() {
+			return comment;
+		}
 
-        public boolean getBoolean(Config c) {
-            return c.getConfig().getBoolean(path);
-        }
+		public boolean getBoolean(Config c) {
+			return c.getConfig().getBoolean(path);
+		}
 
-        public UpdateType getUpdateType(Config c) {
-            return UpdateType.valueOf(c.getConfig().getString(path, UpdateType.DOWNLOAD.toString()).toUpperCase());
-        }
+		public UpdateType getUpdateType(Config c) {
+			return UpdateType.valueOf(c.getConfig().getString(path, UpdateType.DOWNLOAD.toString()).toUpperCase());
+		}
 
-        public ReleaseType getReleaseType(Config c) {
-            return ReleaseType.valueOf(c.getConfig().getString(path, ReleaseType.ALL.toString()).toUpperCase());
-        }
-    }
+		public ReleaseType getReleaseType(Config c) {
+			return ReleaseType.valueOf(c.getConfig().getString(path, ReleaseType.ALL.toString()).toUpperCase());
+		}
+	}
 
-    private final YamlConfiguration cfg;
-    private final File f;
+	private final YamlConfiguration cfg;
+	private final File f;
 
-    public Config(JavaPlugin pl, String cfgFile) {
-        pl.getLogger().info("Loading updater-config...");
-        pl.getDataFolder().mkdirs();
-        f = new File(pl.getDataFolder(), cfgFile);
-        cfg = YamlConfiguration.loadConfiguration(f);
-        String header = "Updater config for the plugin " + pl.getName() + ". (Automaticaly generated)\n";
-        for (Values c : Values.values()) {
-            header += c.getPath() + ": " + c.getComment() + "\n";
-            if (!cfg.contains(c.getPath())) {
-                cfg.set(c.getPath(), c.getDefaultValue());
-            }
-        }
-        cfg.options().header(header);
-        try {
-            cfg.save(f);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        pl.getLogger().info("Done!");
-    }
+	public Config(JavaPlugin pl, String cfgFile) {
+		pl.getLogger().info("Loading updater-config...");
+		pl.getDataFolder().mkdirs();
+		f = new File(pl.getDataFolder(), cfgFile);
+		cfg = YamlConfiguration.loadConfiguration(f);
+		String header = "Updater config for the plugin " + pl.getName() + ". (Automaticaly generated)\n";
+		for (Values c : Values.values()) {
+			header += c.getPath() + ": " + c.getComment() + "\n";
+			if (!cfg.contains(c.getPath())) {
+				cfg.set(c.getPath(), c.getDefaultValue());
+			}
+		}
+		cfg.options().header(header);
+		try {
+			cfg.save(f);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		pl.getLogger().info("Done!");
+	}
 
-    public YamlConfiguration getConfig() {
-        return cfg;
-    }
+	public YamlConfiguration getConfig() {
+		return cfg;
+	}
 
-    public File getFile() {
-        return f;
-    }
+	public File getFile() {
+		return f;
+	}
 
 }

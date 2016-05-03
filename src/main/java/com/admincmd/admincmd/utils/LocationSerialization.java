@@ -28,36 +28,36 @@ import org.bukkit.entity.Player;
 
 public class LocationSerialization {
 
-    public static String serialLocation(Location l) {
-        int pitch = Integer.valueOf(String.valueOf(l.getPitch()).split("\\.")[0]);
-        int yaw = Integer.valueOf(String.valueOf(l.getYaw()).split("\\.")[0]);
-        return l.getX() + ";" + l.getY() + ";" + l.getZ() + ";" + l.getWorld().getName() + ";" + yaw + ";" + pitch;
-    }
+	public static String serialLocation(Location l) {
+		int pitch = Integer.valueOf(String.valueOf(l.getPitch()).split("\\.")[0]);
+		int yaw = Integer.valueOf(String.valueOf(l.getYaw()).split("\\.")[0]);
+		return l.getX() + ";" + l.getY() + ";" + l.getZ() + ";" + l.getWorld().getName() + ";" + yaw + ";" + pitch;
+	}
 
-    public static Location deserialLocation(String s) {
-        String[] a = s.split(";");
-        World w = Bukkit.getWorld(a[3]);
-        if (w == null) {
-            w = Bukkit.getWorlds().get(0);
-        }
-        double x = Double.parseDouble(a[0]);
-        double y = Double.parseDouble(a[1]);
-        double z = Double.parseDouble(a[2]);
-        int yaw = Integer.parseInt(a[4]);
-        int pitch = Integer.parseInt(a[5]);
-        Location l = new Location(w, x, y, z, yaw, pitch);
-        return l;
-    }
+	public static Location deserialLocation(String s) {
+		String[] a = s.split(";");
+		World w = Bukkit.getWorld(a[3]);
+		if (w == null) {
+			w = Bukkit.getWorlds().get(0);
+		}
+		double x = Double.parseDouble(a[0]);
+		double y = Double.parseDouble(a[1]);
+		double z = Double.parseDouble(a[2]);
+		int yaw = Integer.parseInt(a[4]);
+		int pitch = Integer.parseInt(a[5]);
+		Location l = new Location(w, x, y, z, yaw, pitch);
+		return l;
+	}
 
-    public static Block getBlockLooking(Player player, int range) {
-        Block b = player.getTargetBlock((Set<Material>) null, range);
-        return b;
+	public static Block getBlockLooking(Player player, int range) {
+		Block b = player.getTargetBlock((Set<Material>) null, range);
+		return b;
 
-    }
+	}
 
-    public static Location getLocationLooking(Player player, int range) {
-        Block b = getBlockLooking(player, range);
-        return b.getLocation();
-    }
+	public static Location getLocationLooking(Player player, int range) {
+		Block b = getBlockLooking(player, range);
+		return b.getLocation();
+	}
 
 }

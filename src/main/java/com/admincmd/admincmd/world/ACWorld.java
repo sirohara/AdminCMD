@@ -24,35 +24,35 @@ import org.bukkit.World;
 
 public class ACWorld {
 
-    private final World w;
-    private long moment;
-    private boolean timePaused;
+	private final World w;
+	private long moment;
+	private boolean timePaused;
 
-    public ACWorld(World world, boolean timePaused, String moment) {
-        this.w = world;
-        this.timePaused = timePaused;
-        this.moment = Long.valueOf(moment);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new ResetTime(this), 20 * 3, 20 * 3);
-    }
+	public ACWorld(World world, boolean timePaused, String moment) {
+		this.w = world;
+		this.timePaused = timePaused;
+		this.moment = Long.valueOf(moment);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new ResetTime(this), 20 * 3, 20 * 3);
+	}
 
-    public World getWorld() {
-        return w;
-    }
+	public World getWorld() {
+		return w;
+	}
 
-    public void pauseTime() {
-        this.timePaused = true;
-        this.moment = w.getTime();
-    }
+	public void pauseTime() {
+		this.timePaused = true;
+		this.moment = w.getTime();
+	}
 
-    public void unPauseTime() {
-        this.timePaused = false;
-    }
+	public void unPauseTime() {
+		this.timePaused = false;
+	}
 
-    public boolean isTimePaused() {
-        return timePaused;
-    }
+	public boolean isTimePaused() {
+		return timePaused;
+	}
 
-    public long getTimePauseMoment() {
-        return moment;
-    }
+	public long getTimePauseMoment() {
+		return moment;
+	}
 }

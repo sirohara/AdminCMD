@@ -27,22 +27,22 @@ import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
 public class WorldListener extends BukkitListener {
-    
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onWorldLoad(final WorldLoadEvent e) {
-        ACWorld acw = WorldManager.getWorld(e.getWorld());
-        if (acw == null) {
-            ACWorld nvc = new ACWorld(e.getWorld(), false, String.valueOf(e.getWorld().getTime()));
-            WorldManager.createWorld(nvc);
-        }
-    }
-    
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onWorldUnload(WorldUnloadEvent e) {
-        ACWorld acw = WorldManager.getWorld(e.getWorld());
-        if (acw != null) {
-            WorldManager.unloadWorld(acw);
-        }
-    }
-    
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void onWorldLoad(final WorldLoadEvent e) {
+		ACWorld acw = WorldManager.getWorld(e.getWorld());
+		if (acw == null) {
+			ACWorld nvc = new ACWorld(e.getWorld(), false, String.valueOf(e.getWorld().getTime()));
+			WorldManager.createWorld(nvc);
+		}
+	}
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void onWorldUnload(WorldUnloadEvent e) {
+		ACWorld acw = WorldManager.getWorld(e.getWorld());
+		if (acw != null) {
+			WorldManager.unloadWorld(acw);
+		}
+	}
+
 }

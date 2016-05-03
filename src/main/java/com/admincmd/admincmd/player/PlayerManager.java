@@ -31,83 +31,84 @@ import com.admincmd.admincmd.database.Database;
 import com.admincmd.admincmd.database.DatabaseFactory;
 import com.admincmd.admincmd.utils.ACLogger;
 
-
 public class PlayerManager {
 
-    private static final HashMap<UUID, BukkitPlayer> players = new HashMap<>();
-    private static final Database conn = DatabaseFactory.getDatabase();
+	private static final HashMap<UUID, BukkitPlayer> players = new HashMap<>();
+	private static final Database conn = DatabaseFactory.getDatabase();
 
-    public static HashMap<UUID, BukkitPlayer> getPlayers() {
-        return players;
-    }
+	public static HashMap<UUID, BukkitPlayer> getPlayers() {
+		return players;
+	}
 
-    public static void init() {
-        players.clear();
-        try {
-            PreparedStatement s = conn.getPreparedStatement("SELECT `uuid` FROM `ac_player`");
-            ResultSet rs = s.executeQuery();
-            while (rs.next()) {
-                BukkitPlayer p = new BukkitPlayer(rs.getString("uuid"), conn);
-                players.put(p.getUuid(), p);
-            }
-            ACLogger.info("Loaded " + players.size() + " players!");
-        } catch (SQLException ex) {
-            ACLogger.severe("Error loading the players!", ex);
-        }
-    }
+	public static void init() {
+		players.clear();
+		try {
+			PreparedStatement s = conn.getPreparedStatement("SELECT `uuid` FROM `ac_player`");
+			ResultSet rs = s.executeQuery();
+			while (rs.next()) {
+				BukkitPlayer p = new BukkitPlayer(rs.getString("uuid"), conn);
+				players.put(p.getUuid(), p);
+			}
+			ACLogger.info("Loaded " + players.size() + " players!");
+		} catch (SQLException ex) {
+			ACLogger.severe("Error loading the players!", ex);
+		}
+	}
 
-    public static void save() {
-        int saved = players.size();
-        for (UUID uuid : players.keySet()) {
-            BukkitPlayer p = players.get(uuid);
-            p.update();
-        }
-        players.clear();
-        ACLogger.info("Saved " + saved + " players!");
-    }
+	public static void save() {
+		int saved = players.size();
+		for (UUID uuid : players.keySet()) {
+			BukkitPlayer p = players.get(uuid);
+			p.update();
+		}
+		players.clear();
+		ACLogger.info("Saved " + saved + " players!");
+	}
 
-    public static BukkitPlayer getPlayer(OfflinePlayer p) {
-        return players.get(p.getUniqueId());
-    }
+	public static BukkitPlayer getPlayer(OfflinePlayer p) {
+		return players.get(p.getUniqueId());
+	}
 
-    public static BukkitPlayer getPlayer(int id) {
-        for (UUID u : players.keySet()) {
-            BukkitPlayer p = players.get(u);
-            if (p.getId() == id) return p;
-        }
-        return null;
-    }
+	public static BukkitPlayer getPlayer(int id) {
+		for (UUID u : players.keySet()) {
+			BukkitPlayer p = players.get(u);
+			if (p.getId() == id)
+				return p;
+		}
+		return null;
+	}
 
-    public static void unload(BukkitPlayer p) {
-        p.update();
-        if (players.containsKey(p.getUuid()))
-            players.remove(p.getUuid());
-    }
+	public static void unload(BukkitPlayer p) {
+		p.update();
+		if (players.containsKey(p.getUuid()))
+			players.remove(p.getUuid());
+	}
 
-    public static void insert(Player p) {
+	public static void insert(Player p) {
 
-        try {
-            PreparedStatement s = conn.getPreparedStatement("INSERT INTO `ac_player` (`uuid`, `god`, `invisible`, `commandwatcher`, `spy`, `fly`, `muted`, `lastMsg`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-            s.setString(1, p.getUniqueId().toString());
-            s.setBoolean(2, false);
-            s.setBoolean(3, false);
-            s.setBoolean(4, false);
-            s.setBoolean(5, false);
-            s.setBoolean(6, false);
-            s.setBoolean(7, false);
-            s.setBoolean(8, false);
-            s.executeUpdate();
-            conn.closeStatement(s);
+		try {
+			PreparedStatement s = conn.getPreparedStatement(
+					"INSERT INTO `ac_player` (`uuid`, `god`, `invisible`, `commandwatcher`, `spy`, `fly`, `muted`, `lastMsg`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+			s.setString(1, p.getUniqueId().toString());
+			s.setBoolean(2, false);
+			s.setBoolean(3, false);
+			s.setBoolean(4, false);
+			s.setBoolean(5, false);
+			s.setBoolean(6, false);
+			s.setBoolean(7, false);
+			s.setBoolean(8, false);
+			s.executeUpdate();
+			conn.closeStatement(s);
 
-            BukkitPlayer bp = new BukkitPlayer(p, conn);
-            players.put(bp.getUuid(), bp);
-        } catch (SQLException ex) {
-            ACLogger.severe("Error creating the player!", ex);
-        }
-    }
+			BukkitPlayer bp = new BukkitPlayer(p, conn);
+			players.put(bp.getUuid(), bp);
+		} catch (SQLException ex) {
+			ACLogger.severe("Error creating the player!", ex);
+		}
+	}
 
-    public static boolean hasPlayedBefore(OfflinePlayer p) {
-        return getPlayer(p) != null;
-    }
+	public static boolean hasPlayedBefore(OfflinePlayer p) {
+		return getPlayer(p) != null;
+	}
 
 }

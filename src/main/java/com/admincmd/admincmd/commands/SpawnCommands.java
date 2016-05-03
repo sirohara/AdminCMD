@@ -33,53 +33,55 @@ import org.bukkit.entity.Player;
 @CommandHandler
 public class SpawnCommands {
 
-    private final HelpPage setspawn = new HelpPage("setspawn", "");
-    private final HelpPage spawn = new HelpPage("spawn", "", "<-p player>");
+	private final HelpPage setspawn = new HelpPage("setspawn", "");
+	private final HelpPage spawn = new HelpPage("spawn", "", "<-p player>");
 
-    @BaseCommand(command = "setspawn", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.spawn.setspawn")
-    public CommandResult executeSetspawn(Player sender, CommandArgs args) {
-        if (setspawn.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "setspawn", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.spawn.setspawn")
+	public CommandResult executeSetspawn(Player sender, CommandArgs args) {
+		if (setspawn.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (!args.isEmpty()) {
-            return CommandResult.ERROR;
-        }
+		if (!args.isEmpty()) {
+			return CommandResult.ERROR;
+		}
 
-        SpawnManager.setSpawn(sender);
-        return Messager.sendMessage(sender, Locales.SPAWN_SET, Messager.MessageType.INFO);
-    }
+		SpawnManager.setSpawn(sender);
+		return Messager.sendMessage(sender, Locales.SPAWN_SET, Messager.MessageType.INFO);
+	}
 
-    @BaseCommand(command = "spawn", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.spawn.spawn")
-    public CommandResult executeSpawn(Player sender, CommandArgs args) {
-        if (spawn.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "spawn", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.spawn.spawn")
+	public CommandResult executeSpawn(Player sender, CommandArgs args) {
+		if (spawn.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.isEmpty()) {
-            sender.teleport(SpawnManager.getSpawn(sender));
-            return Messager.sendMessage(sender, Locales.SPAWN_TP, Messager.MessageType.INFO);
-        } else if (args.getLength() == 1) {
-            if (!args.hasFlag("p")) {
-                return CommandResult.ERROR;
-            }
+		if (args.isEmpty()) {
+			sender.teleport(SpawnManager.getSpawn(sender));
+			return Messager.sendMessage(sender, Locales.SPAWN_TP, Messager.MessageType.INFO);
+		} else if (args.getLength() == 1) {
+			if (!args.hasFlag("p")) {
+				return CommandResult.ERROR;
+			}
 
-            if (!sender.hasPermission("admincmd.spawn.spawn.other")) {
-                return CommandResult.NO_PERMISSION_OTHER;
-            }
+			if (!sender.hasPermission("admincmd.spawn.spawn.other")) {
+				return CommandResult.NO_PERMISSION_OTHER;
+			}
 
-            Flag f = args.getFlag("p");
-            if (!f.isPlayer()) {
-                return CommandResult.NOT_ONLINE;
-            }
-            Player t = f.getPlayer();
-            t.teleport(SpawnManager.getSpawn(t));
-            Messager.sendMessage(t, Locales.SPAWN_TP, Messager.MessageType.INFO);
-            Messager.sendMessage(sender, Locales.SPAWN_TP_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(t)), Messager.MessageType.INFO);
-            return CommandResult.SUCCESS;
-        } else {
-            return CommandResult.ERROR;
-        }
-    }
+			Flag f = args.getFlag("p");
+			if (!f.isPlayer()) {
+				return CommandResult.NOT_ONLINE;
+			}
+			Player t = f.getPlayer();
+			t.teleport(SpawnManager.getSpawn(t));
+			Messager.sendMessage(t, Locales.SPAWN_TP, Messager.MessageType.INFO);
+			Messager.sendMessage(sender,
+					Locales.SPAWN_TP_OTHER.getString().replaceAll("%player%", Utils.replacePlayerPlaceholders(t)),
+					Messager.MessageType.INFO);
+			return CommandResult.SUCCESS;
+		} else {
+			return CommandResult.ERROR;
+		}
+	}
 
 }

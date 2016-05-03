@@ -20,21 +20,18 @@ package com.admincmd.admincmd.update;
 
 public enum ReleaseType {
 
-    /**
-     * Only download ALPHA files.
-     */
-    ALPHA,
-    /**
-     * Only download BETA files.
-     */
-    BETA,
-    /**
-     * Only download RELEASE files.
-     */
-    RELEASE,
-    /**
-     * Download all new files.
-     */
-    ALL;
+	/**
+	 * Only download ALPHA files.
+	 */
+	ALPHA, /**
+			 * Only download BETA files.
+			 */
+	BETA, /**
+			 * Only download RELEASE files.
+			 */
+	RELEASE, /**
+				 * Download all new files.
+				 */
+	ALL;
 
 }

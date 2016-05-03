@@ -56,106 +56,105 @@ import com.admincmd.admincmd.world.WorldManager;
 
 public class Main extends JavaPlugin {
 
-    private static Main INSTANCE;
-    private final CommandManager manager = new CommandManager(this);
+	private static Main INSTANCE;
+	private final CommandManager manager = new CommandManager(this);
 
-    @Override
-    public void onEnable() {
-        long start = System.currentTimeMillis();
+	@Override
+	public void onEnable() {
+		long start = System.currentTimeMillis();
 
-        INSTANCE = this;
+		INSTANCE = this;
 
-        Config.load();
-        Locales.load();
+		Config.load();
+		Locales.load();
 
-        DatabaseFactory.init();
+		DatabaseFactory.init();
 
-        PlayerManager.init();
-        SpawnManager.init();
-        WorldManager.init();
-        HomeManager.init();
-        WarpPointManager.init();
+		PlayerManager.init();
+		SpawnManager.init();
+		WorldManager.init();
+		HomeManager.init();
+		WarpPointManager.init();
 
-        registerCommands();
-        registerEvents();
+		registerCommands();
+		registerEvents();
 
-        if (checkForProtocolLib()) {
-            ACLogger.info("Hooked into ProtocolLib.");
-            new PingListener().addPingResponsePacketListener();
-        }
+		if (checkForProtocolLib()) {
+			ACLogger.info("Hooked into ProtocolLib.");
+			new PingListener().addPingResponsePacketListener();
+		}
 
-        if (checkForVault()) {
-            if (!Vault.setupChat()) {
-                ACLogger.severe("Vault could not be set up.");
-            }
-            ACLogger.info("Hooked into Vault.");
-        }
+		if (checkForVault()) {
+			if (!Vault.setupChat()) {
+				ACLogger.severe("Vault could not be set up.");
+			}
+			ACLogger.info("Hooked into Vault.");
+		}
 
-        AddonManager.loadAddons();
+		AddonManager.loadAddons();
 
+		new Updater(31318, "admincmd").search();
 
-        new Updater(31318, "admincmd").search();
+		long timeTook = System.currentTimeMillis() - start;
+		ACLogger.info("Plugin start took " + timeTook + " milliseconds");
+	}
 
-        long timeTook = System.currentTimeMillis() - start;
-        ACLogger.info("Plugin start took " + timeTook + " milliseconds");
-    }
+	@Override
+	public void onDisable() {
+		AddonManager.disableAddons();
 
-    @Override
-    public void onDisable() {
-        AddonManager.disableAddons();
+		PlayerManager.save();
+		WorldManager.save();
+		HomeManager.save();
+		WarpPointManager.save();
 
-        PlayerManager.save();
-        WorldManager.save();
-        HomeManager.save();
-        WarpPointManager.save();
+		try {
+			DatabaseFactory.getDatabase().closeConnection();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 
-        try {
-            DatabaseFactory.getDatabase().closeConnection();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+		System.gc();
+	}
 
-        System.gc();
-    }
+	/**
+	 * Returns an instance of this class.
+	 *
+	 * @return {@link com.admincmd.admincmd.Main}
+	 */
+	public static Main getInstance() {
+		return INSTANCE;
+	}
 
-    /**
-     * Returns an instance of this class.
-     *
-     * @return {@link com.admincmd.admincmd.Main}
-     */
-    public static Main getInstance() {
-        return INSTANCE;
-    }
+	public boolean checkForProtocolLib() {
+		Plugin pl = getServer().getPluginManager().getPlugin("ProtocolLib");
+		return pl != null && pl.isEnabled();
+	}
 
-    public boolean checkForProtocolLib() {
-        Plugin pl = getServer().getPluginManager().getPlugin("ProtocolLib");
-        return pl != null && pl.isEnabled();
-    }
+	public boolean checkForVault() {
+		Plugin pl = getServer().getPluginManager().getPlugin("Vault");
+		return pl != null && pl.isEnabled();
+	}
 
-    public boolean checkForVault() {
-        Plugin pl = getServer().getPluginManager().getPlugin("Vault");
-        return pl != null && pl.isEnabled();
-    }
+	private void registerCommands() {
+		manager.registerClass(ServerCommands.class);
+		manager.registerClass(PlayerCommands.class);
+		manager.registerClass(HomeCommands.class);
+		manager.registerClass(WorldCommands.class);
+		manager.registerClass(MobCommands.class);
+		manager.registerClass(SpawnCommands.class);
+		manager.registerClass(MaintenanceCommands.class);
+		manager.registerClass(TeleportCommands.class);
+	}
 
-    private void registerCommands() {
-        manager.registerClass(ServerCommands.class);
-        manager.registerClass(PlayerCommands.class);
-        manager.registerClass(HomeCommands.class);
-        manager.registerClass(WorldCommands.class);
-        manager.registerClass(MobCommands.class);
-        manager.registerClass(SpawnCommands.class);
-        manager.registerClass(MaintenanceCommands.class);
-        manager.registerClass(TeleportCommands.class);
-    }
-
-    private void registerEvents() {
-        EventManager.registerEvent(PlayerJoinListener.class);
-        EventManager.registerEvent(PlayerCommandListener.class);
-        EventManager.registerEvent(WorldListener.class);
-        EventManager.registerEvent(PlayerDamageListener.class);
-        EventManager.registerEvent(PlayerDeathListener.class);
-        EventManager.registerEvent(SignListener.class);
-        EventManager.registerEvent(ChatListener.class);
-    }
+	private void registerEvents() {
+		EventManager.registerEvent(PlayerJoinListener.class);
+		EventManager.registerEvent(PlayerCommandListener.class);
+		EventManager.registerEvent(WorldListener.class);
+		EventManager.registerEvent(PlayerDamageListener.class);
+		EventManager.registerEvent(PlayerDeathListener.class);
+		EventManager.registerEvent(SignListener.class);
+		EventManager.registerEvent(ChatListener.class);
+	}
 
 }

@@ -23,30 +23,28 @@ import org.bukkit.command.CommandSender;
 
 public class Messager {
 
-    public enum MessageType {
-        INFO(Locales.MESSAGE_PREFIX_INFO.getString()),
-        ERROR(Locales.MESSAGE_PREFIX_ERROR.getString()),
-        NONE("");
-            
-        private final String prefix;
+	public enum MessageType {
+		INFO(Locales.MESSAGE_PREFIX_INFO.getString()), ERROR(Locales.MESSAGE_PREFIX_ERROR.getString()), NONE("");
 
-        private MessageType(String prefix) {
-            this.prefix = prefix;
-        }
-        
-        public String getPrefix() {
-            return prefix;
-        }
-    }
-    
-    public static CommandResult sendMessage(CommandSender s, String message, MessageType type) {
-        s.sendMessage(type.getPrefix() + message);
-        return CommandResult.SUCCESS;
-    }
-    
-    public static CommandResult sendMessage(CommandSender s, Locales message, MessageType type) {
-        s.sendMessage(type.getPrefix() + message.getString());
-        return CommandResult.SUCCESS;
-    }
+		private final String prefix;
+
+		private MessageType(String prefix) {
+			this.prefix = prefix;
+		}
+
+		public String getPrefix() {
+			return prefix;
+		}
+	}
+
+	public static CommandResult sendMessage(CommandSender s, String message, MessageType type) {
+		s.sendMessage(type.getPrefix() + message);
+		return CommandResult.SUCCESS;
+	}
+
+	public static CommandResult sendMessage(CommandSender s, Locales message, MessageType type) {
+		s.sendMessage(type.getPrefix() + message.getString());
+		return CommandResult.SUCCESS;
+	}
 
 }

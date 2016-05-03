@@ -26,20 +26,20 @@ import org.bukkit.entity.Player;
 
 public class BukkitPlayer extends SQLPlayer {
 
-    public BukkitPlayer(OfflinePlayer p, Database db) {
-        super(p.getUniqueId(), db);
-    }
+	public BukkitPlayer(OfflinePlayer p, Database db) {
+		super(p.getUniqueId(), db);
+	}
 
-    public BukkitPlayer(UUID uuid, Database db) {
-        super(uuid, db);
-    }
+	public BukkitPlayer(UUID uuid, Database db) {
+		super(uuid, db);
+	}
 
-    public BukkitPlayer(String uuid, Database db) {
-        super(UUID.fromString(uuid), db);
-    }
+	public BukkitPlayer(String uuid, Database db) {
+		super(UUID.fromString(uuid), db);
+	}
 
-    public Player getPlayer() {
-        return Bukkit.getPlayer(getUuid());
-    }
+	public Player getPlayer() {
+		return Bukkit.getPlayer(getUuid());
+	}
 
 }

@@ -26,37 +26,41 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class UpdateListener implements Listener {
 
-    private final Updater u;
+	private final Updater u;
 
-    public UpdateListener(Updater u) {
-        this.u = u;
-    }
+	public UpdateListener(Updater u) {
+		this.u = u;
+	}
 
-    /**
-     * EventHandler for Bukkit to inform ops when they join.
-     *
-     * @param e
-     */
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(final PlayerJoinEvent e) {
-        if (!u.isEnabled()) return;
-        final Player p = e.getPlayer();
-        if (!p.isOp()) return;
-        u.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(u.getPlugin(), new Runnable() {
-            @Override
-            public void run() {
-                String[] data = u.read();
-                if (u.checkForNewVersions(data)) {
-                    String prefix = "§a[" + u.getPlugin().getDescription().getName() + "]§7 ";
-                    p.sendMessage(prefix + "A new update is available! §e(" + data[1] + ")§7 current: §e" + u.getPlugin().getDescription().getVersion());
-                    if (u.getUpdateType() == UpdateType.ANNOUNCE) {
-                        p.sendMessage(prefix + "You can get it at: §a" + u.getLink());
-                    } else {
-                        p.sendMessage(prefix + "It will be downloaded for you and will be installed automatically when the server restarts.");
-                    }
-                }
-            }
-        });
-    }
+	/**
+	 * EventHandler for Bukkit to inform ops when they join.
+	 *
+	 * @param e
+	 */
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerJoin(final PlayerJoinEvent e) {
+		if (!u.isEnabled())
+			return;
+		final Player p = e.getPlayer();
+		if (!p.isOp())
+			return;
+		u.getPlugin().getServer().getScheduler().scheduleSyncDelayedTask(u.getPlugin(), new Runnable() {
+			@Override
+			public void run() {
+				String[] data = u.read();
+				if (u.checkForNewVersions(data)) {
+					String prefix = "§a[" + u.getPlugin().getDescription().getName() + "]§7 ";
+					p.sendMessage(prefix + "A new update is available! §e(" + data[1] + ")§7 current: §e"
+							+ u.getPlugin().getDescription().getVersion());
+					if (u.getUpdateType() == UpdateType.ANNOUNCE) {
+						p.sendMessage(prefix + "You can get it at: §a" + u.getLink());
+					} else {
+						p.sendMessage(prefix
+								+ "It will be downloaded for you and will be installed automatically when the server restarts.");
+					}
+				}
+			}
+		});
+	}
 
 }

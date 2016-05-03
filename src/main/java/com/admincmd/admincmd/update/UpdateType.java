@@ -20,12 +20,11 @@ package com.admincmd.admincmd.update;
 
 public enum UpdateType {
 
-    /**
-     * Download a new Version when it's released.
-     */
-    DOWNLOAD,
-    /**
-     * Only announce it when a new version is released.
-     */
-    ANNOUNCE;
+	/**
+	 * Download a new Version when it's released.
+	 */
+	DOWNLOAD, /**
+				 * Only announce it when a new version is released.
+				 */
+	ANNOUNCE;
 }

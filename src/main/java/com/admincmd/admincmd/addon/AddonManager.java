@@ -28,62 +28,62 @@ import org.bukkit.plugin.PluginManager;
 
 public class AddonManager {
 
-    private static final Map<String, Addon> addons = new HashMap<>();
-    private static final PluginManager manager = Main.getInstance().getServer().getPluginManager();
+	private static final Map<String, Addon> addons = new HashMap<>();
+	private static final PluginManager manager = Main.getInstance().getServer().getPluginManager();
 
-    /**
-     * Loads all the addons in the plugins/AdminCMD/addons folder.
-     */
-    public static void loadAddons() {
-        ACLogger.info("Loading addons...");
-        File folder = new File(Main.getInstance().getDataFolder(), "addons");
-        folder.mkdirs();
-        if (folder.listFiles().length == 0) {
-            ACLogger.info("No Addons installed.");
-            return;
-        }
+	/**
+	 * Loads all the addons in the plugins/AdminCMD/addons folder.
+	 */
+	public static void loadAddons() {
+		ACLogger.info("Loading addons...");
+		File folder = new File(Main.getInstance().getDataFolder(), "addons");
+		folder.mkdirs();
+		if (folder.listFiles().length == 0) {
+			ACLogger.info("No Addons installed.");
+			return;
+		}
 
-        for (File f : folder.listFiles()) {
-            if (!f.getName().toLowerCase().endsWith(".jar") || !f.isFile()) {
-                continue;
-            }
+		for (File f : folder.listFiles()) {
+			if (!f.getName().toLowerCase().endsWith(".jar") || !f.isFile()) {
+				continue;
+			}
 
-            ACLogger.info("Loading addon " + f.getName());
-            try {
-                Plugin p = manager.loadPlugin(f);
-                if (!(p instanceof Addon)) {
-                    ACLogger.severe("Jar File is not an official AdminCMD Addon.");
-                    continue;
-                }
+			ACLogger.info("Loading addon " + f.getName());
+			try {
+				Plugin p = manager.loadPlugin(f);
+				if (!(p instanceof Addon)) {
+					ACLogger.severe("Jar File is not an official AdminCMD Addon.");
+					continue;
+				}
 
-                Addon a = (Addon) p;
-                manager.enablePlugin(a);
-                ACLogger.info("Loaded Addon " + a.getName());
-                addons.put(a.getName(), a);
-            } catch (Exception ex) {
-                ACLogger.severe("Jar File could not be loaded!", ex);
-            }
-        }
-    }
+				Addon a = (Addon) p;
+				manager.enablePlugin(a);
+				ACLogger.info("Loaded Addon " + a.getName());
+				addons.put(a.getName(), a);
+			} catch (Exception ex) {
+				ACLogger.severe("Jar File could not be loaded!", ex);
+			}
+		}
+	}
 
-    /**
-     * Disables all the addons in the plugins/AdminCMD/addons folder
-     */
-    public static void disableAddons() {
-        for (Addon a : addons.values()) {
-            manager.disablePlugin(a);
-        }
-        addons.clear();
-    }
+	/**
+	 * Disables all the addons in the plugins/AdminCMD/addons folder
+	 */
+	public static void disableAddons() {
+		for (Addon a : addons.values()) {
+			manager.disablePlugin(a);
+		}
+		addons.clear();
+	}
 
-    /**
-     * Returns a loaded Addon
-     *
-     * @param name the name of the addon
-     * @return {@link com.admincmd.admincmd.addon.Addon}
-     */
-    public static Addon getAddon(String name) {
-        return addons.get(name);
-    }
+	/**
+	 * Returns a loaded Addon
+	 *
+	 * @param name the name of the addon
+	 * @return {@link com.admincmd.admincmd.addon.Addon}
+	 */
+	public static Addon getAddon(String name) {
+		return addons.get(name);
+	}
 
 }

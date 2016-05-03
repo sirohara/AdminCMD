@@ -25,22 +25,22 @@ import java.util.HashMap;
 
 public class MethodContainer {
 
-    private final HashMap<Sender, Method> methods;
+	private final HashMap<Sender, Method> methods;
 
-    protected MethodContainer(HashMap<Sender, Method> map) {
-        methods = map;
-    }
+	protected MethodContainer(HashMap<Sender, Method> map) {
+		methods = map;
+	}
 
-    protected Method getMethod(Sender s) {
-        return methods.get(s);
-    }
+	protected Method getMethod(Sender s) {
+		return methods.get(s);
+	}
 
-    protected Collection<Method> getMethods() {
-        return methods.values();
-    }
+	protected Collection<Method> getMethods() {
+		return methods.values();
+	}
 
-    protected HashMap<Sender, Method> getMethodMap() {
-        return methods;
-    }
+	protected HashMap<Sender, Method> getMethodMap() {
+		return methods;
+	}
 
 }

@@ -27,48 +27,47 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface BaseCommand {
 
-    /**
-     * Used to determine the type of the command sender
-     */
-    public enum Sender {
+	/**
+	 * Used to determine the type of the command sender
+	 */
+	public enum Sender {
 
-        PLAYER,
-        CONSOLE;
-    }
+		PLAYER, CONSOLE;
+	}
 
-    /**
-     * Determines the command sender this method is for.
-     *
-     * @return {@link com.admincmd.admincmd.commandapi.BaseCommand.Sender}
-     */
-    Sender sender();
+	/**
+	 * Determines the command sender this method is for.
+	 *
+	 * @return {@link com.admincmd.admincmd.commandapi.BaseCommand.Sender}
+	 */
+	Sender sender();
 
-    /**
-     * Determines the command name.
-     *
-     * @return the command
-     */
-    String command();
+	/**
+	 * Determines the command name.
+	 *
+	 * @return the command
+	 */
+	String command();
 
-    /**
-     * Determines the permission which is needed to execute this command.
-     *
-     * @return the permission
-     */
-    String permission() default "";
+	/**
+	 * Determines the permission which is needed to execute this command.
+	 *
+	 * @return the permission
+	 */
+	String permission() default "";
 
-    /**
-     * Used to determine a certain subcommand this method is for.
-     *
-     * @return the subcommand
-     */
-    String subCommand() default "";
+	/**
+	 * Used to determine a certain subcommand this method is for.
+	 *
+	 * @return the subcommand
+	 */
+	String subCommand() default "";
 
-    /**
-     * Used to add any aliases for this command. Seperated by a comma
-     *
-     * @return the aliases
-     */
-    String aliases() default "";
+	/**
+	 * Used to add any aliases for this command. Seperated by a comma
+	 *
+	 * @return the aliases
+	 */
+	String aliases() default "";
 
 }

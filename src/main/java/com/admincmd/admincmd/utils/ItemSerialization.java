@@ -28,55 +28,55 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemSerialization {
 
-    public static String saveInventory(Inventory inventory) {
-        YamlConfiguration config = new YamlConfiguration();
+	public static String saveInventory(Inventory inventory) {
+		YamlConfiguration config = new YamlConfiguration();
 
-        // Save every element in the list
-        saveInventory(inventory, config);
-        return config.saveToString();
-    }
+		// Save every element in the list
+		saveInventory(inventory, config);
+		return config.saveToString();
+	}
 
-    public static void saveInventory(Inventory inventory, ConfigurationSection destination) {
-        // Save every element in the list
-        for (int i = 0; i < inventory.getSize(); i++) {
-            ItemStack item = inventory.getItem(i);
+	public static void saveInventory(Inventory inventory, ConfigurationSection destination) {
+		// Save every element in the list
+		for (int i = 0; i < inventory.getSize(); i++) {
+			ItemStack item = inventory.getItem(i);
 
-            // Don't store NULL entries
-            if (item != null) {
-                destination.set(Integer.toString(i), item);
-            }
-        }
-    }
+			// Don't store NULL entries
+			if (item != null) {
+				destination.set(Integer.toString(i), item);
+			}
+		}
+	}
 
-    public static ItemStack[] loadInventory(String data) throws InvalidConfigurationException {
-        YamlConfiguration config = new YamlConfiguration();
+	public static ItemStack[] loadInventory(String data) throws InvalidConfigurationException {
+		YamlConfiguration config = new YamlConfiguration();
 
-        // Load the string
-        config.loadFromString(data);
-        return loadInventory(config);
-    }
+		// Load the string
+		config.loadFromString(data);
+		return loadInventory(config);
+	}
 
-    public static ItemStack[] loadInventory(ConfigurationSection source) throws InvalidConfigurationException {
-        List<ItemStack> stacks = new ArrayList<>();
+	public static ItemStack[] loadInventory(ConfigurationSection source) throws InvalidConfigurationException {
+		List<ItemStack> stacks = new ArrayList<>();
 
-        try {
-            // Try to parse this inventory
-            for (String key : source.getKeys(false)) {
-                int number = Integer.parseInt(key);
+		try {
+			// Try to parse this inventory
+			for (String key : source.getKeys(false)) {
+				int number = Integer.parseInt(key);
 
-                // Size should always be bigger
-                while (stacks.size() <= number) {
-                    stacks.add(null);
-                }
+				// Size should always be bigger
+				while (stacks.size() <= number) {
+					stacks.add(null);
+				}
 
-                stacks.set(number, (ItemStack) source.get(key));
-            }
-        } catch (NumberFormatException e) {
-            throw new InvalidConfigurationException("Expected a number.", e);
-        }
+				stacks.set(number, (ItemStack) source.get(key));
+			}
+		} catch (NumberFormatException e) {
+			throw new InvalidConfigurationException("Expected a number.", e);
+		}
 
-        // Return result
-        return stacks.toArray(new ItemStack[0]);
-    }
+		// Return result
+		return stacks.toArray(new ItemStack[0]);
+	}
 
 }

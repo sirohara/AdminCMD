@@ -34,44 +34,49 @@ import org.bukkit.entity.Player;
 @CommandHandler
 public class MaintenanceCommands {
 
-    private final HelpPage maintenance = new HelpPage("maintenance", "on", "off");
+	private final HelpPage maintenance = new HelpPage("maintenance", "on", "off");
 
-    @BaseCommand(command = "maintenance", sender = BaseCommand.Sender.CONSOLE, permission = "admincmd.maintenance.enable")
-    public CommandResult executeConsole(CommandSender sender, CommandArgs args) {
-        return executePlayer(sender, args);
-    }
+	@BaseCommand(command = "maintenance", sender = BaseCommand.Sender.CONSOLE, permission = "admincmd.maintenance.enable")
+	public CommandResult executeConsole(CommandSender sender, CommandArgs args) {
+		return executePlayer(sender, args);
+	}
 
-    @BaseCommand(command = "maintenance", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.maintenance.enable")
-    public CommandResult executePlayer(CommandSender sender, CommandArgs args) {
-        if (maintenance.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "maintenance", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.maintenance.enable")
+	public CommandResult executePlayer(CommandSender sender, CommandArgs args) {
+		if (maintenance.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 1) {
+			return CommandResult.ERROR;
+		}
 
-        if (!Main.getInstance().checkForProtocolLib()) {
-            return Messager.sendMessage(sender, "ProtocolLib is not installed. Maintenance feature is not available.", Messager.MessageType.ERROR);
-        }
+		if (!Main.getInstance().checkForProtocolLib()) {
+			return Messager.sendMessage(sender, "ProtocolLib is not installed. Maintenance feature is not available.",
+					Messager.MessageType.ERROR);
+		}
 
-        if (args.getString(0).equalsIgnoreCase("on")) {
-            Config.MAINTENANCE_ENABLED.set(true, true);
-            if (Config.MAINTENANCE_KICK.getBoolean()) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.hasPermission("admincmd.maintenance.bypass")) {
-                        continue;
-                    }
-                    p.kickPlayer(Config.MAINTENANCE_KICKMESSAGE.getString());
-                }
-            }
-            return Messager.sendMessage(sender, Locales.MAINTENANCE_TOGGLED.getString().replaceAll("%status%", "enabled"), Messager.MessageType.INFO);
-        } else if (args.getString(0).equalsIgnoreCase("off")) {
-            Config.MAINTENANCE_ENABLED.set(false, true);
-            return Messager.sendMessage(sender, Locales.MAINTENANCE_TOGGLED.getString().replaceAll("%status%", "disabled"), Messager.MessageType.INFO);
-        }
+		if (args.getString(0).equalsIgnoreCase("on")) {
+			Config.MAINTENANCE_ENABLED.set(true, true);
+			if (Config.MAINTENANCE_KICK.getBoolean()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					if (p.hasPermission("admincmd.maintenance.bypass")) {
+						continue;
+					}
+					p.kickPlayer(Config.MAINTENANCE_KICKMESSAGE.getString());
+				}
+			}
+			return Messager.sendMessage(sender,
+					Locales.MAINTENANCE_TOGGLED.getString().replaceAll("%status%", "enabled"),
+					Messager.MessageType.INFO);
+		} else if (args.getString(0).equalsIgnoreCase("off")) {
+			Config.MAINTENANCE_ENABLED.set(false, true);
+			return Messager.sendMessage(sender,
+					Locales.MAINTENANCE_TOGGLED.getString().replaceAll("%status%", "disabled"),
+					Messager.MessageType.INFO);
+		}
 
-        return CommandResult.ERROR;
-    }
+		return CommandResult.ERROR;
+	}
 
 }

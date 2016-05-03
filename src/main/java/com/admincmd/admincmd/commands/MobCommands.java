@@ -36,79 +36,80 @@ import org.bukkit.entity.Player;
 @CommandHandler
 public class MobCommands {
 
-    private final HelpPage killall = new HelpPage("killall", "<-w world>");
-    private final HelpPage spawnmob = new HelpPage("spawnmob", "mobtype amount");
+	private final HelpPage killall = new HelpPage("killall", "<-w world>");
+	private final HelpPage spawnmob = new HelpPage("spawnmob", "mobtype amount");
 
-    @BaseCommand(command = "spawnmob", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.mob.spawnmob")
-    public CommandResult executeSpawnmob(Player sender, CommandArgs args) {
-        if (spawnmob.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "spawnmob", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.mob.spawnmob")
+	public CommandResult executeSpawnmob(Player sender, CommandArgs args) {
+		if (spawnmob.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() != 2 || !args.isInteger(1)) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 2 || !args.isInteger(1)) {
+			return CommandResult.ERROR;
+		}
 
-        World target = sender.getWorld();
-        int amount = args.getInt(1);
+		World target = sender.getWorld();
+		int amount = args.getInt(1);
 
-        EntityType type;
-        try {
-            type = EntityType.valueOf(args.getString(0).toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return CommandResult.NOT_A_MOB;
-        }
+		EntityType type;
+		try {
+			type = EntityType.valueOf(args.getString(0).toUpperCase());
+		} catch (IllegalArgumentException e) {
+			return CommandResult.NOT_A_MOB;
+		}
 
-        if (!type.isSpawnable() || !type.isAlive()) {
-            return CommandResult.NOT_SPAWNABLE;
-        }
+		if (!type.isSpawnable() || !type.isAlive()) {
+			return CommandResult.NOT_SPAWNABLE;
+		}
 
-        for (int i = 0; i < amount; i++) {
-            target.spawnEntity(LocationSerialization.getLocationLooking(sender, 10), type);
-        }
+		for (int i = 0; i < amount; i++) {
+			target.spawnEntity(LocationSerialization.getLocationLooking(sender, 10), type);
+		}
 
-        String msg = Locales.MOB_SPAWNED.getString().replaceAll("%num%", spawnmob + "");
-        return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
-    }
+		String msg = Locales.MOB_SPAWNED.getString().replaceAll("%num%", spawnmob + "");
+		return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+	}
 
-    @BaseCommand(command = "killall", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.mob.killall")
-    public CommandResult executeKillall(Player sender, CommandArgs args) {
-        if (killall.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
+	@BaseCommand(command = "killall", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.mob.killall")
+	public CommandResult executeKillall(Player sender, CommandArgs args) {
+		if (killall.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
 
-        if (args.getLength() > 2) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() > 2) {
+			return CommandResult.ERROR;
+		}
 
-        World target = sender.getWorld();
-        if (args.hasFlag("w")) {
-            Flag f = args.getFlag("w");
-            if (!f.isWorld()) {
-                return CommandResult.NOT_A_WORLD;
-            }
+		World target = sender.getWorld();
+		if (args.hasFlag("w")) {
+			Flag f = args.getFlag("w");
+			if (!f.isWorld()) {
+				return CommandResult.NOT_A_WORLD;
+			}
 
-            if (!sender.hasPermission("admincmd.mob.kill.other")) {
-                return CommandResult.NO_PERMISSION_OTHER;
-            }
+			if (!sender.hasPermission("admincmd.mob.kill.other")) {
+				return CommandResult.NO_PERMISSION_OTHER;
+			}
 
-            target = f.getWorld().getWorld();
-        }
+			target = f.getWorld().getWorld();
+		}
 
-        int killed = 0;
-        for (Entity e : target.getEntities()) {
-            if (e instanceof LivingEntity) {
-                if (e instanceof Player) {
-                    continue;
-                }
-                LivingEntity l = (LivingEntity) e;
-                l.setHealth(0.0);
-                killed++;
-            }
-        }
+		int killed = 0;
+		for (Entity e : target.getEntities()) {
+			if (e instanceof LivingEntity) {
+				if (e instanceof Player) {
+					continue;
+				}
+				LivingEntity l = (LivingEntity) e;
+				l.setHealth(0.0);
+				killed++;
+			}
+		}
 
-        String msg = Locales.MOB_KILLALL.getString().replaceAll("%num%", killed + "").replaceAll("%world%", target.getName());
-        return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
-    }
+		String msg = Locales.MOB_KILLALL.getString().replaceAll("%num%", killed + "").replaceAll("%world%",
+				target.getName());
+		return Messager.sendMessage(sender, msg, Messager.MessageType.INFO);
+	}
 
 }

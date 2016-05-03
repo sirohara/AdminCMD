@@ -32,34 +32,34 @@ import org.bukkit.plugin.Plugin;
 @CommandHandler
 public class ServerCommands {
 
-    private final HelpPage reload = new HelpPage("acreload", "", "<plugin>");
+	private final HelpPage reload = new HelpPage("acreload", "", "<plugin>");
 
-    @BaseCommand(command = "acreload", sender = BaseCommand.Sender.CONSOLE)
-    public CommandResult executeConsole(CommandSender sender, CommandArgs args) {
-        if (reload.sendHelp(sender, args)) {
-            return CommandResult.SUCCESS;
-        }
-        if (args.isEmpty()) {
-            Main.getInstance().getServer().reload();
-            return Messager.sendMessage(sender, Locales.SERVER_RELOAD_FULL, Messager.MessageType.INFO);
-        }
+	@BaseCommand(command = "acreload", sender = BaseCommand.Sender.CONSOLE)
+	public CommandResult executeConsole(CommandSender sender, CommandArgs args) {
+		if (reload.sendHelp(sender, args)) {
+			return CommandResult.SUCCESS;
+		}
+		if (args.isEmpty()) {
+			Main.getInstance().getServer().reload();
+			return Messager.sendMessage(sender, Locales.SERVER_RELOAD_FULL, Messager.MessageType.INFO);
+		}
 
-        if (args.getLength() != 1) {
-            return CommandResult.ERROR;
-        }
+		if (args.getLength() != 1) {
+			return CommandResult.ERROR;
+		}
 
-        Plugin pl = Main.getInstance().getServer().getPluginManager().getPlugin(args.getString(0));
-        if (pl == null) {
-            return Messager.sendMessage(sender, Locales.SERVER_RELOAD_NOT_FOUND, Messager.MessageType.ERROR);
-        }
-        Main.getInstance().getServer().getPluginManager().disablePlugin(pl);
-        Main.getInstance().getServer().getPluginManager().enablePlugin(pl);
-        return Messager.sendMessage(sender, Locales.SERVER_RELOAD_SINGLE, Messager.MessageType.INFO);
-    }
+		Plugin pl = Main.getInstance().getServer().getPluginManager().getPlugin(args.getString(0));
+		if (pl == null) {
+			return Messager.sendMessage(sender, Locales.SERVER_RELOAD_NOT_FOUND, Messager.MessageType.ERROR);
+		}
+		Main.getInstance().getServer().getPluginManager().disablePlugin(pl);
+		Main.getInstance().getServer().getPluginManager().enablePlugin(pl);
+		return Messager.sendMessage(sender, Locales.SERVER_RELOAD_SINGLE, Messager.MessageType.INFO);
+	}
 
-    @BaseCommand(command = "acreload", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.server.reload")
-    public CommandResult executePlayer(CommandSender sender, CommandArgs args) {
-        return executeConsole(sender, args);
-    }
+	@BaseCommand(command = "acreload", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.server.reload")
+	public CommandResult executePlayer(CommandSender sender, CommandArgs args) {
+		return executeConsole(sender, args);
+	}
 
 }

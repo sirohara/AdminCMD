@@ -22,22 +22,22 @@ import org.bukkit.entity.Player;
 
 public class Utils {
 
-    public static String replaceColors(String string) {
-        return string.replaceAll("&((?i)[0-9a-fk-or])", "§$1");
-    }
+	public static String replaceColors(String string) {
+		return string.replaceAll("&((?i)[0-9a-fk-or])", "§$1");
+	}
 
-    public static String removeColors(String string) {
-        return string.replaceAll("§((?i)[0-9a-fk-or])", "");
-    }
-    
-    public static String replacePlayerPlaceholders(Player player) {
-        String result = Config.MESSAGE_FORMAT.getString();
-               
-        result = result.replace("%prefix", Vault.getPrefix(player));
-        result = result.replace("%suffix", Vault.getSuffix(player));
-        result = result.replace("%name", player.getDisplayName());        
-        result = replaceColors(result);
-        return result;
-    }
+	public static String removeColors(String string) {
+		return string.replaceAll("§((?i)[0-9a-fk-or])", "");
+	}
+
+	public static String replacePlayerPlaceholders(Player player) {
+		String result = Config.MESSAGE_FORMAT.getString();
+
+		result = result.replace("%prefix", Vault.getPrefix(player));
+		result = result.replace("%suffix", Vault.getSuffix(player));
+		result = result.replace("%name", player.getDisplayName());
+		result = replaceColors(result);
+		return result;
+	}
 
 }
