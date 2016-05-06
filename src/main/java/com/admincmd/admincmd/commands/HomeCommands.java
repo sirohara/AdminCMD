@@ -49,7 +49,7 @@ public class HomeCommands {
 		helpPages.put("listhome", new HelpPage("listhome", "<name>"));
 	}
 
-	@BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "h")
+	@BaseCommand(command = "home", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.home", aliases = "h")
 	public CommandResult executeHome(Player p, CommandArgs args) {
 		if (helpPages.get("home").sendHelp(p, args)) {
 			return CommandResult.SUCCESS;
@@ -140,7 +140,7 @@ public class HomeCommands {
 		return Messager.sendMessage(sender, Locales.HOME_UPDATED, MessageType.INFO);
 	}
 
-	@BaseCommand(command = "listhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "lh")
+	@BaseCommand(command = "listhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.home", aliases = "lh")
 	public CommandResult executeListHome(Player p, CommandArgs args) {
 		if (helpPages.get("listhome").sendHelp(p, args)) {
 			return CommandResult.SUCCESS;

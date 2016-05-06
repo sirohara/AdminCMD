@@ -47,7 +47,7 @@ public class TeleportCommands {
 		helpPages.put("lwp", new HelpPage("lwp", "<>"));
 	}
 
-	@BaseCommand(command = "twp", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.warp.tp", aliases = "twarp")
+	@BaseCommand(command = "twp", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.warp.warp", aliases = "twarp")
 	public CommandResult executeTWP(Player p, CommandArgs args) {
 		if (helpPages.get("twp").sendHelp(p, args)) {
 			return CommandResult.SUCCESS;
@@ -119,7 +119,7 @@ public class TeleportCommands {
 		return Messager.sendMessage(p, msg, MessageType.INFO);
 	}
 
-	@BaseCommand(command = "lwp", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.warp.tp", aliases = "lwarp")
+	@BaseCommand(command = "lwp", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.warp.warp", aliases = "lwarp")
 	public CommandResult executeLWP(Player p, CommandArgs args) {
 		if (helpPages.get("lwp").sendHelp(p, args)) {
 			return CommandResult.SUCCESS;
