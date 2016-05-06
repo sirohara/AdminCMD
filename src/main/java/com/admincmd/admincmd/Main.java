@@ -40,6 +40,7 @@ import com.admincmd.admincmd.events.PlayerCommandListener;
 import com.admincmd.admincmd.events.PlayerDamageListener;
 import com.admincmd.admincmd.events.PlayerDeathListener;
 import com.admincmd.admincmd.events.PlayerJoinListener;
+import com.admincmd.admincmd.events.PortalEventListener;
 import com.admincmd.admincmd.events.SignListener;
 import com.admincmd.admincmd.events.WorldListener;
 import com.admincmd.admincmd.home.HomeManager;
@@ -149,6 +150,7 @@ public class Main extends JavaPlugin {
 
 	private void registerEvents() {
 		EventManager.registerEvent(PlayerJoinListener.class);
+		EventManager.registerEvent(PortalEventListener.class);
 		EventManager.registerEvent(PlayerCommandListener.class);
 		EventManager.registerEvent(WorldListener.class);
 		EventManager.registerEvent(PlayerDamageListener.class);
