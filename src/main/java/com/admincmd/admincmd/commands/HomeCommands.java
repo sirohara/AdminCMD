@@ -30,6 +30,7 @@ import com.admincmd.admincmd.commandapi.CommandResult;
 import com.admincmd.admincmd.commandapi.HelpPage;
 import com.admincmd.admincmd.home.Home;
 import com.admincmd.admincmd.home.HomeManager;
+import com.admincmd.admincmd.utils.Config;
 import com.admincmd.admincmd.utils.Locales;
 import com.admincmd.admincmd.utils.Messager;
 import com.admincmd.admincmd.utils.Messager.MessageType;
@@ -88,6 +89,10 @@ public class HomeCommands {
 		Home h = HomeManager.getHome(sender, args.getString(0));
 		if (h != null) {
 			return Messager.sendMessage(sender, Locales.HOME_ALREADY_EXISTING, MessageType.ERROR);
+		}
+
+		if (Config.HOME_LIMIT.getInteger() <= HomeManager.getHomes(sender).size()){
+			return Messager.sendMessage(sender, Locales.HOME_LIMIT, MessageType.ERROR);
 		}
 
 		HomeManager.createHome(sender, args.getString(0));

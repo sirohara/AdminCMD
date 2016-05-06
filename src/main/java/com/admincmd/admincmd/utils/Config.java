@@ -44,7 +44,8 @@ public enum Config {
 	MAINTENANCE_KICKMESSAGE("Maintenance.KickMessages","&c&nServer is in Maintenance","Maintenance kickmessage"),
 	MAINTENANCE_ICON("Maintenance.Favicon",Main.getInstance().getDataFolder().getAbsolutePath()+ File.separator+ "maintenance.png","Maintenance favicon"),
 	MAINTENANCE_VERSION("Maintenance.Version","Maintenance","Maintenance version number"),
-	MAINTENANCE_KICK("Maintenance.KickOnMaintenance",true,"Kick if maintenance gets activated");
+	MAINTENANCE_KICK("Maintenance.KickOnMaintenance",true,"Kick if maintenance gets activated"),
+	HOME_LIMIT("Home.UserLimit",10,"Home limit");
 
 	private Config(String path, Object val, String description) {
 		this.path = path;

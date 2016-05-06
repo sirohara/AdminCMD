@@ -107,6 +107,7 @@ public enum Locales {
 
 	HOME_HOME("Home.Home", "Homes"),
 	HOME_MULTI("Home.Multi", "Teleported to %home%."),
+	HOME_LIMIT("Home.Limit", "You have reached your home limit."),
 	HOME_LISTHOME("Home.List", "Homes"),
 	HOME_SET("Home.Set","The home was added."),
 	HOME_DELETED("Home.Deleted", "The home %home% was deleted."),
