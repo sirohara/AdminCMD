@@ -76,7 +76,7 @@ public class HomeCommands {
 		}
 	}
 
-	@BaseCommand(command = "sethome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "sh")
+	@BaseCommand(command = "sethome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.create", aliases = "sh")
 	public CommandResult executeSethome(Player sender, CommandArgs args) {
 		if (helpPages.get("sethome").sendHelp(sender, args)) {
 			return CommandResult.SUCCESS;
@@ -100,7 +100,7 @@ public class HomeCommands {
 		return Messager.sendMessage(sender, msg, MessageType.INFO);
 	}
 
-	@BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rh")
+	@BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.create", aliases = "rh")
 	public CommandResult executeRemovehome(Player sender, CommandArgs args) {
 		if (helpPages.get("delhome").sendHelp(sender, args)) {
 			return CommandResult.SUCCESS;
@@ -120,7 +120,7 @@ public class HomeCommands {
 		return Messager.sendMessage(sender, msg, MessageType.INFO);
 	}
 
-	@BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "eh")
+	@BaseCommand(command = "edithome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.create", aliases = "eh")
 	public CommandResult executeEdithome(Player sender, CommandArgs args) {
 		if (helpPages.get("edithome").sendHelp(sender, args)) {
 			return CommandResult.SUCCESS;
