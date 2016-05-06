@@ -106,6 +106,7 @@ public enum Locales {
 	HELP_SPAWN_SPAWN_2("Help.Spawn.Spawn.2","Teleports the given player to the spawnpoint"),
 
 	HOME_HOME("Home.Home", "Homes"),
+	HOME_MULTI("Home.Multi", "Teleported to %home%."),
 	HOME_LISTHOME("Home.List", "Homes"),
 	HOME_SET("Home.Set","The home was added."),
 	HOME_DELETED("Home.Deleted", "The home %home% was deleted."),
@@ -114,6 +115,7 @@ public enum Locales {
 	HOME_ALREADY_EXISTING("Home.AlreadyExisting","This home is already existing! Try /home to list all homes."),
 
 	WARP_WP("Warp.WP", "Warp Points"),
+	WARP_TP("Warp.TP", "Teleported to %wp%."),
 	WARP_LISTWPS("Warp.List", "Warp Points"),
 	WARP_SET("Warp.Set","The warp point was added."),
 	WARP_DELETED("Warp.Deleted", "The warp point %wp% was deleted."),
