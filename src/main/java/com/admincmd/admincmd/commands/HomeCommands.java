@@ -66,6 +66,8 @@ public class HomeCommands {
 			Home h = HomeManager.getHome(p, args.getString(0));
 			if (h != null) {
 				h.teleport(p);
+				String msg = Locales.HOME_MULTI.getString().replaceAll("%home%", h.getName());
+				Messager.sendMessage(p, msg, MessageType.INFO);
 				return CommandResult.SUCCESS;
 			} else {
 				return Messager.sendMessage(p, Locales.HOME_NOHOME, MessageType.ERROR);
