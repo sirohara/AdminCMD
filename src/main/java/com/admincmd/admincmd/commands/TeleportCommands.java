@@ -68,7 +68,7 @@ public class TeleportCommands {
 
 			Home wp = WarpPointManager.getWP(args.getString(0));
 			if (wp != null) {
-				wp.teleport(p);
+				p.teleport(wp.getLocation());
 				String msg = Locales.WARP_TP.getString().replaceAll("%wp%", wp.getName());
 				Messager.sendMessage(p, msg, MessageType.INFO);
 				return CommandResult.SUCCESS;

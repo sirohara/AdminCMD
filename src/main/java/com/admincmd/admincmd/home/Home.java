@@ -19,7 +19,6 @@
 package com.admincmd.admincmd.home;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 import com.admincmd.admincmd.player.BukkitPlayer;
 import com.admincmd.admincmd.utils.LocationSerialization;
@@ -77,11 +76,5 @@ public class Home {
 
 	public ACWorld getWorld() {
 		return WorldManager.getWorld(loc);
-	}
-
-	public void teleport(Player p) {
-		if (getOwner().getPlayer() != null) {
-			p.teleport(loc);
-		}
 	}
 }
