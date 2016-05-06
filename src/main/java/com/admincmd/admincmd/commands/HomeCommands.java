@@ -65,7 +65,7 @@ public class HomeCommands {
 		} else {
 			Home h = HomeManager.getHome(p, args.getString(0));
 			if (h != null) {
-				h.teleport();
+				h.teleport(p);
 				return CommandResult.SUCCESS;
 			} else {
 				return Messager.sendMessage(p, Locales.HOME_NOHOME, MessageType.ERROR);
