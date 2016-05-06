@@ -96,7 +96,8 @@ public class HomeCommands {
 		}
 
 		HomeManager.createHome(sender, args.getString(0));
-		return Messager.sendMessage(sender, Locales.HOME_SET, MessageType.INFO);
+		String msg = Locales.HOME_SET.getString().replaceAll("%home%", args.getString(0));
+		return Messager.sendMessage(sender, msg, MessageType.INFO);
 	}
 
 	@BaseCommand(command = "delhome", sender = BaseCommand.Sender.PLAYER, permission = "admincmd.home.tp", aliases = "rh")
