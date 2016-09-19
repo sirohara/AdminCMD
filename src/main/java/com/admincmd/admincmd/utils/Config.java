@@ -35,7 +35,7 @@ public enum Config {
 	MYSQL_USER("MySQL.User", "root","The user of the database"),
 	MYSQL_PASSWORD("MySQL.Password", "password","The password of the user"),
 	GLOBAL_SPAWNS("Options.WorldSpawns", false,"Set to true if you want one spawn for every world. false means one spawn for the whole server."),
-	DIRECT_RESPAWN("Options.DirectRespawn", true,"Set to false if you want players to manually click the respawn button."),
+	DIRECT_RESPAWN("Options.DirectRespawn", false,"Set to false if you want players to manually click the respawn button."),
 	DEBUG("Options.Debug", false,"Enables debugging chat."),
 	MESSAGE_FORMAT("Player.Format", "%prefix%name%suffix","Here you can add the prefix or suffixes to playernames."),
 	MAINTENANCE_ENABLED("Maintenance.Enabled", false,"Enables Maintenance."),
